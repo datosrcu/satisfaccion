@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Encuesta de Satisfacción en Salud · Gabinete Social + LMetB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #009DE0;
+      --brand-d: #0079ac;
+      --brand-bg: #dbf1fb;
+
+      --c-salud: #009DE0;
+      --c-educacion: #00C96B;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-alertas: #d32f2f;
+
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #102d39;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-alt);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-muni {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    /* BANNER INTRO */
+    .intro-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin: 24px 0 20px;
+    }
+
+    .intro-card h2 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .intro-card p {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* TARJETA DE ESTABLECIMIENTO FIJADO (QR / LINK DIRECTO) */
+    .institution-lock-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--brand-bg);
+      border: 1px solid rgba(0, 157, 224, .35);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .institution-lock-card .lock-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--brand-d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+    }
+
+    .institution-lock-card .lock-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .institution-lock-card .lock-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--brand-d);
+    }
+
+    .institution-lock-card strong {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .institution-lock-card .lock-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* FORM CARD SECTIONS */
+    .form-section {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .sec-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: -3px 0 8px;
+    }
+
+    .form-select,
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%235b6470'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 12px center;
+      padding-right: 32px;
+    }
+
+    .form-select:focus,
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--brand);
+      background: var(--bg);
+      box-shadow: 0 0 0 3px var(--brand-bg);
+    }
+
+    /* RADIO GRID LLEGADA */
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+
+    .radio-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--bg-alt);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .15s var(--ease-standard);
+    }
+
+    .radio-card:hover {
+      border-color: var(--brand);
+      background: var(--bg);
+    }
+
+    /* BOTONES RATING 1-5 (ESCALA CARITAS SEMÁFORO) */
+    .rating-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .btn-rate {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 4px 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all .18s ease;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-rate .rate-face {
+      font-size: 30px;
+      line-height: 1;
+      margin: 0 0 5px;
+      transition: transform .18s ease, color .18s ease;
+      font-variation-settings: 'FILL' 0, 'wght' 500;
+    }
+
+    .btn-rate .rate-label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      line-height: 1.2;
+      text-align: center;
+      transition: color .18s ease;
+    }
+
+    /* Colores base semáforo para los íconos */
+    .btn-rate[data-val="1"] .rate-face { color: #DC2626; }
+    .btn-rate[data-val="2"] .rate-face { color: #EA580C; }
+    .btn-rate[data-val="3"] .rate-face { color: #D97706; }
+    .btn-rate[data-val="4"] .rate-face { color: #65A30D; }
+    .btn-rate[data-val="5"] .rate-face { color: #059669; }
+
+    .btn-rate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+    }
+    .btn-rate:hover .rate-face {
+      transform: scale(1.15);
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .btn-rate[data-val="1"]:hover { border-color: #EF4444; background: #FEF2F2; }
+    .btn-rate[data-val="2"]:hover { border-color: #F97316; background: #FFF7ED; }
+    .btn-rate[data-val="3"]:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .btn-rate[data-val="4"]:hover { border-color: #84CC16; background: #F7FEE7; }
+    .btn-rate[data-val="5"]:hover { border-color: #10B981; background: #ECFDF5; }
+
+    /* Estados Activos (Seleccionados) */
+    .btn-rate.active {
+      transform: translateY(-1px);
+    }
+    .btn-rate.active .rate-face {
+      font-variation-settings: 'FILL' 1;
+      transform: scale(1.15);
+    }
+    .btn-rate.active .rate-label {
+      font-weight: 800;
+    }
+
+    .btn-rate[data-val="1"].active {
+      background: #FEE2E2;
+      border-color: #DC2626;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, .25);
+    }
+    .btn-rate[data-val="1"].active .rate-label { color: #991B1B; }
+
+    .btn-rate[data-val="2"].active {
+      background: #FFEDD5;
+      border-color: #EA580C;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, .25);
+    }
+    .btn-rate[data-val="2"].active .rate-label { color: #9A3412; }
+
+    .btn-rate[data-val="3"].active {
+      background: #FEF3C7;
+      border-color: #D97706;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, .25);
+    }
+    .btn-rate[data-val="3"].active .rate-label { color: #92400E; }
+
+    .btn-rate[data-val="4"].active {
+      background: #ECFCCB;
+      border-color: #65A30D;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, .25);
+    }
+    .btn-rate[data-val="4"].active .rate-label { color: #3F6212; }
+
+    .btn-rate[data-val="5"].active {
+      background: #D1FAE5;
+      border-color: #059669;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, .25);
+    }
+    .btn-rate[data-val="5"].active .rate-label { color: #065F46; }
+
+    /* FILA DE 6 OPCIONES (CON BOTÓN NO USÉ) */
+    .rating-row.rating-6 {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+
+    .btn-rate.btn-na .rate-face { color: #64748B; }
+    .btn-rate.btn-na:hover { border-color: #94A3B8; background: #F1F5F9; }
+    .btn-rate.btn-na:hover .rate-face { color: #475569; }
+    .btn-rate.btn-na.active {
+      background: #F1F5F9;
+      border-color: #64748B;
+      box-shadow: 0 4px 12px rgba(100, 116, 139, .25);
+    }
+    .btn-rate.btn-na.active .rate-label { color: #1E293B; }
+    .btn-rate.btn-na.active .rate-face { color: #334155; }
+
+    /* BOTONES NPS 0-10 */
+    .nps-grid {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 5px;
+    }
+
+    .btn-nps {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 2px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all .15s ease;
+      font-family: inherit;
+    }
+
+    .btn-nps:hover {
+      border-color: var(--brand);
+    }
+
+    .btn-nps.detractor.active {
+      background: var(--c-alertas);
+      color: #fff;
+      border-color: var(--c-alertas);
+    }
+
+    .btn-nps.pasivo.active {
+      background: var(--c-naranja);
+      color: #fff;
+      border-color: var(--c-naranja);
+    }
+
+    .btn-nps.promotor.active {
+      background: var(--c-educacion);
+      color: #fff;
+      border-color: var(--c-educacion);
+    }
+
+    /* BOTÓN SUBMIT */
+    .btn-submit {
+      width: 100%;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0, 157, 224, .35);
+      transition: all .2s var(--ease-standard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 28px 0 40px;
+    }
+
+    .btn-submit:hover {
+      background: var(--brand-d);
+      transform: translateY(-1px);
+    }
+
+    /* MODAL ÉXITO */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 14, .65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 28px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lift);
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="logo">
+        <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+      </div>
+
+      <div class="badge-chip">
+        <span class="material-symbols-outlined" style="font-size:16px;">verified</span>
+        Salud Municipal
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="wrap">
+
+    <!-- INTRO CARD -->
+    <div class="intro-card">
+      <h2 id="intro-title"><span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">volunteer_activism</span>
+        Tu opinión nos ayuda a mejorar</h2>
+      <p id="intro-desc">
+        Esta encuesta es totalmente <b>anónima</b> y demora menos de 1 minuto. Evaluá los servicios de salud recibidos
+        en tu consulta.
+      </p>
+    </div>
+
+    <form id="health-survey-form">
+
+      <!-- SECCIÓN 1: CENTRO Y CONSULTA -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--brand);">local_hospital</span>
+          1. Lugar y Modalidad de Consulta
+        </div>
+
+        <!-- TARJETA FIJADA CUANDO SE LEE DESDE QR -->
+        <div id="centro-locked-card" class="institution-lock-card hidden">
+          <div class="lock-icon">
+            <span class="material-symbols-outlined">local_hospital</span>
+          </div>
+          <div class="lock-info">
+            <span class="lock-tag">Centro de Salud Asignado</span>
+            <strong id="lock-centro-nombre">Nombre del Centro</strong>
+            <span class="lock-sub" id="lock-centro-sub">Dirección</span>
+          </div>
+        </div>
+
+        <div class="form-group" id="group-centro-select">
+          <label class="form-label" for="select-centro">Centro de Salud / CAPS / Posta *</label>
+          <select id="select-centro" name="centro_id" class="form-select" required>
+            <option value="">Selecciona el centro donde fuiste atendido/a...</option>
+          </select>
+          <div id="centro-info-badge" style="font-size:12px; color:var(--brand-d); font-weight:600; margin-top:6px;"
+            class="hidden"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">¿Cómo fue tu llegada a la consulta? *</label>
+          <div class="radio-grid">
+            <label class="radio-card">
+              <input type="radio" name="llegada" value="Con turno previo" required>
+              <span style="display:inline-flex; align-items:center; gap:6px;">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">calendar_month</span>
+                Con turno previo
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="llegada" value="Sin turno (espontáneo / guardia)" required>
+              <span style="display:inline-flex; align-items:center; gap:6px;">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--c-naranja); margin:0;">bolt</span>
+                Demanda espontánea / Guardia
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-especialidad">Especialidad o Servicio Consultado *</label>
+          <select id="select-especialidad" name="especialidad" class="form-select" required disabled>
+            <option value="">Primero selecciona el centro arriba...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-profesional">Profesional / Médico que te atendió</label>
+          <select id="select-profesional" name="profesional" class="form-select" disabled>
+            <option value="">Selecciona especialidad primero...</option>
+          </select>
+          <div id="doctor-preview-card" class="doctor-preview-card hidden" style="margin-top:10px; display:flex; align-items:center; gap:12px; background:var(--bg-alt); padding:10px 14px; border-radius:var(--radius-sm); border:1px solid var(--line);">
+            <div class="doctor-avatar" style="width:46px; height:46px; min-width:46px; border-radius:50%; overflow:hidden; background:var(--brand-bg); border:2px solid rgba(0,157,224,.4); display:flex; align-items:center; justify-content:center; color:var(--brand-d); box-shadow:0 2px 8px rgba(0,0,0,.08);">
+              <img id="doctor-preview-img" src="" alt="" style="width:100%; height:100%; object-fit:cover; display:none;" onerror="this.style.display='none'; document.getElementById('doctor-preview-icon').style.display='flex';">
+              <span class="material-symbols-outlined" id="doctor-preview-icon" style="font-size:26px; margin:0; color:var(--brand-d);">person</span>
+            </div>
+            <div>
+              <strong id="doctor-preview-name" style="font-size:13px; color:var(--ink); display:block;"></strong>
+              <span id="doctor-preview-esp" style="font-size:11.5px; color:var(--ink-soft);"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: CALIFICACIÓN DE SERVICIOS -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-naranja);">sentiment_satisfied</span>
+          2. Evaluación de la Experiencia
+        </div>
+
+        <!-- 1. Recepción -->
+        <div class="form-group">
+          <label class="form-label">1. Recepción y orientación en mostrador *</label>
+          <p class="form-sub">Amabilidad, trato y claridad al recibirte.</p>
+          <div class="rating-row" data-rating-group="recepcion_nota">
+            <button type="button" data-val="1" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span>
+              <span class="rate-label">Muy mala</span>
+            </button>
+            <button type="button" data-val="2" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span>
+              <span class="rate-label">Mala</span>
+            </button>
+            <button type="button" data-val="3" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_neutral</span>
+              <span class="rate-label">Regular</span>
+            </button>
+            <button type="button" data-val="4" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_satisfied</span>
+              <span class="rate-label">Buena</span>
+            </button>
+            <button type="button" data-val="5" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span>
+              <span class="rate-label">Excelente</span>
+            </button>
+          </div>
+          <input type="hidden" name="recepcion_nota" required>
+        </div>
+
+        <!-- 2. Tiempo de espera -->
+        <div class="form-group" style="padding-top:14px; border-top:1px solid var(--line);">
+          <label class="form-label">2. Tiempo de espera hasta ser atendido/a *</label>
+          <p class="form-sub">Puntualidad y agilidad en la sala de espera.</p>
+          <div class="rating-row" data-rating-group="espera_nota">
+            <button type="button" data-val="1" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span>
+              <span class="rate-label">Muy demorado</span>
+            </button>
+            <button type="button" data-val="2" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span>
+              <span class="rate-label">Demorado</span>
+            </button>
+            <button type="button" data-val="3" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_neutral</span>
+              <span class="rate-label">Aceptable</span>
+            </button>
+            <button type="button" data-val="4" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_satisfied</span>
+              <span class="rate-label">Rápido</span>
+            </button>
+            <button type="button" data-val="5" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span>
+              <span class="rate-label">Muy ágil</span>
+            </button>
+          </div>
+          <input type="hidden" name="espera_nota" required>
+        </div>
+
+        <!-- 3. Infraestructura -->
+        <div class="form-group" style="padding-top:14px; border-top:1px solid var(--line);">
+          <label class="form-label">3. Instalaciones, limpieza y comodidad del centro *</label>
+          <p class="form-sub">Higiene de consultorios, baños y sala de espera.</p>
+          <div class="rating-row" data-rating-group="infraestructura_nota">
+            <button type="button" data-val="1" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span>
+              <span class="rate-label">Muy deficiente</span>
+            </button>
+            <button type="button" data-val="2" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span>
+              <span class="rate-label">Deficiente</span>
+            </button>
+            <button type="button" data-val="3" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_neutral</span>
+              <span class="rate-label">Regular</span>
+            </button>
+            <button type="button" data-val="4" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_satisfied</span>
+              <span class="rate-label">Buena</span>
+            </button>
+            <button type="button" data-val="5" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span>
+              <span class="rate-label">Excelente</span>
+            </button>
+          </div>
+          <input type="hidden" name="infraestructura_nota" required>
+        </div>
+
+        <!-- 4. Enfermería -->
+        <div class="form-group" style="padding-top:14px; border-top:1px solid var(--line);">
+          <label class="form-label">4. Atención de Enfermería / Vacunatorio *</label>
+          <p class="form-sub">Evaluá la atención de enfermería o seleccioná "No usé" si no pasaste por el servicio.</p>
+          <div class="rating-row rating-6" data-rating-group="enfermeria_nota">
+            <button type="button" data-val="1" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span>
+              <span class="rate-label">Muy mala</span>
+            </button>
+            <button type="button" data-val="2" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span>
+              <span class="rate-label">Mala</span>
+            </button>
+            <button type="button" data-val="3" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_neutral</span>
+              <span class="rate-label">Regular</span>
+            </button>
+            <button type="button" data-val="4" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_satisfied</span>
+              <span class="rate-label">Buena</span>
+            </button>
+            <button type="button" data-val="5" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span>
+              <span class="rate-label">Excelente</span>
+            </button>
+            <button type="button" data-val="No aplica" class="btn-rate btn-na">
+              <span class="material-symbols-outlined rate-face">do_not_disturb_on</span>
+              <span class="rate-label">No usé</span>
+            </button>
+          </div>
+          <input type="hidden" name="enfermeria_nota" id="input-enfermeria" required>
+        </div>
+
+        <!-- 5. Atención médica -->
+        <div class="form-group" style="padding-top:14px; border-top:1px solid var(--line);">
+          <label class="form-label">5. Atención del Médico / Especialista *</label>
+          <p class="form-sub">Evaluá la atención médica o seleccioná "No usé" si no consultaste con un profesional.</p>
+          <div class="rating-row rating-6" data-rating-group="medico_nota">
+            <button type="button" data-val="1" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span>
+              <span class="rate-label">Muy mala</span>
+            </button>
+            <button type="button" data-val="2" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span>
+              <span class="rate-label">Mala</span>
+            </button>
+            <button type="button" data-val="3" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_neutral</span>
+              <span class="rate-label">Regular</span>
+            </button>
+            <button type="button" data-val="4" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_satisfied</span>
+              <span class="rate-label">Buena</span>
+            </button>
+            <button type="button" data-val="5" class="btn-rate">
+              <span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span>
+              <span class="rate-label">Excelente</span>
+            </button>
+            <button type="button" data-val="No aplica" class="btn-rate btn-na">
+              <span class="material-symbols-outlined rate-face">do_not_disturb_on</span>
+              <span class="rate-label">No usé</span>
+            </button>
+          </div>
+          <input type="hidden" name="medico_nota" id="input-medico" required>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: RECOMENDACIÓN NPS -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-educacion);">recommend</span>
+          3. Recomendación Ciudadana (NPS)
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">¿Qué tan probable es que recomiendes este centro de salud a un familiar o vecino?
+            *</label>
+          <p class="form-sub">Escala del 0 (Nada probable) al 10 (Totalmente seguro):</p>
+
+          <div class="nps-grid" id="nps-container">
+            <button type="button" data-nps="0" class="btn-nps detractor">0</button>
+            <button type="button" data-nps="1" class="btn-nps detractor">1</button>
+            <button type="button" data-nps="2" class="btn-nps detractor">2</button>
+            <button type="button" data-nps="3" class="btn-nps detractor">3</button>
+            <button type="button" data-nps="4" class="btn-nps detractor">4</button>
+            <button type="button" data-nps="5" class="btn-nps detractor">5</button>
+            <button type="button" data-nps="6" class="btn-nps detractor">6</button>
+            <button type="button" data-nps="7" class="btn-nps pasivo">7</button>
+            <button type="button" data-nps="8" class="btn-nps pasivo">8</button>
+            <button type="button" data-nps="9" class="btn-nps promotor">9</button>
+            <button type="button" data-nps="10" class="btn-nps promotor">10</button>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-soft); margin-top:6px;">
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-alertas); margin:0;">cancel</span>
+              Nada probable
+            </span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-educacion); margin:0;">check_circle</span>
+              Muy probable
+            </span>
+          </div>
+          <input type="hidden" name="nps_puntaje" id="input-nps" required>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 4: SUGERENCIAS -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-deporte);">edit_note</span>
+          4. Comentarios y Sugerencias
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="textarea-sugerencias">¿Querés dejarnos algún comentario o sugerencia? (Opcional)</label>
+          <textarea id="textarea-sugerencias" name="sugerencias" rows="3" class="form-textarea"
+            placeholder="Escribí aquí tu mensaje..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" id="btn-submit" class="btn-submit">
+        <span class="material-symbols-outlined" style="font-size:18px; margin:0;">send</span>
+        Enviar Evaluación
+      </button>
+
+    </form>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="modal-success" class="modal-overlay">
+      <div class="modal-box">
+        <div
+          style="width:54px; height:54px; border-radius:50%; background:var(--tint-verde); color:var(--c-educacion); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px;">
+          <span class="material-symbols-outlined" style="font-size:32px; margin:0;">check_circle</span>
+        </div>
+        <h3 style="font-size:18px; font-weight:800; margin:0 0 6px;">¡Muchas gracias!</h3>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 20px; line-height:1.45;">
+          Tu respuesta ha sido registrada correctamente y nos ayuda a seguir mejorando la atención en la ciudad.
+        </p>
+        <button type="button" onclick="resetFormAndCloseModal()" class="btn-submit" style="margin:0; padding:10px 18px;">
+          Cargar otra respuesta
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Dirección de Estadística · Secretaría de Salud</b><br>
+      Municipalidad de Río Cuarto · Gobierno de la Ciudad
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrhg-bnnwGEhCE48DzPlkt_TZtz8fD8_2MMf_Za1N-kg6LnaWcc9hlIfVleOZSHIf75Q/exec";
+
+    let catalogoSalud = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+    let centroSeleccionado = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initCentrosSelect();
+      initRatingButtons();
+      initNpsButtons();
+      handleUrlParameters();
+      initFormSubmission();
+    });
+
+    function initCentrosSelect() {
+      const select = document.getElementById('select-centro');
+      select.innerHTML = '<option value="">Selecciona el centro donde fuiste atendido/a...</option>';
+
+      const tipos = [...new Set(catalogoSalud.map(c => c.tipo))];
+      tipos.forEach(tipo => {
+        const optGroup = document.createElement('optgroup');
+        optGroup.label = tipo;
+        catalogoSalud.filter(c => c.tipo === tipo).forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.id;
+          opt.textContent = `${c.nombre} (${c.barrio})`;
+          optGroup.appendChild(opt);
+        });
+        select.appendChild(optGroup);
+      });
+
+      select.addEventListener('change', (e) => {
+        onCentroChange(e.target.value);
+      });
+    }
+
+    function onCentroChange(centroId, isDirectLink = false) {
+      const selectEsp = document.getElementById('select-especialidad');
+      const selectProf = document.getElementById('select-profesional');
+      const badge = document.getElementById('centro-info-badge');
+      const lockCard = document.getElementById('centro-locked-card');
+      const groupSelect = document.getElementById('group-centro-select');
+
+      centroSeleccionado = catalogoSalud.find(c => c.id === centroId);
+
+      if (!centroSeleccionado) {
+        selectEsp.innerHTML = '<option value="">Primero selecciona un centro de salud arriba...</option>';
+        selectEsp.disabled = true;
+        selectProf.innerHTML = '<option value="">Selecciona especialidad primero...</option>';
+        selectProf.disabled = true;
+        badge.classList.add('hidden');
+        if (lockCard) lockCard.classList.add('hidden');
+        if (groupSelect) groupSelect.classList.remove('hidden');
+        document.getElementById('intro-title').innerHTML = '<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">volunteer_activism</span> Tu opinión nos ayuda a mejorar';
+        document.getElementById('intro-desc').innerHTML = 'Esta encuesta es totalmente <b>anónima</b> y demora menos de 1 minuto. Evaluá los servicios de salud recibidos en tu consulta.';
+        return;
+      }
+
+      if (isDirectLink) {
+        // Modo QR / Enlace Directo: Ocultar selector y mostrar tarjeta fija
+        if (groupSelect) groupSelect.classList.add('hidden');
+        if (lockCard) {
+          document.getElementById('lock-centro-nombre').textContent = centroSeleccionado.nombre;
+          document.getElementById('lock-centro-sub').innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin-right:3px;">location_on</span>${centroSeleccionado.direccion} · B° ${centroSeleccionado.barrio}`;
+          lockCard.classList.remove('hidden');
+        }
+        document.getElementById('intro-title').innerHTML = `<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">local_hospital</span> ¡Bienvenido/a a ${centroSeleccionado.nombre}!`;
+        document.getElementById('intro-desc').innerHTML = `Tu opinión sobre la atención médica, de enfermería y tiempos de espera en <b>${centroSeleccionado.nombre}</b> es fundamental para seguir mejorando. Encuesta anónima · 1 minuto.`;
+      } else {
+        if (lockCard) lockCard.classList.add('hidden');
+        if (groupSelect) groupSelect.classList.remove('hidden');
+        badge.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; vertical-align:-3px; margin-right:4px;">location_on</span>${centroSeleccionado.direccion} · B° ${centroSeleccionado.barrio}`;
+        badge.classList.remove('hidden');
+      }
+
+      selectEsp.innerHTML = '<option value="">Selecciona la especialidad atendida...</option>';
+      centroSeleccionado.especialidades.forEach(esp => {
+        const opt = document.createElement('option');
+        opt.value = esp.nombre;
+        opt.textContent = esp.nombre;
+        selectEsp.appendChild(opt);
+      });
+      selectEsp.disabled = false;
+
+      selectProf.innerHTML = '<option value="">Selecciona especialidad primero...</option>';
+      selectProf.disabled = true;
+
+      selectEsp.onchange = () => {
+        onEspecialidadChange(selectEsp.value);
+      };
+    }
+
+    function getDoctorPhotoUrl(name) {
+      if (!name || name.includes('Turno') || name.includes('recuerda')) return null;
+      const slug = name.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/^(dr|dra|lic|prof|enf)\.?\s+/i, '')
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      return `assets/profesionales/${slug}.jpg`;
+    }
+
+    function onEspecialidadChange(espNombre) {
+      const selectProf = document.getElementById('select-profesional');
+      const previewCard = document.getElementById('doctor-preview-card');
+      if (previewCard) previewCard.classList.add('hidden');
+
+      if (!centroSeleccionado || !espNombre) {
+        selectProf.innerHTML = '<option value="">Selecciona especialidad primero...</option>';
+        selectProf.disabled = true;
+        return;
+      }
+
+      const espData = centroSeleccionado.especialidades.find(e => e.nombre === espNombre);
+      selectProf.innerHTML = '<option value="">Selecciona profesional (o no recuerda)...</option>';
+
+      if (espData && espData.profesionales) {
+        espData.profesionales.forEach(prof => {
+          const opt = document.createElement('option');
+          opt.value = prof;
+          opt.textContent = prof;
+          selectProf.appendChild(opt);
+        });
+      }
+      const optGenerica = document.createElement('option');
+      optGenerica.value = "Profesional de Turno / No recuerda";
+      optGenerica.textContent = "No recuerdo el nombre / Otro";
+      selectProf.appendChild(optGenerica);
+
+      selectProf.disabled = false;
+
+      selectProf.onchange = () => {
+        const val = selectProf.value;
+        if (!val || val.includes('recuerda')) {
+          if (previewCard) previewCard.classList.add('hidden');
+          return;
+        }
+        const photoUrl = getDoctorPhotoUrl(val);
+        const previewImg = document.getElementById('doctor-preview-img');
+        const previewIcon = document.getElementById('doctor-preview-icon');
+        document.getElementById('doctor-preview-name').textContent = val;
+        document.getElementById('doctor-preview-esp').textContent = `${espNombre} · ${centroSeleccionado.nombre}`;
+
+        if (photoUrl) {
+          previewImg.src = photoUrl;
+          previewImg.style.display = 'block';
+          previewIcon.style.display = 'none';
+        } else {
+          previewImg.style.display = 'none';
+          previewIcon.style.display = 'flex';
+        }
+        previewCard.classList.remove('hidden');
+      };
+    }
+
+    function initRatingButtons() {
+      document.querySelectorAll('[data-rating-group]').forEach(group => {
+        const groupName = group.getAttribute('data-rating-group');
+        const hiddenInput = document.querySelector(`input[name="${groupName}"]`);
+        const buttons = group.querySelectorAll('.btn-rate');
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            hiddenInput.value = btn.getAttribute('data-val');
+          });
+        });
+      });
+    }
+
+    function initNpsButtons() {
+      const container = document.getElementById('nps-container');
+      const hiddenNps = document.getElementById('input-nps');
+      const buttons = container.querySelectorAll('.btn-nps');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          hiddenNps.value = btn.getAttribute('data-nps');
+        });
+      });
+    }
+
+    function handleUrlParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const centroParam = urlParams.get('centro') || urlParams.get('c');
+      const espParam = urlParams.get('especialidad') || urlParams.get('esp') || urlParams.get('e');
+      const profParam = urlParams.get('profesional') || urlParams.get('prof') || urlParams.get('p');
+
+      if (centroParam) {
+        const select = document.getElementById('select-centro');
+        for (let i = 0; i < select.options.length; i++) {
+          const opt = select.options[i];
+          if (opt.value && (opt.value.toUpperCase() === centroParam.toUpperCase() || opt.value.toUpperCase().includes(centroParam.toUpperCase()) || centroParam.toUpperCase().includes(opt.value.toUpperCase()))) {
+            select.selectedIndex = i;
+            onCentroChange(opt.value, true);
+            break;
+          }
+        }
+
+        if (espParam) {
+          const selectEsp = document.getElementById('select-especialidad');
+          for (let j = 0; j < selectEsp.options.length; j++) {
+            const optEsp = selectEsp.options[j];
+            if (optEsp.value && (optEsp.value.toLowerCase() === espParam.toLowerCase() || optEsp.value.toLowerCase().includes(espParam.toLowerCase()) || espParam.toLowerCase().includes(optEsp.value.toLowerCase()))) {
+              selectEsp.selectedIndex = j;
+              onEspecialidadChange(optEsp.value);
+              break;
+            }
+          }
+
+          if (profParam) {
+            const selectProf = document.getElementById('select-profesional');
+            for (let k = 0; k < selectProf.options.length; k++) {
+              const optProf = selectProf.options[k];
+              if (optProf.value && (optProf.value.toLowerCase() === profParam.toLowerCase() || optProf.value.toLowerCase().includes(profParam.toLowerCase()) || profParam.toLowerCase().includes(optProf.value.toLowerCase()))) {
+                selectProf.selectedIndex = k;
+                selectProf.dispatchEvent(new Event('change'));
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function initFormSubmission() {
+      const form = document.getElementById('health-survey-form');
+      const btnSubmit = document.getElementById('btn-submit');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const requiredInputs = form.querySelectorAll('input[type="hidden"][required]');
+        for (let input of requiredInputs) {
+          if (!input.value) {
+            alert("Por favor completa todas las calificaciones obligatorias antes de enviar.");
+            input.closest('div').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+        }
+
+        const formData = new FormData(form);
+        const payload = {
+          tipo_encuesta: "salud",
+          centro_id: formData.get('centro_id'),
+          centro_nombre: centroSeleccionado ? centroSeleccionado.nombre : "",
+          tipo_centro: centroSeleccionado ? centroSeleccionado.tipo : "",
+          barrio: centroSeleccionado ? centroSeleccionado.barrio : "",
+          llegada: formData.get('llegada'),
+          especialidad: formData.get('especialidad'),
+          profesional: formData.get('profesional') || "No especificado",
+          recepcion_nota: formData.get('recepcion_nota'),
+          espera_nota: formData.get('espera_nota'),
+          infraestructura_nota: formData.get('infraestructura_nota'),
+          enfermeria_nota: formData.get('enfermeria_nota') || "No aplica",
+          medico_nota: formData.get('medico_nota') || "No aplica",
+          nps_puntaje: formData.get('nps_puntaje'),
+          sugerencias: formData.get('sugerencias') || "",
+          dispositivo: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
+        };
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Enviando respuestas...`;
+
+        try {
+          saveToLocalStorage(payload);
+
+          const params = new URLSearchParams();
+          for (const key in payload) {
+            params.append(key, payload[key]);
+          }
+
+          if (SCRIPT_URL) {
+            await fetch(SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: params
+            });
+          }
+
+          document.getElementById('modal-success').classList.add('open');
+        } catch (err) {
+          console.warn("Envío directo con contingencia offline:", err);
+          document.getElementById('modal-success').classList.add('open');
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<span class="material-symbols-outlined">send</span> Enviar Evaluación`;
+        }
+      });
+    }
+
+    function saveToLocalStorage(payload) {
+      try {
+        let queue = JSON.parse(localStorage.getItem('encuestas_salud_guardadas') || '[]');
+        queue.push({
+          fecha: new Date().toISOString(),
+          ...payload
+        });
+        localStorage.setItem('encuestas_salud_guardadas', JSON.stringify(queue));
+      } catch (e) {
+        console.error("Error guardando en localStorage:", e);
+      }
+    }
+
+    function resetFormAndCloseModal() {
+      document.getElementById('modal-success').classList.remove('open');
+      const form = document.getElementById('health-survey-form');
+      form.reset();
+      document.querySelectorAll('.btn-rate.active').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('centro') || urlParams.get('c')) {
+        handleUrlParameters();
+      } else {
+        onCentroChange("");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

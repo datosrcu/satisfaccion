@@ -1,0 +1,3684 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablero de Satisfacción en Salud · Gabinete Social + LMetB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #009DE0;
+      --brand-d: #0079ac;
+      --brand-bg: #dbf1fb;
+
+      --c-salud: #009DE0;
+      --c-educacion: #00C96B;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-deporte: #FF3CB2;
+      --c-alertas: #d32f2f;
+
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+      --tint-magenta: #ffe4f4;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #102d39;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      padding-top: 14px;
+      padding-bottom: 12px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-muni {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 7px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all .15s var(--ease-standard);
+    }
+
+    .nav-btn:hover {
+      background: var(--brand);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 40px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      margin: 0 0 8px;
+      line-height: 1.15;
+    }
+
+    .hero h1 .accent {
+      color: var(--brand);
+    }
+
+    .hero p.sub {
+      font-size: 15px;
+      color: var(--ink-soft);
+      max-width: 780px;
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+
+    /* HERO STATS (1px hairline) */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      background: var(--bg);
+      padding: 16px 18px;
+      position: relative;
+    }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3.5px;
+      background: var(--kc, var(--brand));
+    }
+
+    .hero-stat .stat-label {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat .stat-label .material-symbols-outlined {
+      color: var(--kc, var(--brand));
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .hero-stat .stat-sub {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* FILTERBAR STICKY */
+    .filterbar {
+      position: sticky;
+      top: 65px;
+      z-index: 25;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+    }
+
+    .filter-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .filter-group select,
+    .filter-group input {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%235b6470'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 8px center;
+      background-size: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 7px 26px 7px 10px;
+      font-size: 12.5px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s ease;
+      max-width: 240px;
+    }
+
+    .filter-group input[type="date"] {
+      background-image: none;
+      padding-right: 10px;
+      max-width: 140px;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+      border-color: var(--brand);
+    }
+
+    .btn-reset {
+      background: var(--line);
+      color: var(--ink);
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .15s var(--ease-standard);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-reset:hover {
+      background: var(--brand-bg);
+      color: var(--brand-d);
+    }
+
+    .result-pill {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .result-pill b {
+      color: var(--brand-d);
+    }
+
+    /* SECCIONES Y TARJETAS */
+    .sec-block {
+      padding: 32px 0 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sec-head h2 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-head p {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin: 2px 0 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .chart-box {
+      position: relative;
+      width: 100%;
+      height: 270px;
+    }
+
+    /* TABLA Y PERFILES PROFESIONALES */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table.rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    table.rank-table th {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 700;
+    }
+
+    table.rank-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      vertical-align: middle;
+    }
+
+    table.rank-table tr:hover td {
+      background: var(--bg-alt);
+    }
+
+    /* AVATAR CIRCULAR DEL PROFESIONAL */
+    .doctor-profile-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .doctor-avatar {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--brand-bg);
+      border: 2px solid rgba(0, 157, 224, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-d);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .doctor-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+    }
+
+    .doctor-avatar .material-symbols-outlined {
+      font-size: 24px;
+      color: var(--brand-d);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .chip-nps {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 11.5px;
+    }
+
+    .chip-nps.green {
+      background: var(--tint-verde);
+      color: #065f46;
+    }
+
+    .chip-nps.yellow {
+      background: var(--tint-amarillo);
+      color: #92400e;
+    }
+
+    .chip-nps.red {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* MURO DE COMENTARIOS */
+    .comments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    .comment-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .comment-card .meta {
+      font-size: 11px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding-top: 6px;
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg-alt);
+      padding: 24px 0;
+      margin-top: 48px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-row">
+        <div class="logo">
+          <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+        </div>
+
+        <div class="topbar-actions">
+          <a href="index.html" class="nav-btn">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">arrow_back</span>
+            Portal Central
+          </a>
+          <a href="encuesta-salud.html" target="_blank" class="nav-btn"
+            style="background:var(--brand); color:#fff;">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">assignment</span>
+            Formulario
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Red de Salud Municipal · CAPS, CS, Salud 24 Horas y Postas</span>
+      <h1>Tablero de Satisfacción en <span class="accent">Salud Municipal</span></h1>
+      <p class="sub">
+        Monitoreo en tiempo real de la calidad de atención percibida por los vecinos en la Red de Salud (CAPS, CS, Salud
+        24 Horas y Postas de Río Cuarto).
+      </p>
+
+      <!-- STATS HERO (Hairline 1px) -->
+      <div class="hero-stats">
+        <div class="hero-stat" style="--kc:var(--brand);">
+          <div class="stat-label"><span class="material-symbols-outlined">how_to_reg</span>Evaluaciones</div>
+          <strong id="kpiTotal">0</strong>
+          <div class="stat-sub" id="kpiTotalFoot">de 0 registradas</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-educacion);">
+          <div class="stat-label"><span class="material-symbols-outlined">recommend</span>NPS Global</div>
+          <strong id="kpiNps">—</strong>
+          <div class="stat-sub" id="kpiNpsSub">0 promotores · 0 detractores</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--brand-d);">
+          <div class="stat-label"><span class="material-symbols-outlined">stethoscope</span>Atención Médica</div>
+          <strong id="kpiMedico">0.0</strong>
+          <div class="stat-sub">promedio sobre 5</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-naranja);">
+          <div class="stat-label"><span class="material-symbols-outlined">schedule</span>Tiempo de Espera</div>
+          <strong id="kpiEspera">0.0</strong>
+          <div class="stat-sub">promedio sobre 5</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-deporte);">
+          <div class="stat-label"><span class="material-symbols-outlined">domain</span>Infraestructura</div>
+          <strong id="kpiInfra">0.0</strong>
+          <div class="stat-sub">promedio sobre 5</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY FILTERBAR -->
+  <div class="filterbar">
+    <div class="wrap">
+      <div class="filter-wrap">
+        <div class="filter-group">
+          <span class="material-symbols-outlined">location_on</span>
+          <select id="fCentro">
+            <option value="">Todos los centros de salud</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">medical_services</span>
+          <select id="fEspecialidad">
+            <option value="">Todas las especialidades</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">badge</span>
+          <select id="fMedico">
+            <option value="">Todos los profesionales</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">event</span>
+          <select id="fLlegada">
+            <option value="">Llegada: Todas</option>
+            <option value="Con turno">Con turno previo</option>
+            <option value="Sin turno">Sin turno (espontáneo)</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <input type="date" id="fDesde" title="Desde">
+          <input type="date" id="fHasta" title="Hasta">
+        </div>
+
+        <button type="button" class="btn-reset" id="btnReset">
+          <span class="material-symbols-outlined" style="font-size:14px; margin:0;">clear_all</span>
+          Limpiar
+        </button>
+
+        <div class="result-pill">
+          <b id="countN">0</b> respuestas filtradas
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="wrap">
+
+    <!-- SECCIÓN 1: DIMENSIONES Y TENDENCIA -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--brand);">bar_chart</span> Dimensiones y
+            Tendencia Histórica</h2>
+          <p>Promedios por aspecto de atención (escala 1 a 5) y evolución mensual del Net Promoter Score (NPS).</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="chart-box"><canvas id="chartDimensiones"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="chart-box"><canvas id="chartTendencia"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: COMPARATIVA POR CENTRO -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-educacion);">domain</span> Comparativa de
+            Satisfacción por CAPS</h2>
+          <p>Promedio de satisfacción médica y volumen de encuestas en los centros de salud de la ciudad.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-box" style="height: 300px;"><canvas id="chartCentros"></canvas></div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: RANKING PROFESIONALES CON AVATAR CIRCULAR -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-gobierno);">star</span> Desempeño por
+            Profesional / Médico</h2>
+          <p>Detalle con fotografía enmarcada, especialidad, volumen de evaluaciones, tiempo de espera y NPS.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="rank-table" id="tablaMedicos">
+            <thead>
+              <tr>
+                <th style="min-width: 240px;">Profesional</th>
+                <th>Especialidad</th>
+                <th>Encuestas</th>
+                <th>Atención Médica</th>
+                <th>Espera</th>
+                <th>Infraestructura</th>
+                <th>NPS Prom.</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: COMPOSICIÓN Y MODALIDAD -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-naranja);">pie_chart</span> Composición de la
+            Demanda</h2>
+          <p>Distribución por especialidad consultada y modalidad de llegada a la consulta.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="chart-box"><canvas id="chartEspecialidad"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="chart-box"><canvas id="chartLlegada"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: COMENTARIOS Y SUGERENCIAS -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-deporte);">forum</span> La Voz del Vecino
+          </h2>
+          <p>Comentarios y sugerencias de mejora registrados en los centros de salud.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="comments-grid" id="suggList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Dirección de Estadística · Gobierno de Río Cuarto</b><br>
+      Infraestructura del Observatorio Social · Gabinete Social + LMetB
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrhg-bnnwGEhCE48DzPlkt_TZtz8fD8_2MMf_Za1N-kg6LnaWcc9hlIfVleOZSHIf75Q/exec";
+
+    // Datos históricos reales embebidos (Maternidad Kowalk)
+    let RAW = [
+  {
+    "fecha_hora": "2026-06-02 14:05:09",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-06-04 10:12:37",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 4,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 09:39:04",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 10:18:29",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 10:47:33",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 11:14:32",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 11:32:40",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 11:42:47",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 15:45:26",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Mi única observación fue q no hay agua en el baño ."
+  },
+  {
+    "fecha_hora": "2026-07-06 16:18:30",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 3,
+    "infraestructura_nota": 3,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 7,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 16:21:29",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 16:59:28",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-06 18:20:09",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 3,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "La espera"
+  },
+  {
+    "fecha_hora": "2026-07-06 18:21:42",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 4,
+    "espera_nota": 2,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 3,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 6,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 09:09:30",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 09:38:05",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Muy buena atención"
+  },
+  {
+    "fecha_hora": "2026-07-07 09:50:19",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 10:46:39",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 11:06:53",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 12:00:28",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 16:51:12",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 17:19:37",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Que huvierA MAS MEDICOS DE DIFERENTES ESPESIALIDADES YA Q ES MUY EFICIENTE EL TRATO Y EL LUGAR"
+  },
+  {
+    "fecha_hora": "2026-07-07 18:01:40",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Sinceramente, exelente atención,limpieza también."
+  },
+  {
+    "fecha_hora": "2026-07-07 18:27:29",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-07 18:30:04",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 7,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 10:27:15",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 10:40:33",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 3,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 10:52:08",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 11:18:51",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 4,
+    "espera_nota": 3,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 7,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 11:20:46",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 12:58:15",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 16:02:15",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 17:02:39",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dr. Marcelo Pedraza",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 17:37:01",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dr. Marcelo Pedraza",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-08 17:43:46",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 1,
+    "espera_nota": 1,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 1,
+    "enfermeria_nota": 1,
+    "nps_puntaje": 1,
+    "sugerencias": "Mucho tiempo de espera"
+  },
+  {
+    "fecha_hora": "2026-07-08 17:50:40",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 1,
+    "espera_nota": 1,
+    "infraestructura_nota": 3,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 3,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 5,
+    "sugerencias": "Que la atención sea más rápida porque hay niños de por medio y se trata sobre su salud!!!!!!"
+  },
+  {
+    "fecha_hora": "2026-07-08 17:55:26",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 7,
+    "sugerencias": "Se podría mejorar la atención al paciente por la espera."
+  },
+  {
+    "fecha_hora": "2026-07-10 09:22:06",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-10 09:27:28",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-10 09:42:17",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-10 10:28:53",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-10 10:31:52",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Cecilia Peñeñory",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-10 10:52:25",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 09:46:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 10,
+    "sugerencias": "Muy bueno todo, me atendieron bien"
+  },
+  {
+    "fecha_hora": "2026-07-13 09:49:27",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 3,
+    "espera_nota": 3,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 6,
+    "sugerencias": "En la farmacia podrían dar los remedios temprano"
+  },
+  {
+    "fecha_hora": "2026-07-13 09:52:40",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 10:01:00",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 5,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 10:10:34",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 10:23:48",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 10:39:41",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 11:07:48",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 11:12:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 11:13:53",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 14:32:41",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 16:20:14",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-13 17:06:09",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 09:05:39",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 09:09:42",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 09:12:26",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 10:30:23",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 10:42:07",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 16:08:51",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 16:51:18",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 3,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 3,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 17:34:48",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-14 19:27:21",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-15 09:18:38",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-15 09:38:23",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-15 17:07:00",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dr. Marcelo Pedraza",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-15 17:08:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-15 17:44:28",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 09:27:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 09:51:20",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 12:31:20",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "La verdad es muy buena la atención en todas las secciones estoy muy agradecida"
+  },
+  {
+    "fecha_hora": "2026-07-16 12:34:52",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 12:51:30",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 13:02:26",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 13:08:25",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 16:43:04",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Nada"
+  },
+  {
+    "fecha_hora": "2026-07-16 16:52:27",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Muy rápida y buena la atención"
+  },
+  {
+    "fecha_hora": "2026-07-16 18:10:23",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 18:22:51",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-16 18:26:33",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": "No sabía que tenían atención medica pediatría, me fue muy útil"
+  },
+  {
+    "fecha_hora": "2026-07-17 16:16:37",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-17 16:28:24",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-17 16:44:56",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-20 16:55:12",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 2,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-20 17:07:08",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-20 18:24:59",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Están bien"
+  },
+  {
+    "fecha_hora": "2026-07-21 09:17:21",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 3,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 16:28:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Muy bueno"
+  },
+  {
+    "fecha_hora": "2026-07-21 17:00:32",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 17:24:03",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 17:38:56",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 17:42:27",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 18:03:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-21 18:34:19",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Mejor organización de administración"
+  },
+  {
+    "fecha_hora": "2026-07-22 09:52:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 10:14:20",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 16:12:39",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 17:16:02",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 3,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Hebe Saucedo",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 17:21:22",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 3,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dr. Marcelo Pedraza",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": "Larga espera en los turnos de la siesta."
+  },
+  {
+    "fecha_hora": "2026-07-22 18:52:52",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dr. Marcelo Pedraza",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 18:53:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-22 19:03:31",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dr. Fabián Herrero",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 10:58:05",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 8,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 11:19:22",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 11:38:21",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 11:55:54",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 17:11:45",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 4,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 17:31:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 17:33:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 17:35:41",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 17:41:35",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 3,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-23 18:08:41",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Me parece muy buena la atención, solo que hay que esperar más de lo esperado"
+  },
+  {
+    "fecha_hora": "2026-07-23 18:38:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 08:56:43",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 09:03:00",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 09:09:00",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 09:15:03",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 10:08:31",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Gabriela Alcántara",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": "Se extraña el servicio de partos, institución creada para ese fin; pero la atención es excelente, no es necesario envidiar o compararse con instituciones privadas de renombre.\nExcelente calidez en la atención de todo el servicio de salud."
+  },
+  {
+    "fecha_hora": "2026-07-24 16:09:43",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 16:21:11",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 16:43:29",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Verónica Canale",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-24 17:22:01",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Evelin Palma",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 10:45:44",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 12:15:26",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": "Mejoraría más facilidad en la entrega de leche de formula"
+  },
+  {
+    "fecha_hora": "2026-07-27 12:41:21",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 12:50:39",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Sandra Ojeda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 16:30:43",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 16:32:53",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 16:42:13",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 16:43:51",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Ana Laura Peiovich",
+    "medico_nota": 4,
+    "enfermeria_nota": 0,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-27 16:58:42",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 4,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-28 10:44:40",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 4,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 5,
+    "enfermeria_nota": 4,
+    "nps_puntaje": 7,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-28 10:58:00",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-28 16:15:28",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Gladys Díaz",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-28 16:16:16",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 4,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. Mónica Roda",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 9,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-07-28 16:28:19",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 3,
+    "infraestructura_nota": 4,
+    "especialidad": "Médicos Ginecólogos",
+    "profesional": "Dra. Silvina Silva",
+    "medico_nota": 4,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 8,
+    "sugerencias": "Mejorar el personal de turnos tienen muy mala atención sobre todo box 2"
+  },
+  {
+    "fecha_hora": "2026-08-10 11:26:22",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Con turno previo",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Lic. en Obstetricia",
+    "profesional": "Lic. María José Marino",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  },
+  {
+    "fecha_hora": "2026-08-13 10:15:31",
+    "centro_id": "MATERNIDAD_KOWALK",
+    "centro_nombre": "Maternidad Hortensia Gardey de Kowalk",
+    "barrio": "Centro",
+    "sector": "C (Centro)",
+    "llegada": "Sin turno (espontáneo)",
+    "recepcion_nota": 5,
+    "espera_nota": 5,
+    "infraestructura_nota": 5,
+    "especialidad": "Médicos Pediatras",
+    "profesional": "Dra. Marisa Ortiz",
+    "medico_nota": 5,
+    "enfermeria_nota": 5,
+    "nps_puntaje": 10,
+    "sugerencias": ""
+  }
+];
+
+    let chartDimensiones, chartTendencia, chartCentros, chartEspecialidad, chartLlegada;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initFilterOptions();
+      setupEventListeners();
+      renderDashboard();
+      if (SCRIPT_URL) fetchLiveData();
+    });
+
+    function getDoctorPhotoUrl(name) {
+      if (!name || name === 'Profesional de Turno' || name === 'No especificado') return null;
+      // 1. Si existe en catalogo explícito
+      if (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) {
+        for (const c of window.CATALOGO_MUNICIPAL.salud.centros) {
+          for (const e of (c.especialidades || [])) {
+            if (e.profesionales_detalle) {
+              const match = e.profesionales_detalle.find(p => p.nombre === name);
+              if (match && match.foto) return match.foto;
+            }
+          }
+        }
+      }
+      // 2. Ruta estandarizada en assets/profesionales/
+      const slug = name.toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/^(dr|dra|lic|prof|enf).?s+/i, '')
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      return `assets/profesionales/${slug}.jpg`;
+    }
+
+    function updateCascadingFilters() {
+      const fCentro = document.getElementById('fCentro');
+      const fEsp = document.getElementById('fEspecialidad');
+      const fMed = document.getElementById('fMedico');
+
+      const selCentro = fCentro.value;
+      const selEsp = fEsp.value;
+      const selMed = fMed.value;
+
+      // 1. Filtrar especialidades para el centro
+      let centrosSalud = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud)
+        ? window.CATALOGO_MUNICIPAL.salud.centros
+        : [];
+      if (selCentro) {
+        centrosSalud = centrosSalud.filter(c => c.nombre === selCentro);
+      }
+
+      let rawFiltered = RAW;
+      if (selCentro) {
+        rawFiltered = rawFiltered.filter(r => r.centro_nombre === selCentro);
+      }
+
+      const catEsp = centrosSalud.flatMap(c => (c.especialidades || []).map(e => e.nombre));
+      const rawEsp = rawFiltered.map(r => r.especialidad);
+      const especialidades = [...new Set([...catEsp, ...rawEsp])].filter(Boolean).sort();
+
+      fEsp.innerHTML = '<option value="">Todas las especialidades</option>';
+      especialidades.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e;
+        opt.textContent = e;
+        fEsp.appendChild(opt);
+      });
+      if (especialidades.includes(selEsp)) {
+        fEsp.value = selEsp;
+      } else {
+        fEsp.value = '';
+      }
+
+      // 2. Filtrar profesionales para centro y especialidad
+      const activeEsp = fEsp.value;
+      let catMed = [];
+      centrosSalud.forEach(c => {
+        (c.especialidades || []).forEach(e => {
+          if (!activeEsp || e.nombre === activeEsp) {
+            catMed.push(...(e.profesionales || []));
+          }
+        });
+      });
+
+      let rawMedRecords = rawFiltered;
+      if (activeEsp) {
+        rawMedRecords = rawMedRecords.filter(r => r.especialidad === activeEsp);
+      }
+      const rawMed = rawMedRecords.map(r => r.profesional);
+
+      const medicos = [...new Set([...catMed, ...rawMed])].filter(Boolean).sort();
+      fMed.innerHTML = '<option value="">Todos los profesionales</option>';
+      medicos.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        fMed.appendChild(opt);
+      });
+      if (medicos.includes(selMed)) {
+        fMed.value = selMed;
+      } else {
+        fMed.value = '';
+      }
+    }
+
+    function initFilterOptions() {
+      const fCentro = document.getElementById('fCentro');
+      const catalogoCentros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud)
+        ? window.CATALOGO_MUNICIPAL.salud.centros.map(c => c.nombre)
+        : [];
+      const centros = [...new Set([...catalogoCentros, ...RAW.map(r => r.centro_nombre)])].filter(Boolean).sort();
+      fCentro.innerHTML = '<option value="">Todos los centros de salud</option>';
+      centros.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        fCentro.appendChild(opt);
+      });
+
+      updateCascadingFilters();
+
+      // Fechas por defecto si hay datos
+      if (RAW.length > 0) {
+        const dates = RAW.map(r => r.fecha_hora ? r.fecha_hora.slice(0, 10) : '').filter(Boolean).sort();
+        if (dates.length > 0) {
+          document.getElementById('fDesde').value = dates[0];
+          document.getElementById('fHasta').value = dates[dates.length - 1];
+        }
+      }
+    }
+
+    function setupEventListeners() {
+      document.getElementById('fCentro').addEventListener('change', () => {
+        updateCascadingFilters();
+        renderDashboard();
+      });
+
+      document.getElementById('fEspecialidad').addEventListener('change', () => {
+        updateCascadingFilters();
+        renderDashboard();
+      });
+
+      ['fDesde', 'fHasta', 'fMedico', 'fLlegada'].forEach(id => {
+        document.getElementById(id).addEventListener('change', renderDashboard);
+      });
+
+      document.getElementById('btnReset').addEventListener('click', () => {
+        ['fDesde', 'fHasta', 'fCentro', 'fEspecialidad', 'fMedico', 'fLlegada'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
+        updateCascadingFilters();
+        renderDashboard();
+      });
+    }
+
+    async function fetchLiveData() {
+      if (!SCRIPT_URL) return;
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        let rowsArr = Array.isArray(data) ? data : (data.rows || data.data || []);
+        if (Array.isArray(rowsArr) && rowsArr.length > 0) {
+          const scaleMap = { '1': 1, '2': 2, '3': 3, '4': 4, '5': 5 };
+          function toScale(v) {
+            if (v === null || v === undefined || v === '') return 0;
+            const s = String(v).trim();
+            if (!s || /^nos*aplica$/i.test(s) || /^nos*us[eé]/i.test(s)) return 0;
+            const n = parseInt(s[0], 10);
+            return scaleMap[n] || 0;
+          }
+          function parseFecha(s) {
+            if (!s) return '';
+            const parts = s.split(' ');
+            const dmy = parts[0].split('/');
+            if (dmy.length === 3) {
+              const d = dmy[0].padStart(2, '0');
+              const m = dmy[1].padStart(2, '0');
+              const y = dmy[2];
+              return y + '-' + m + '-' + d + (parts[1] ? ' ' + parts[1] : '');
+            }
+            return s;
+          }
+
+          RAW = rowsArr.map(r => ({
+            fecha_hora: r.fecha_hora ? r.fecha_hora : parseFecha(r.fecha),
+            centro_id: r.centro_id || 'MATERNIDAD_KOWALK',
+            centro_nombre: r.centro_nombre || 'Maternidad Hortensia Gardey de Kowalk',
+            barrio: r.barrio || 'Centro',
+            sector: r.sector || 'C (Centro)',
+            llegada: r.llegada || 'Con turno previo',
+            recepcion_nota: r.recepcion_nota !== undefined ? Number(r.recepcion_nota) : toScale(r.recepcion),
+            espera_nota: r.espera_nota !== undefined ? Number(r.espera_nota) : toScale(r.espera),
+            infraestructura_nota: r.infraestructura_nota !== undefined ? Number(r.infraestructura_nota) : toScale(r.infra),
+            especialidad: r.especialidad || '',
+            profesional: r.profesional || '',
+            medico_nota: r.medico_nota !== undefined ? Number(r.medico_nota) : toScale(r.medico),
+            enfermeria_nota: r.enfermeria_nota !== undefined ? Number(r.enfermeria_nota) : toScale(r.enfermeria),
+            nps_puntaje: Number(r.nps_puntaje !== undefined ? r.nps_puntaje : r.nps) || 0,
+            sugerencias: (r.sugerencias || '').trim()
+          }));
+
+          initFilterOptions();
+          renderDashboard();
+        }
+      } catch (e) {
+        console.warn('Conexión en vivo no disponible, usando respaldo local:', e);
+      }
+    }
+
+    function getFilteredData() {
+      const desde = document.getElementById('fDesde').value;
+      const hasta = document.getElementById('fHasta').value;
+      const centro = document.getElementById('fCentro').value;
+      const esp = document.getElementById('fEspecialidad').value;
+      const med = document.getElementById('fMedico').value;
+      const llegada = document.getElementById('fLlegada').value;
+
+      return RAW.filter(r => {
+        if (desde && r.fecha_hora && r.fecha_hora.slice(0, 10) < desde) return false;
+        if (hasta && r.fecha_hora && r.fecha_hora.slice(0, 10) > hasta) return false;
+        if (centro && r.centro_nombre !== centro) return false;
+        if (esp && r.especialidad !== esp) return false;
+        if (med && r.profesional !== med) return false;
+        if (llegada) {
+          if (llegada.includes('turno') && !r.llegada.toLowerCase().includes('con turno')) return false;
+          if (llegada.includes('espontáneo') && !r.llegada.toLowerCase().includes('sin turno') && !r.llegada.toLowerCase().includes('espontáneo')) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderDashboard() {
+      const filtered = getFilteredData();
+      const n = filtered.length;
+      document.getElementById('countN').innerText = n;
+      document.getElementById('kpiTotal').innerText = n;
+      document.getElementById('kpiTotalFoot').innerText = `de ${RAW.length} registradas`;
+
+      if (n === 0) {
+        document.getElementById('kpiNps').innerText = '—';
+        document.getElementById('kpiNpsSub').innerText = '0 promotores · 0 detractores';
+        document.getElementById('kpiMedico').innerText = '0.0';
+        document.getElementById('kpiEspera').innerText = '0.0';
+        document.getElementById('kpiInfra').innerText = '0.0';
+        renderCharts([], { avgRec: 0, avgEsp: 0, avgInf: 0, avgEnf: 0, avgMed: 0 });
+        renderMedicosTable([]);
+        renderSugerencias([]);
+        return;
+      }
+
+      let promotores = 0, pasivos = 0, detractores = 0;
+      let sumMed = 0, countMed = 0;
+      let sumEsp = 0, countEsp = 0;
+      let sumInf = 0, countInf = 0;
+      let sumRecep = 0, countRecep = 0;
+      let sumEnf = 0, countEnf = 0;
+
+      filtered.forEach(r => {
+        const nps = Number(r.nps_puntaje);
+        if (!isNaN(nps)) {
+          if (nps >= 9) promotores++;
+          else if (nps >= 7) pasivos++;
+          else detractores++;
+        }
+
+        const medN = Number(r.medico_nota); if (!isNaN(medN) && medN > 0) { sumMed += medN; countMed++; }
+        const espN = Number(r.espera_nota); if (!isNaN(espN) && espN > 0) { sumEsp += espN; countEsp++; }
+        const infN = Number(r.infraestructura_nota); if (!isNaN(infN) && infN > 0) { sumInf += infN; countInf++; }
+        const recN = Number(r.recepcion_nota); if (!isNaN(recN) && recN > 0) { sumRecep += recN; countRecep++; }
+        const enfN = Number(r.enfermeria_nota); if (!isNaN(enfN) && enfN > 0) { sumEnf += enfN; countEnf++; }
+      });
+
+      const npsGlobal = Math.round(((promotores - detractores) / n) * 100);
+      const avgMed = countMed > 0 ? (sumMed / countMed).toFixed(1) : 0;
+      const avgEsp = countEsp > 0 ? (sumEsp / countEsp).toFixed(1) : 0;
+      const avgInf = countInf > 0 ? (sumInf / countInf).toFixed(1) : 0;
+      const avgRec = countRecep > 0 ? (sumRecep / countRecep).toFixed(1) : 0;
+      const avgEnf = countEnf > 0 ? (sumEnf / countEnf).toFixed(1) : 0;
+
+      const npsStr = (npsGlobal >= 0 ? '+' : '') + npsGlobal;
+      document.getElementById('kpiNps').innerText = npsStr;
+      document.getElementById('kpiNpsSub').innerText = `${promotores} promotores · ${detractores} detractores`;
+      document.getElementById('kpiMedico').innerText = avgMed;
+      document.getElementById('kpiEspera').innerText = avgEsp;
+      document.getElementById('kpiInfra').innerText = avgInf;
+
+      renderCharts(filtered, { avgRec, avgEsp, avgInf, avgEnf, avgMed });
+      renderMedicosTable(filtered);
+      renderSugerencias(filtered);
+    }
+
+    function renderCharts(filtered, avgs) {
+      // 1. Dimensiones
+      const ctxDim = document.getElementById('chartDimensiones').getContext('2d');
+      if (chartDimensiones) chartDimensiones.destroy();
+      chartDimensiones = new Chart(ctxDim, {
+        type: 'bar',
+        data: {
+          labels: ['Recepción', 'Espera', 'Infraestructura', 'Enfermería', 'Atención Médica'],
+          datasets: [{
+            label: 'Promedio (1 a 5)',
+            data: [avgs.avgRec, avgs.avgEsp, avgs.avgInf, avgs.avgEnf, avgs.avgMed],
+            backgroundColor: ['#009DE0', '#F27C00', '#00C96B', '#FF3CB2', '#0079ac'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { min: 0, max: 5, ticks: { stepSize: 1 } }, x: { grid: { display: false } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // 2. Tendencia NPS
+      const agrupadoFecha = {};
+      filtered.forEach(r => {
+        const f = r.fecha_hora ? r.fecha_hora.slice(0, 7) : 'Reciente';
+        if (!agrupadoFecha[f]) agrupadoFecha[f] = { prom: 0, det: 0, total: 0 };
+        agrupadoFecha[f].total++;
+        const nps = Number(r.nps_puntaje);
+        if (nps >= 9) agrupadoFecha[f].prom++;
+        if (nps <= 6) agrupadoFecha[f].det++;
+      });
+      const fechasLabels = Object.keys(agrupadoFecha).sort();
+      const npsTrend = fechasLabels.map(f => {
+        const item = agrupadoFecha[f];
+        return Math.round(((item.prom - item.det) / item.total) * 100);
+      });
+
+      const ctxTrend = document.getElementById('chartTendencia').getContext('2d');
+      if (chartTendencia) chartTendencia.destroy();
+      chartTendencia = new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: fechasLabels,
+          datasets: [{
+            label: 'NPS Histórico',
+            data: npsTrend,
+            borderColor: '#009DE0',
+            backgroundColor: 'rgba(0, 157, 224, 0.12)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#0079ac'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { min: -100, max: 100 } }
+        }
+      });
+
+      // 3. CAPS Comparativa
+      const centrosAgg = {};
+      filtered.forEach(r => {
+        const c = r.centro_nombre ? r.centro_nombre.split('(')[0].trim() : 'Otro';
+        if (!centrosAgg[c]) centrosAgg[c] = { sumMed: 0, count: 0 };
+        const m = Number(r.medico_nota);
+        if (m > 0) { centrosAgg[c].sumMed += m; centrosAgg[c].count++; }
+      });
+      const cLabels = Object.keys(centrosAgg);
+      const cValues = cLabels.map(c => (centrosAgg[c].sumMed / centrosAgg[c].count).toFixed(2));
+
+      const ctxCentros = document.getElementById('chartCentros').getContext('2d');
+      if (chartCentros) chartCentros.destroy();
+      chartCentros = new Chart(ctxCentros, {
+        type: 'bar',
+        data: {
+          labels: cLabels,
+          datasets: [{
+            label: 'Satisfacción Médica (1 a 5)',
+            data: cValues,
+            backgroundColor: '#009DE0',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { min: 0, max: 5 } }
+        }
+      });
+
+      // 4. Especialidad
+      const espCount = {};
+      filtered.forEach(r => {
+        const e = r.especialidad ? r.especialidad.split('/')[0].trim() : 'Otras';
+        espCount[e] = (espCount[e] || 0) + 1;
+      });
+      const ctxEsp = document.getElementById('chartEspecialidad').getContext('2d');
+      if (chartEspecialidad) chartEspecialidad.destroy();
+      chartEspecialidad = new Chart(ctxEsp, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(espCount),
+          datasets: [{
+            data: Object.values(espCount),
+            backgroundColor: ['#009DE0', '#00C96B', '#F27C00', '#FF3CB2', '#F2C100', '#0079ac']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      // 5. Llegada
+      let turnoCount = 0, espCountLlegada = 0;
+      filtered.forEach(r => {
+        if (r.llegada && r.llegada.toLowerCase().includes('con turno')) turnoCount++;
+        else espCountLlegada++;
+      });
+      const ctxLleg = document.getElementById('chartLlegada').getContext('2d');
+      if (chartLlegada) chartLlegada.destroy();
+      chartLlegada = new Chart(ctxLleg, {
+        type: 'pie',
+        data: {
+          labels: ['Con Turno Previo', 'Sin Turno (Espontáneo)'],
+          datasets: [{
+            data: [turnoCount, espCountLlegada],
+            backgroundColor: ['#009DE0', '#F27C00']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    function renderMedicosTable(filtered) {
+      const tbody = document.querySelector('#tablaMedicos tbody');
+      tbody.innerHTML = '';
+
+      const medAgg = {};
+      filtered.forEach(r => {
+        const p = r.profesional || 'No especificado';
+        if (!medAgg[p]) {
+          medAgg[p] = { esp: r.especialidad, count: 0, sumMed: 0, sumEsp: 0, sumInf: 0, prom: 0, det: 0 };
+        }
+        medAgg[p].count++;
+        const med = Number(r.medico_nota); if (med > 0) medAgg[p].sumMed += med;
+        const esp = Number(r.espera_nota); if (esp > 0) medAgg[p].sumEsp += esp;
+        const inf = Number(r.infraestructura_nota); if (inf > 0) medAgg[p].sumInf += inf;
+        const nps = Number(r.nps_puntaje);
+        if (nps >= 9) medAgg[p].prom++;
+        if (nps <= 6) medAgg[p].det++;
+      });
+
+      const list = Object.keys(medAgg).map(p => {
+        const item = medAgg[p];
+        const nps = Math.round(((item.prom - item.det) / item.count) * 100);
+        return {
+          profesional: p,
+          especialidad: item.esp,
+          count: item.count,
+          medico: (item.sumMed / item.count).toFixed(1),
+          espera: (item.sumEsp / item.count).toFixed(1),
+          infra: (item.sumInf / item.count).toFixed(1),
+          nps: nps
+        };
+      }).sort((a, b) => b.count - a.count || b.medico - a.medico);
+
+      if (list.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="7" style="text-align:center; color:var(--ink-soft); padding:20px;">No hay evaluaciones de profesionales registradas aún.</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+
+      list.forEach(item => {
+        const badgeClass = item.nps >= 50 ? 'green' : (item.nps >= 0 ? 'yellow' : 'red');
+        const photoUrl = getDoctorPhotoUrl(item.profesional);
+        const tr = document.createElement('tr');
+
+        let avatarHtml = '';
+        if (photoUrl) {
+          avatarHtml = `
+            <div class="doctor-avatar" title="${item.profesional}">
+              <img src="${photoUrl}" alt="${item.profesional}" 
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" 
+                   loading="lazy">
+              <span class="material-symbols-outlined" style="display:none;">person</span>
+            </div>`;
+        } else {
+          avatarHtml = `
+            <div class="doctor-avatar" title="${item.profesional}">
+              <span class="material-symbols-outlined">person</span>
+            </div>`;
+        }
+
+        tr.innerHTML = `
+          <td>
+            <div class="doctor-profile-cell">
+              ${avatarHtml}
+              <div>
+                <b style="font-size:13px; color:var(--ink); display:block;">${item.profesional}</b>
+                <span style="font-size:11px; color:var(--ink-soft);">${item.especialidad || 'Salud Municipal'}</span>
+              </div>
+            </div>
+          </td>
+          <td><span style="color:var(--ink-soft); font-size:12px;">${item.especialidad || '—'}</span></td>
+          <td><b>${item.count}</b></td>
+          <td><b style="color:var(--brand-d); font-size:13.5px;">${item.medico}</b> / 5</td>
+          <td>${item.espera} / 5</td>
+          <td>${item.infra} / 5</td>
+          <td><span class="chip-nps ${badgeClass}">${item.nps >= 0 ? '+' : ''}${item.nps}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderSugerencias(filtered) {
+      const container = document.getElementById('suggList');
+      container.innerHTML = '';
+
+      const withComments = filtered.filter(r => r.sugerencias && r.sugerencias.trim().length > 3);
+      if (withComments.length === 0) {
+        container.innerHTML = '<p style="color:var(--ink-soft); font-size:13px; padding:10px;">No hay comentarios registrados para los filtros seleccionados.</p>';
+        return;
+      }
+
+      withComments.slice(0, 18).forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'comment-card';
+        card.innerHTML = `
+          <div>"${r.sugerencias}"</div>
+          <div class="meta">
+            <span style="display:inline-flex; align-items:center; gap:3px;"><span class="material-symbols-outlined" style="font-size:13px; vertical-align:middle;">location_on</span> ${r.centro_nombre ? r.centro_nombre.split('(')[0] : 'Centro'}</span>
+            <span style="display:inline-flex; align-items:center; gap:3px;"><span class="material-symbols-outlined" style="font-size:13px; color:var(--c-naranja); vertical-align:middle;">star</span> NPS: <b>${r.nps_puntaje}</b></span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+  </script>
+</body>
+
+</html>

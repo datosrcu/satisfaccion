@@ -1,0 +1,1712 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablero de Satisfacción en Educación Municipal · Gabinete Social + LMetB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #00C96B;
+      --brand-d: #009b52;
+      --brand-bg: #dbf7ea;
+
+      --c-salud: #009DE0;
+      --c-educacion: #00C96B;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-violeta: #8B5CF6;
+      --c-alertas: #d32f2f;
+
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+      --tint-violeta: #f3e8ff;
+      --tint-slate: #f1f5f9;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #103524;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+        --tint-violeta: #2e1065;
+        --tint-slate: #1e293b;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      padding-top: 14px;
+      padding-bottom: 12px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-muni {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 7px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all .15s var(--ease-standard);
+    }
+
+    .nav-btn:hover {
+      background: var(--brand);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 36px 0 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      margin: 0 0 8px;
+      line-height: 1.15;
+    }
+
+    .hero h1 .accent {
+      color: var(--brand);
+    }
+
+    .hero p.sub {
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      max-width: 860px;
+      margin: 0 0 22px;
+      line-height: 1.5;
+    }
+
+    /* HERO STATS (1px hairline) */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      background: var(--bg);
+      padding: 14px 16px;
+      position: relative;
+    }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3.5px;
+      background: var(--kc, var(--brand));
+    }
+
+    .hero-stat .stat-label {
+      font-size: 11px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat .stat-label .material-symbols-outlined {
+      color: var(--kc, var(--brand));
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 23px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .hero-stat .stat-sub {
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-top: 3px;
+    }
+
+    /* FILTERBAR */
+    .filterbar {
+      position: sticky;
+      top: 65px;
+      z-index: 25;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      backdrop-filter: blur(8px);
+    }
+
+    .filter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-size: 12.5px;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 12.5px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .btn-reset {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all .15s ease;
+    }
+
+    .btn-reset:hover {
+      background: var(--line);
+      color: var(--ink);
+    }
+
+    .result-pill {
+      margin-left: auto;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      font-weight: 600;
+    }
+
+    /* SECCIONES Y CARDS */
+    .sec-block {
+      margin-top: 32px;
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .sec-head h2 {
+      font-size: 17.5px;
+      font-weight: 800;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-head p {
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 3px 0 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .grid-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-deck-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+
+    .kpi-deck-card .kpi-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .kpi-deck-card .kpi-card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kpi-deck-card .kpi-badge-p {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--brand-bg);
+      color: var(--brand-d);
+    }
+
+    .kpi-stat-huge {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .kpi-stat-huge .main-val {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .kpi-stat-huge .main-sub {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .kpi-breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-breakdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      padding: 7px 10px;
+      background: var(--bg-alt);
+      border-radius: 8px;
+      gap: 8px;
+    }
+
+    .kpi-breakdown-item .item-label {
+      color: var(--ink);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .kpi-breakdown-item .item-val {
+      font-weight: 800;
+      color: var(--brand-d);
+      white-space: nowrap;
+    }
+
+    .badge-na {
+      font-size: 10px;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #475569;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    .chart-box {
+      position: relative;
+      width: 100%;
+      height: 280px;
+    }
+
+    /* SEGMENTACIÓN ANTIGÜEDAD */
+    .antiguedad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .antiguedad-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .antiguedad-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .antiguedad-card strong {
+      font-size: 13.5px;
+      color: var(--ink);
+    }
+
+    .antiguedad-card .ant-val {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--brand-d);
+    }
+
+    .antiguedad-card .ant-sub {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+
+    /* RANKING TABLE */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    .rank-table th {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--line);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--ink-soft);
+    }
+
+    .rank-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .rank-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rank-table tr:hover td {
+      background: var(--bg-alt);
+    }
+
+    .chip-nps {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .chip-nps.green { background: var(--tint-verde); color: var(--brand-d); }
+    .chip-nps.yellow { background: var(--tint-naranja); color: var(--c-naranja); }
+    .chip-nps.red { background: #fee2e2; color: #dc2626; }
+
+    /* MURO DE FAMILIAS */
+    .wall-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .wall-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .wall-card.improvement {
+      border-left: 3.5px solid var(--c-violeta);
+    }
+
+    .wall-card .meta {
+      font-size: 11px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding-top: 5px;
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg-alt);
+      padding: 24px 0;
+      margin-top: 48px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-row">
+        <div class="logo">
+          <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+        </div>
+
+        <div class="topbar-actions">
+          <a href="index.html" class="nav-btn">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">arrow_back</span>
+            Portal Central
+          </a>
+          <a href="encuesta-educacion.html" target="_blank" class="nav-btn"
+            style="background:var(--brand); color:#fff;">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">assignment</span>
+            Formulario Familias
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Red de Educación Municipal · Salas Cuna y Jardines Maternales</span>
+      <h1>Tablero de Satisfacción en <span class="accent">Educación Municipal</span></h1>
+      <p class="sub">
+        Monitoreo analítico integral y diagnóstico multidimensional estructurado en 7 bloques: atención y organización, infraestructura y limpieza, desempeño docente por subdimensiones, desempeño auxiliar, comentarios y NPS.
+      </p>
+
+      <!-- STATS HERO (Hairline 1px) -->
+      <div class="hero-stats">
+        <div class="hero-stat" style="--kc:var(--brand);">
+          <div class="stat-label"><span class="material-symbols-outlined">family_restroom</span>Familias</div>
+          <strong id="kpiTotal">0</strong>
+          <div class="stat-sub" id="kpiTotalFoot">de 0 registradas</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-salud);">
+          <div class="stat-label"><span class="material-symbols-outlined">recommend</span>NPS Institucional</div>
+          <strong id="kpiNps">—</strong>
+          <div class="stat-sub" id="kpiNpsSub">0 promotores · 0 detractores</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-naranja);">
+          <div class="stat-label"><span class="material-symbols-outlined">corporate_fare</span>Organización</div>
+          <strong id="kpiOrg">0.0</strong>
+          <div class="stat-sub" id="kpiOrgSub">Bloque 2 · P4-P7</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-salud);">
+          <div class="stat-label"><span class="material-symbols-outlined">apartment</span>Infraestructura</div>
+          <strong id="kpiInfra">0.0</strong>
+          <div class="stat-sub" id="kpiInfraSub">Bloque 3 · P8-P11</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--brand-d);">
+          <div class="stat-label"><span class="material-symbols-outlined">psychology</span>Docentes</div>
+          <strong id="kpiDocente">0.0</strong>
+          <div class="stat-sub" id="kpiDocenteSub">Bloque 4 · P12b-P12q</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-gobierno);">
+          <div class="stat-label"><span class="material-symbols-outlined">cleaning_services</span>Auxiliares</div>
+          <strong id="kpiAuxiliar">0.0</strong>
+          <div class="stat-sub" id="kpiAuxiliarSub">Bloque 5 · P13b-P13d</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY FILTERBAR -->
+  <div class="filterbar">
+    <div class="wrap">
+      <div class="filter-wrap">
+        <div class="filter-group">
+          <span class="material-symbols-outlined">school</span>
+          <select id="fInst">
+            <option value="">Todas las instituciones</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">schedule</span>
+          <select id="fTurno">
+            <option value="">Todos los turnos</option>
+            <option value="Mañana">Turno Mañana</option>
+            <option value="Tarde">Turno Tarde</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">psychology</span>
+          <select id="fDocente">
+            <option value="">Todas las docentes</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="material-symbols-outlined">history</span>
+          <select id="fTiempo">
+            <option value="">Toda antigüedad</option>
+            <option value="Este año">Este año</option>
+            <option value="Más de 1 año">Más de 1 año</option>
+            <option value="Más de 2 años">Más de 2 años</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <input type="date" id="fDesde" title="Desde">
+          <input type="date" id="fHasta" title="Hasta">
+        </div>
+
+        <button type="button" class="btn-reset" id="btnReset">
+          <span class="material-symbols-outlined" style="font-size:14px; margin:0;">clear_all</span>
+          Limpiar
+        </button>
+
+        <div class="result-pill">
+          <b id="countN">0</b> respuestas filtradas
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="wrap">
+
+    <!-- SECCIÓN: MAPEO DE INDICADORES (KPI CARDS) -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--brand);">analytics</span> Tablero de Indicadores Clave (KPIs)</h2>
+          <p>Mapeo directo de preguntas de la encuesta. Las respuestas "No sabe / No responde" (NS/NR) y "No aplica" (N/A) se computan por separado sin alterar el promedio numérico.</p>
+        </div>
+      </div>
+
+      <div class="grid-kpis">
+
+        <!-- KPI CARD 1: P3 Inscripción y Comunicación -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--brand-d);">how_to_reg</span>
+              Inscripción y Comunicación
+            </div>
+            <span class="kpi-badge-p">P3</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardP3Pct">0%</div>
+            <div class="main-sub">satisfacción positiva (Buena+Muy buena)</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">star</span> Calificación Promedio:</span>
+              <span class="item-val" id="cardP3Avg">0.0 / 5.0</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">do_not_disturb_on</span> Sin contacto / No aplica:</span>
+              <span class="item-val" id="cardP3NA">0% N/A</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI CARD 2: P4-P7 Organización Institucional -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--c-naranja);">corporate_fare</span>
+              Organización Institucional
+            </div>
+            <span class="kpi-badge-p">P4–P7</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardOrgAvg">0.0</div>
+            <div class="main-sub">índice general sobre 5</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P4 Horarios y Organización:</span>
+              <span class="item-val" id="cardP4Val">0.0 <span class="badge-na" id="cardP4NA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P5 Ingreso y Egreso:</span>
+              <span class="item-val" id="cardP5Val">0.0 <span class="badge-na" id="cardP5NA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P6 Claridad de Normas:</span>
+              <span class="item-val" id="cardP6Val">0.0 <span class="badge-na" id="cardP6NA">0% NS/NR</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P7 Respuesta a Necesidades:</span>
+              <span class="item-val" id="cardP7Val">0.0 <span class="badge-na" id="cardP7NA">0% N/A</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI CARD 3: P8-P11 Infraestructura y Limpieza -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--c-salud);">apartment</span>
+              Infraestructura y Limpieza
+            </div>
+            <span class="kpi-badge-p">P8–P11</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardInfraAvg">0.0</div>
+            <div class="main-sub">índice general de espacio</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P8 Infraestructura e Instalaciones:</span>
+              <span class="item-val" id="cardP8Val">0.0 <span class="badge-na" id="cardP8NA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P9 Condiciones de Seguridad:</span>
+              <span class="item-val" id="cardP9Val">0.0 <span class="badge-na" id="cardP9NA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P10 Materiales y Recursos:</span>
+              <span class="item-val" id="cardP10Val">0.0 <span class="badge-na" id="cardP10NA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P11 Limpieza del Espacio:</span>
+              <span class="item-val" id="cardP11Val">0.0 <span class="badge-na" id="cardP11NA">0% N/A</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI CARD 4: P12b-P12q Desempeño Docente por Subdimensión -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--brand);">psychology</span>
+              Desempeño Docente
+            </div>
+            <span class="kpi-badge-p">P12b–P12q</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardDocAvg">0.0</div>
+            <div class="main-sub">índice docente global</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">forum</span> Comunicación con Familias:</span>
+              <span class="item-val" id="cardDocCom">0.0 <span class="badge-na" id="cardDocComNA">0% NS/NR</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">favorite</span> Vínculo con las Docentes:</span>
+              <span class="item-val" id="cardDocVin">0.0 <span class="badge-na" id="cardDocVinNA">0% NS/NR</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">health_and_safety</span> Cuidado y Bienestar:</span>
+              <span class="item-val" id="cardDocCuid">0.0 <span class="badge-na" id="cardDocCuidNA">0% N/A</span></span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">toys</span> Propuesta Pedagógica:</span>
+              <span class="item-val" id="cardDocPed">0.0 <span class="badge-na" id="cardDocPedNA">0% NS/NR</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI CARD 5: P13b-P13d Desempeño Auxiliares -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--c-gobierno);">cleaning_services</span>
+              Desempeño Auxiliares
+            </div>
+            <span class="kpi-badge-p">P13b–P13d</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardAuxAvg">0.0</div>
+            <div class="main-sub">índice auxiliar global</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P13b Desempeño General:</span>
+              <span class="item-val" id="cardP13bVal">0.0</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P13c Higiene y Orden a cargo:</span>
+              <span class="item-val" id="cardP13cVal">0.0</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label">P13d Contención al niño/a:</span>
+              <span class="item-val" id="cardP13dVal">0.0</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label"><span class="material-symbols-outlined" style="font-size:14px;">do_not_disturb_on</span> Respuestas No aplica:</span>
+              <span class="item-val" id="cardAuxNA">0% N/A</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI CARD 6: P15 NPS Institucional -->
+        <div class="kpi-deck-card">
+          <div class="kpi-card-header">
+            <div class="kpi-card-title">
+              <span class="material-symbols-outlined" style="color:var(--brand);">recommend</span>
+              Recomendación NPS
+            </div>
+            <span class="kpi-badge-p">P15</span>
+          </div>
+          <div class="kpi-stat-huge">
+            <div class="main-val" id="cardNpsVal">—</div>
+            <div class="main-sub">Promotores (9-10) − Detractores (1-6)</div>
+          </div>
+          <div class="kpi-breakdown-list">
+            <div class="kpi-breakdown-item">
+              <span class="item-label" style="color:var(--brand-d);"><span class="material-symbols-outlined" style="font-size:14px;">check_circle</span> Promotores (9 a 10):</span>
+              <span class="item-val" id="cardNpsProm">0 (0%)</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label" style="color:var(--c-naranja);"><span class="material-symbols-outlined" style="font-size:14px;">remove_circle</span> Pasivos (7 a 8):</span>
+              <span class="item-val" id="cardNpsPas">0 (0%)</span>
+            </div>
+            <div class="kpi-breakdown-item">
+              <span class="item-label" style="color:var(--c-alertas);"><span class="material-symbols-outlined" style="font-size:14px;">cancel</span> Detractores (1 a 6):</span>
+              <span class="item-val" id="cardNpsDet">0 (0%)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN: P2 CRUZADO CON P3-P15 (SATISFACCIÓN SEGÚN ANTIGÜEDAD) -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-violeta);">history_toggle_off</span> Satisfacción según Antigüedad del Vínculo (P2 cruzado con P3–P15)</h2>
+          <p>Segmentación comparativa de satisfacción, NPS y experiencia según el tiempo de asistencia del niño/a a la institución.</p>
+        </div>
+      </div>
+      <div class="antiguedad-grid">
+        <div class="antiguedad-card">
+          <strong>🔹 Ingresantes: Este año</strong>
+          <div class="ant-val" id="antEsteAnioNps">—</div>
+          <div class="ant-sub" id="antEsteAnioSub">0 respuestas · 0.0 Satisfacción general</div>
+        </div>
+        <div class="antiguedad-card">
+          <strong>🔹 Permanencia: Más de 1 año</strong>
+          <div class="ant-val" id="antMas1AnioNps">—</div>
+          <div class="ant-sub" id="antMas1AnioSub">0 respuestas · 0.0 Satisfacción general</div>
+        </div>
+        <div class="antiguedad-card">
+          <strong>🔹 Trayectoria: Más de 2 años</strong>
+          <div class="ant-val" id="antMas2AniosNps">—</div>
+          <div class="ant-sub" id="antMas2AniosSub">0 respuestas · 0.0 Satisfacción general</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: RADAR Y TENDENCIA -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--brand);">radar</span> Diagnóstico Multidimensional y Trayectoria</h2>
+          <p>Evaluación radial en las 6 dimensiones clave y evolución del índice de recomendación.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="chart-box"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="chart-box"><canvas id="chartTendencia"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: COMPARATIVA INSTITUCIONAL -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-salud);">domain</span> Comparativa de Desempeño por Institución</h2>
+          <p>Índice promedio general en los Jardines Maternales y Salas Cuna de la ciudad.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="chart-box" style="height: 300px;"><canvas id="chartInstituciones"></canvas></div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: TABLA DE RENDIMIENTO -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-gobierno);">table_chart</span> Matriz de Rendimiento por Institución</h2>
+          <p>Desglose de indicadores calculados excluyendo respuestas N/A y reportando porcentajes válidos.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="rank-table" id="tablaSalas">
+            <thead>
+              <tr>
+                <th>Institución</th>
+                <th>Barrio</th>
+                <th>Familias</th>
+                <th>P3 Inscrip.</th>
+                <th>P4-P7 Org.</th>
+                <th>P8-P11 Infra.</th>
+                <th>P12 Docentes</th>
+                <th>P13 Auxiliares</th>
+                <th>P15 NPS</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: COMPOSICIÓN -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-naranja);">pie_chart</span> Composición de Respuestas</h2>
+          <p>Distribución por antigüedad del vínculo y perfil NPS de familias.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-size:13px; font-weight:800; color:var(--ink-soft); margin:0 0 12px; text-transform:uppercase;">Antigüedad (P2)</h3>
+          <div class="chart-box"><canvas id="chartGrupos"></canvas></div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:13px; font-weight:800; color:var(--ink-soft); margin:0 0 12px; text-transform:uppercase;">Segmentación NPS (P15)</h3>
+          <div class="chart-box"><canvas id="chartTurnos"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: MURO DE FAMILIAS -->
+    <section class="sec-block">
+      <div class="sec-head">
+        <div>
+          <h2><span class="material-symbols-outlined" style="color:var(--c-violeta);">forum</span> La Voz de las Familias (Bloque 6)</h2>
+          <p>Oportunidades de mejora y sugerencias constructivas compartidas por madres, padres y tutores (P14).</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="wall-col" id="wallMejoras"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Dirección de Estadística · Gobierno de Río Cuarto</b><br>
+      Infraestructura del Observatorio Social · Gabinete Social + LMetB
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // URL de Apps Script Web App (reemplazar por la URL implementada de tu Google Sheets)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrhg-bnnwGEhCE48DzPlkt_TZtz8fD8_2MMf_Za1N-kg6LnaWcc9hlIfVleOZSHIf75Q/exec";
+
+    // Base de datos en memoria (inicia en 0, listo para recibir respuestas reales de Google Sheets y envíos locales)
+    let RAW = [];
+
+    let chartRadar, chartTendencia, chartInstituciones, chartGrupos, chartTurnos;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedLocalData();
+      initFilterOptions();
+      setupEventListeners();
+      renderDashboard();
+      if (SCRIPT_URL) fetchLiveData();
+    });
+
+    function loadSavedLocalData() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('encuestas_educacion_guardadas') || '[]');
+        if (Array.isArray(saved) && saved.length > 0) {
+          RAW = [...saved];
+        } else {
+          RAW = [];
+        }
+      } catch (e) {
+        console.warn("Error leyendo localStorage:", e);
+        RAW = [];
+      }
+    }
+
+    function initFilterOptions() {
+      const fInst = document.getElementById('fInst');
+      const catalogoInsts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion)
+        ? window.CATALOGO_MUNICIPAL.educacion.instituciones.map(i => i.nombre)
+        : [];
+      const insts = [...new Set([...catalogoInsts, ...RAW.map(r => r.institucion_nombre)])].filter(Boolean).sort();
+      
+      fInst.innerHTML = '<option value="">Todas las instituciones</option>';
+      insts.forEach(i => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i;
+        fInst.appendChild(opt);
+      });
+
+      updateDocentesFilter();
+    }
+
+    function updateDocentesFilter() {
+      const fInst = document.getElementById('fInst');
+      const fDocente = document.getElementById('fDocente');
+      const selectedInst = fInst.value;
+
+      fDocente.innerHTML = '<option value="">Todas las docentes</option>';
+
+      let docs = [];
+      if (selectedInst && window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) {
+        const instObj = window.CATALOGO_MUNICIPAL.educacion.instituciones.find(i => i.nombre === selectedInst);
+        if (instObj && instObj.docentes) {
+          docs = instObj.docentes;
+        }
+      }
+
+      if (docs.length === 0) {
+        if (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) {
+          const allDocs = [];
+          window.CATALOGO_MUNICIPAL.educacion.instituciones.forEach(inst => {
+            if (inst.docentes) allDocs.push(...inst.docentes);
+          });
+          docs = [...new Set(allDocs)];
+        }
+        const rawDocs = RAW.filter(r => !selectedInst || r.institucion_nombre === selectedInst).map(r => r.docente_nombre);
+        docs = [...new Set([...docs, ...rawDocs])].filter(Boolean);
+      }
+
+      docs.sort().forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        fDocente.appendChild(opt);
+      });
+    }
+
+    function setupEventListeners() {
+      document.getElementById('fInst').addEventListener('change', () => {
+        updateDocentesFilter();
+        renderDashboard();
+      });
+
+      ['fDesde', 'fHasta', 'fTurno', 'fDocente', 'fTiempo'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', renderDashboard);
+      });
+
+      document.getElementById('btnReset').addEventListener('click', () => {
+        ['fDesde', 'fHasta', 'fInst', 'fTurno', 'fDocente', 'fTiempo'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        updateDocentesFilter();
+        renderDashboard();
+      });
+    }
+
+    async function fetchLiveData() {
+      if (!SCRIPT_URL) return;
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=get_education`);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const localSaved = JSON.parse(localStorage.getItem('encuestas_educacion_guardadas') || '[]');
+          RAW = [...localSaved, ...data];
+          initFilterOptions();
+          renderDashboard();
+        }
+      } catch (e) {
+        console.warn("Conexión en vivo no disponible:", e);
+      }
+    }
+
+    function getFilteredData() {
+      const desde = document.getElementById('fDesde').value;
+      const hasta = document.getElementById('fHasta').value;
+      const inst = document.getElementById('fInst').value;
+      const turno = document.getElementById('fTurno').value;
+      const docente = document.getElementById('fDocente').value;
+      const tiempo = document.getElementById('fTiempo').value;
+
+      return RAW.filter(r => {
+        if (desde && r.fecha_hora && r.fecha_hora.slice(0, 10) < desde) return false;
+        if (hasta && r.fecha_hora && r.fecha_hora.slice(0, 10) > hasta) return false;
+        if (inst && r.institucion_nombre !== inst) return false;
+        if (turno && r.turno !== turno) return false;
+        if (docente && r.docente_nombre !== docente) return false;
+        if (tiempo && r.tiempo_asistencia !== tiempo) return false;
+        return true;
+      });
+    }
+
+    // Helper para cálculo robusto de indicadores con exclusión de N/A y NS/NR
+    function calcMetric(items, keys) {
+      if (!Array.isArray(keys)) keys = [keys];
+      let sum = 0, countValid = 0, countPos = 0, countNA = 0, totalResp = 0;
+
+      items.forEach(r => {
+        keys.forEach(k => {
+          const raw = r[k];
+          if (raw !== undefined && raw !== null && raw !== '') {
+            totalResp++;
+            if (raw === 'NA' || raw === 'NSNR' || raw === 'N/A' || raw === 'NS/NR' || raw === 'No aplica' || raw === 'No sabe') {
+              countNA++;
+            } else {
+              const num = Number(raw);
+              if (!isNaN(num) && num >= 1 && num <= 5) {
+                sum += num;
+                countValid++;
+                if (num >= 4) countPos++;
+              }
+            }
+          }
+        });
+      });
+
+      const avg = countValid > 0 ? (sum / countValid) : 0;
+      const pctPos = countValid > 0 ? Math.round((countPos / countValid) * 100) : 0;
+      const pctNA = totalResp > 0 ? Math.round((countNA / totalResp) * 100) : 0;
+
+      return {
+        avg: avg.toFixed(1),
+        avgRaw: avg,
+        pctPos,
+        pctNA,
+        countValid,
+        countNA,
+        totalResp
+      };
+    }
+
+    function calcNPS(items) {
+      const n = items.length;
+      if (n === 0) return { score: "—", promPct: 0, pasPct: 0, detPct: 0, promCount: 0, pasCount: 0, detCount: 0 };
+      let p = 0, pas = 0, d = 0;
+      items.forEach(r => {
+        const nps = Number(r.nps_puntaje);
+        if (!isNaN(nps) && nps >= 1 && nps <= 10) {
+          if (nps >= 9) p++;
+          else if (nps >= 7) pas++;
+          else d++;
+        }
+      });
+      const valid = p + pas + d;
+      if (valid === 0) return { score: "—", promPct: 0, pasPct: 0, detPct: 0, promCount: 0, pasCount: 0, detCount: 0 };
+      const scoreNum = Math.round(((p - d) / valid) * 100);
+      return {
+        scoreNum,
+        score: (scoreNum >= 0 ? "+" : "") + scoreNum,
+        promPct: Math.round((p / valid) * 100),
+        pasPct: Math.round((pas / valid) * 100),
+        detPct: Math.round((d / valid) * 100),
+        promCount: p,
+        pasCount: pas,
+        detCount: d,
+        total: valid
+      };
+    }
+
+    function renderDashboard() {
+      const filtered = getFilteredData();
+      const n = filtered.length;
+      document.getElementById('countN').innerText = n;
+      document.getElementById('kpiTotal').innerText = n;
+      document.getElementById('kpiTotalFoot').innerText = `de ${RAW.length} registradas`;
+
+      if (n === 0) {
+        // Reset KPIs Hero
+        document.getElementById('kpiNps').innerText = "—";
+        document.getElementById('kpiNpsSub').innerText = "0 promotores · 0 detractores";
+        document.getElementById('kpiOrg').innerText = "0.0";
+        document.getElementById('kpiOrgSub').innerText = "Bloque 2 · P4-P7";
+        document.getElementById('kpiInfra').innerText = "0.0";
+        document.getElementById('kpiInfraSub').innerText = "Bloque 3 · P8-P11";
+        document.getElementById('kpiDocente').innerText = "0.0";
+        document.getElementById('kpiDocenteSub').innerText = "Bloque 4 · P12b-P12q";
+        document.getElementById('kpiAuxiliar').innerText = "0.0";
+        document.getElementById('kpiAuxiliarSub').innerText = "Bloque 5 · P13b-P13d";
+
+        // Reset Deck Cards
+        document.getElementById('cardP3Pct').innerText = "0%";
+        document.getElementById('cardP3Avg').innerText = "0.0 / 5.0";
+        document.getElementById('cardP3NA').innerText = "0% N/A";
+
+        document.getElementById('cardOrgAvg').innerText = "0.0";
+        document.getElementById('cardP4Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardP5Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardP6Val').innerHTML = `0.0 <span class="badge-na">0% NS/NR</span>`;
+        document.getElementById('cardP7Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+
+        document.getElementById('cardInfraAvg').innerText = "0.0";
+        document.getElementById('cardP8Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardP9Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardP10Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardP11Val').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+
+        document.getElementById('cardDocAvg').innerText = "0.0";
+        document.getElementById('cardDocCom').innerHTML = `0.0 <span class="badge-na">0% NS/NR</span>`;
+        document.getElementById('cardDocVin').innerHTML = `0.0 <span class="badge-na">0% NS/NR</span>`;
+        document.getElementById('cardDocCuid').innerHTML = `0.0 <span class="badge-na">0% N/A</span>`;
+        document.getElementById('cardDocPed').innerHTML = `0.0 <span class="badge-na">0% NS/NR</span>`;
+
+        document.getElementById('cardAuxAvg').innerText = "0.0";
+        document.getElementById('cardP13bVal').innerText = "0.0";
+        document.getElementById('cardP13cVal').innerText = "0.0";
+        document.getElementById('cardP13dVal').innerText = "0.0";
+        document.getElementById('cardAuxNA').innerText = "0% N/A";
+
+        document.getElementById('cardNpsVal').innerText = "—";
+        document.getElementById('cardNpsProm').innerText = "0 (0%)";
+        document.getElementById('cardNpsPas').innerText = "0 (0%)";
+        document.getElementById('cardNpsDet').innerText = "0 (0%)";
+
+        // Reset Antigüedad
+        document.getElementById('antEsteAnioNps').innerText = "—";
+        document.getElementById('antEsteAnioSub').innerText = "0 respuestas · 0.0 Satisfacción";
+        document.getElementById('antMas1AnioNps').innerText = "—";
+        document.getElementById('antMas1AnioSub').innerText = "0 respuestas · 0.0 Satisfacción";
+        document.getElementById('antMas2AniosNps').innerText = "—";
+        document.getElementById('antMas2AniosSub').innerText = "0 respuestas · 0.0 Satisfacción";
+
+        renderCharts([], { avgOrg: 0, avgInfra: 0, avgCom: 0, avgVin: 0, avgPed: 0, avgAux: 0 });
+        renderSalasTable([]);
+        renderMuroFamilias([]);
+        return;
+      }
+
+      // Cálculos individuales por Mapeo de Indicadores
+      // P3
+      const mP3 = calcMetric(filtered, 'atencion_inscripcion_nota');
+      document.getElementById('cardP3Pct').innerText = `${mP3.pctPos}%`;
+      document.getElementById('cardP3Avg').innerText = `${mP3.avg} / 5.0`;
+      document.getElementById('cardP3NA').innerText = `${mP3.pctNA}% N/A`;
+
+      // P4-P7 (Organización)
+      const mP4 = calcMetric(filtered, 'horarios_organizacion_nota');
+      const mP5 = calcMetric(filtered, 'ingreso_egreso_nota');
+      const mP6 = calcMetric(filtered, 'normas_claras_nota');
+      const mP7 = calcMetric(filtered, 'respuesta_institucional_nota');
+      const mOrg = calcMetric(filtered, ['horarios_organizacion_nota', 'ingreso_egreso_nota', 'normas_claras_nota', 'respuesta_institucional_nota']);
+
+      document.getElementById('kpiOrg').innerText = mOrg.avg;
+      document.getElementById('kpiOrgSub').innerText = `${mOrg.pctPos}% Positivo · ${mOrg.pctNA}% N/A`;
+      document.getElementById('cardOrgAvg').innerText = mOrg.avg;
+      document.getElementById('cardP4Val').innerHTML = `${mP4.avg} <span class="badge-na">${mP4.pctNA}% N/A</span>`;
+      document.getElementById('cardP5Val').innerHTML = `${mP5.avg} <span class="badge-na">${mP5.pctNA}% N/A</span>`;
+      document.getElementById('cardP6Val').innerHTML = `${mP6.avg} <span class="badge-na">${mP6.pctNA}% NS/NR</span>`;
+      document.getElementById('cardP7Val').innerHTML = `${mP7.avg} <span class="badge-na">${mP7.pctNA}% N/A</span>`;
+
+      // P8-P11 (Infraestructura y Limpieza)
+      const mP8 = calcMetric(filtered, 'infraestructura_instalaciones_nota');
+      const mP9 = calcMetric(filtered, 'seguridad_espacio_nota');
+      const mP10 = calcMetric(filtered, 'materiales_recursos_nota');
+      const mP11 = calcMetric(filtered, 'limpieza_espacio_nota');
+      const mInfra = calcMetric(filtered, ['infraestructura_instalaciones_nota', 'seguridad_espacio_nota', 'materiales_recursos_nota', 'limpieza_espacio_nota']);
+
+      document.getElementById('kpiInfra').innerText = mInfra.avg;
+      document.getElementById('kpiInfraSub').innerText = `${mInfra.pctPos}% Positivo · ${mInfra.pctNA}% N/A`;
+      document.getElementById('cardInfraAvg').innerText = mInfra.avg;
+      document.getElementById('cardP8Val').innerHTML = `${mP8.avg} <span class="badge-na">${mP8.pctNA}% N/A</span>`;
+      document.getElementById('cardP9Val').innerHTML = `${mP9.avg} <span class="badge-na">${mP9.pctNA}% N/A</span>`;
+      document.getElementById('cardP10Val').innerHTML = `${mP10.avg} <span class="badge-na">${mP10.pctNA}% N/A</span>`;
+      document.getElementById('cardP11Val').innerHTML = `${mP11.avg} <span class="badge-na">${mP11.pctNA}% N/A</span>`;
+
+      // P12b-P12q (Docentes por Subdimensión)
+      const comKeys = ['docente_info_actividades_nota', 'docente_canales_adecuados_nota', 'docente_info_clara_nota', 'docente_espacios_escucha_nota', 'docente_comunicacion_fluida_nota', 'docente_sentirse_escuchado_nota'];
+      const vinKeys = ['docente_vinculo_nino_nota', 'docente_contencion_nota', 'docente_conoce_particularidades_nota'];
+      const cuidKeys = ['docente_tranquilidad_confianza_nota', 'docente_trato_afectuoso_nota', 'docente_atencion_necesidades_nota', 'docente_ambiente_seguro_nota'];
+      const pedKeys = ['docente_propuestas_adecuadas_nota', 'docente_experiencias_juego_nota', 'docente_variedad_propuestas_nota'];
+      const allDocKeys = [...comKeys, ...vinKeys, ...cuidKeys, ...pedKeys];
+
+      const mDocCom = calcMetric(filtered, comKeys);
+      const mDocVin = calcMetric(filtered, vinKeys);
+      const mDocCuid = calcMetric(filtered, cuidKeys);
+      const mDocPed = calcMetric(filtered, pedKeys);
+      const mDocAll = calcMetric(filtered, allDocKeys);
+
+      document.getElementById('kpiDocente').innerText = mDocAll.avg;
+      document.getElementById('kpiDocenteSub').innerText = `${mDocAll.pctPos}% Positivo · ${mDocAll.pctNA}% NS/NR`;
+      document.getElementById('cardDocAvg').innerText = mDocAll.avg;
+      document.getElementById('cardDocCom').innerHTML = `${mDocCom.avg} <span class="badge-na">${mDocCom.pctNA}% NS/NR</span>`;
+      document.getElementById('cardDocVin').innerHTML = `${mDocVin.avg} <span class="badge-na">${mDocVin.pctNA}% NS/NR</span>`;
+      document.getElementById('cardDocCuid').innerHTML = `${mDocCuid.avg} <span class="badge-na">${mDocCuid.pctNA}% N/A</span>`;
+      document.getElementById('cardDocPed').innerHTML = `${mDocPed.avg} <span class="badge-na">${mDocPed.pctNA}% NS/NR</span>`;
+
+      // P13b-P13d (Auxiliares)
+      const mP13b = calcMetric(filtered, 'auxiliar_desempeno_nota');
+      const mP13c = calcMetric(filtered, 'auxiliar_higiene_orden_nota');
+      const mP13d = calcMetric(filtered, 'auxiliar_contencion_nota');
+      const mAux = calcMetric(filtered, ['auxiliar_desempeno_nota', 'auxiliar_higiene_orden_nota', 'auxiliar_contencion_nota']);
+
+      document.getElementById('kpiAuxiliar').innerText = mAux.avg;
+      document.getElementById('kpiAuxiliarSub').innerText = `${mAux.pctPos}% Positivo · ${mAux.pctNA}% N/A`;
+      document.getElementById('cardAuxAvg').innerText = mAux.avg;
+      document.getElementById('cardP13bVal').innerText = `${mP13b.avg} / 5.0`;
+      document.getElementById('cardP13cVal').innerText = `${mP13c.avg} / 5.0`;
+      document.getElementById('cardP13dVal').innerText = `${mP13d.avg} / 5.0`;
+      document.getElementById('cardAuxNA').innerText = `${mAux.pctNA}% N/A`;
+
+      // P15 (NPS)
+      const npsData = calcNPS(filtered);
+      document.getElementById('kpiNps').innerText = npsData.score;
+      document.getElementById('kpiNpsSub').innerText = `${npsData.promCount} promotores · ${npsData.detCount} detractores`;
+      document.getElementById('cardNpsVal').innerText = npsData.score;
+      document.getElementById('cardNpsProm').innerText = `${npsData.promCount} (${npsData.promPct}%)`;
+      document.getElementById('cardNpsPas').innerText = `${npsData.pasCount} (${npsData.pasPct}%)`;
+      document.getElementById('cardNpsDet').innerText = `${npsData.detCount} (${npsData.detPct}%)`;
+
+      // P2 cruzado con P3-P15 (Antigüedad)
+      renderAntiguedad(filtered);
+
+      renderCharts(filtered, {
+        avgOrg: mOrg.avgRaw,
+        avgInfra: mInfra.avgRaw,
+        avgCom: mDocCom.avgRaw,
+        avgVin: mDocVin.avgRaw,
+        avgPed: mDocPed.avgRaw,
+        avgAux: mAux.avgRaw
+      });
+      renderSalasTable(filtered);
+      renderMuroFamilias(filtered);
+    }
+
+    function renderAntiguedad(filtered) {
+      const grupos = {
+        'Este año': filtered.filter(r => r.tiempo_asistencia === 'Este año'),
+        'Más de 1 año': filtered.filter(r => r.tiempo_asistencia === 'Más de 1 año'),
+        'Más de 2 años': filtered.filter(r => r.tiempo_asistencia === 'Más de 2 años')
+      };
+
+      // Este año
+      const nps1 = calcNPS(grupos['Este año']);
+      const sat1 = calcMetric(grupos['Este año'], ['atencion_inscripcion_nota', 'horarios_organizacion_nota', 'infraestructura_instalaciones_nota', 'docente_vinculo_nino_nota', 'auxiliar_desempeno_nota']);
+      document.getElementById('antEsteAnioNps').innerText = nps1.score;
+      document.getElementById('antEsteAnioSub').innerText = `${grupos['Este año'].length} familias · ★ ${sat1.avg}`;
+
+      // Más de 1 año
+      const nps2 = calcNPS(grupos['Más de 1 año']);
+      const sat2 = calcMetric(grupos['Más de 1 año'], ['atencion_inscripcion_nota', 'horarios_organizacion_nota', 'infraestructura_instalaciones_nota', 'docente_vinculo_nino_nota', 'auxiliar_desempeno_nota']);
+      document.getElementById('antMas1AnioNps').innerText = nps2.score;
+      document.getElementById('antMas1AnioSub').innerText = `${grupos['Más de 1 año'].length} familias · ★ ${sat2.avg}`;
+
+      // Más de 2 años
+      const nps3 = calcNPS(grupos['Más de 2 años']);
+      const sat3 = calcMetric(grupos['Más de 2 años'], ['atencion_inscripcion_nota', 'horarios_organizacion_nota', 'infraestructura_instalaciones_nota', 'docente_vinculo_nino_nota', 'auxiliar_desempeno_nota']);
+      document.getElementById('antMas2AniosNps').innerText = nps3.score;
+      document.getElementById('antMas2AniosSub').innerText = `${grupos['Más de 2 años'].length} familias · ★ ${sat3.avg}`;
+    }
+
+    function renderCharts(filtered, avgs) {
+      // 1. Radar
+      const ctxRadar = document.getElementById('chartRadar').getContext('2d');
+      if (chartRadar) chartRadar.destroy();
+      chartRadar = new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+          labels: [
+            'Organización Institucional',
+            'Infraestructura & Limpieza',
+            'Comunicación Docente',
+            'Vínculo & Afecto',
+            'Propuesta Pedagógica',
+            'Desempeño Auxiliares'
+          ],
+          datasets: [{
+            label: 'Promedio Evaluado (1 a 5, sin N/A)',
+            data: [avgs.avgOrg, avgs.avgInfra, avgs.avgCom, avgs.avgVin, avgs.avgPed, avgs.avgAux],
+            backgroundColor: 'rgba(0, 201, 107, 0.2)',
+            borderColor: '#00C96B',
+            pointBackgroundColor: '#009b52',
+            pointBorderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { r: { min: 0, max: 5, ticks: { stepSize: 1 } } }
+        }
+      });
+
+      // 2. Tendencia NPS
+      const agrupadoFecha = {};
+      filtered.forEach(r => {
+        const f = r.fecha_hora ? r.fecha_hora.slice(0, 7) : "Reciente";
+        if (!agrupadoFecha[f]) agrupadoFecha[f] = { prom: 0, det: 0, total: 0 };
+        const nps = Number(r.nps_puntaje);
+        if (!isNaN(nps) && nps >= 1) {
+          agrupadoFecha[f].total++;
+          if (nps >= 9) agrupadoFecha[f].prom++;
+          if (nps <= 6) agrupadoFecha[f].det++;
+        }
+      });
+      const fechasLabels = Object.keys(agrupadoFecha).sort();
+      const npsTrend = fechasLabels.map(f => {
+        const item = agrupadoFecha[f];
+        return item.total > 0 ? Math.round(((item.prom - item.det) / item.total) * 100) : 0;
+      });
+
+      const ctxTrend = document.getElementById('chartTendencia').getContext('2d');
+      if (chartTendencia) chartTendencia.destroy();
+      chartTendencia = new Chart(ctxTrend, {
+        type: 'line',
+        data: {
+          labels: fechasLabels.length > 0 ? fechasLabels : ['Sin registros'],
+          datasets: [{
+            label: 'NPS Histórico',
+            data: npsTrend.length > 0 ? npsTrend : [0],
+            borderColor: '#00C96B',
+            backgroundColor: 'rgba(0, 201, 107, 0.1)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#009b52'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { min: -100, max: 100 } }
+        }
+      });
+
+      // 3. Instituciones
+      const instAgg = {};
+      filtered.forEach(r => {
+        const inst = r.institucion_nombre || "Otra";
+        if (!instAgg[inst]) instAgg[inst] = [];
+        instAgg[inst].push(r);
+      });
+      const iLabels = Object.keys(instAgg);
+      const iValues = iLabels.map(i => calcMetric(instAgg[i], ['docente_vinculo_nino_nota', 'docente_trato_afectuoso_nota', 'cuidado_afecto_nota']).avg);
+
+      const ctxInst = document.getElementById('chartInstituciones').getContext('2d');
+      if (chartInstituciones) chartInstituciones.destroy();
+      chartInstituciones = new Chart(ctxInst, {
+        type: 'bar',
+        data: {
+          labels: iLabels.length > 0 ? iLabels : ['Sin registros'],
+          datasets: [{
+            label: 'Índice General de Vínculo y Cuidado (1 a 5)',
+            data: iValues.length > 0 ? iValues : [0],
+            backgroundColor: '#00C96B',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { y: { min: 0, max: 5 } }
+        }
+      });
+
+      // 4. Tiempo de Asistencia
+      const tiempoCount = { 'Este año': 0, 'Más de 1 año': 0, 'Más de 2 años': 0, 'Otros': 0 };
+      filtered.forEach(r => {
+        const t = r.tiempo_asistencia || "Otros";
+        if (tiempoCount[t] !== undefined) tiempoCount[t]++;
+        else tiempoCount['Otros']++;
+      });
+      const ctxGrupos = document.getElementById('chartGrupos').getContext('2d');
+      if (chartGrupos) chartGrupos.destroy();
+      chartGrupos = new Chart(ctxGrupos, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(tiempoCount).filter(k => tiempoCount[k] > 0).length > 0 ? Object.keys(tiempoCount).filter(k => tiempoCount[k] > 0) : ['Sin datos'],
+          datasets: [{
+            data: Object.values(tiempoCount).filter(v => v > 0).length > 0 ? Object.values(tiempoCount).filter(v => v > 0) : [1],
+            backgroundColor: Object.values(tiempoCount).filter(v => v > 0).length > 0 ? ['#00C96B', '#009DE0', '#F27C00', '#8B5CF6'] : ['#e5e8eb']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+
+      // 5. Segmentación NPS
+      let pCount = 0, pasCount = 0, detCount = 0;
+      filtered.forEach(r => {
+        const nps = Number(r.nps_puntaje);
+        if (nps >= 9) pCount++;
+        else if (nps >= 7) pasCount++;
+        else if (nps >= 1) detCount++;
+      });
+      const ctxTurnos = document.getElementById('chartTurnos').getContext('2d');
+      if (chartTurnos) chartTurnos.destroy();
+      chartTurnos = new Chart(ctxTurnos, {
+        type: 'pie',
+        data: {
+          labels: ['Promotores (9-10)', 'Pasivos (7-8)', 'Detractores (1-6)'],
+          datasets: [{
+            data: (pCount + pasCount + detCount > 0) ? [pCount, pasCount, detCount] : [0, 0, 0],
+            backgroundColor: ['#00C96B', '#F27C00', '#d32f2f']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    function renderSalasTable(filtered) {
+      const tbody = document.querySelector('#tablaSalas tbody');
+      tbody.innerHTML = '';
+
+      const instMap = {};
+      filtered.forEach(r => {
+        const key = r.institucion_nombre || "Institución";
+        if (!instMap[key]) instMap[key] = [];
+        instMap[key].push(r);
+      });
+
+      const list = Object.keys(instMap).map(key => {
+        const items = instMap[key];
+        const mP3 = calcMetric(items, 'atencion_inscripcion_nota');
+        const mOrg = calcMetric(items, ['horarios_organizacion_nota', 'ingreso_egreso_nota', 'normas_claras_nota', 'respuesta_institucional_nota']);
+        const mInf = calcMetric(items, ['infraestructura_instalaciones_nota', 'seguridad_espacio_nota', 'materiales_recursos_nota', 'limpieza_espacio_nota']);
+        const mDoc = calcMetric(items, ['docente_vinculo_nino_nota', 'docente_contencion_nota', 'docente_tranquilidad_confianza_nota', 'docente_trato_afectuoso_nota', 'docente_propuestas_adecuadas_nota']);
+        const mAux = calcMetric(items, ['auxiliar_desempeno_nota', 'auxiliar_higiene_orden_nota', 'auxiliar_contencion_nota']);
+        const npsObj = calcNPS(items);
+
+        return {
+          inst: key,
+          barrio: items[0].barrio || "—",
+          count: items.length,
+          p3: mP3.avg,
+          org: mOrg.avg,
+          inf: mInf.avg,
+          doc: mDoc.avg,
+          aux: mAux.avg,
+          nps: npsObj.scoreNum !== undefined ? npsObj.scoreNum : 0,
+          npsStr: npsObj.score
+        };
+      }).sort((a, b) => b.count - a.count);
+
+      if (list.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="9" style="text-align:center; color:var(--ink-soft); padding:24px;">No hay evaluaciones registradas aún. Las respuestas reales ingresadas desde el formulario o Google Sheets aparecerán aquí automáticamente.</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+
+      list.forEach(item => {
+        const badgeClass = item.nps >= 50 ? 'green' : (item.nps >= 0 ? 'yellow' : 'red');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><b>${item.inst}</b></td>
+          <td><span style="color:var(--ink-soft);">${item.barrio}</span></td>
+          <td><b>${item.count}</b></td>
+          <td>${item.p3}</td>
+          <td>${item.org}</td>
+          <td>${item.inf}</td>
+          <td><b style="color:var(--brand-d);">${item.doc}</b></td>
+          <td>${item.aux}</td>
+          <td><span class="chip-nps ${badgeClass}">${item.npsStr}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderMuroFamilias(filtered) {
+      const mejContainer = document.getElementById('wallMejoras');
+      mejContainer.innerHTML = '';
+
+      const mejoras = filtered.filter(r => (r.comentario_mejora && r.comentario_mejora.trim().length > 2) || (r.sugerencias_mejora && r.sugerencias_mejora.trim().length > 2));
+
+      if (mejoras.length === 0) {
+        mejContainer.innerHTML = '<p style="color:var(--ink-soft); font-size:12.5px; padding:14px; text-align:center;">No hay comentarios o sugerencias registradas aún.</p>';
+      } else {
+        mejoras.slice(0, 20).forEach(r => {
+          const text = r.comentario_mejora || r.sugerencias_mejora;
+          const card = document.createElement('div');
+          card.className = 'wall-card improvement';
+          card.innerHTML = `
+            <div>"${text}"</div>
+            <div class="meta">
+              <span style="display:inline-flex; align-items:center; gap:3px;"><span class="material-symbols-outlined" style="font-size:13px; vertical-align:middle;">school</span> ${r.institucion_nombre || 'Institución'}</span>
+              <span style="display:inline-flex; align-items:center; gap:3px;"><span class="material-symbols-outlined" style="font-size:13px; color:var(--c-naranja); vertical-align:middle;">star</span> NPS: <b>${r.nps_puntaje || '—'}</b></span>
+            </div>
+          `;
+          mejContainer.appendChild(card);
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>

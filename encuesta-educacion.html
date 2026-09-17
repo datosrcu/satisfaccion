@@ -1,0 +1,1673 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Encuesta de Satisfacción en Educación Municipal · Gabinete Social + LMetB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #00C96B;
+      --brand-d: #009b52;
+      --brand-bg: #dbf7ea;
+
+      --c-salud: #009DE0;
+      --c-educacion: #00C96B;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-violeta: #8B5CF6;
+      --c-alertas: #d32f2f;
+
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+      --tint-violeta: #f3e8ff;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #103524;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+        --tint-violeta: #2e1065;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-alt);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-muni {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    /* BANNER INTRO */
+    .intro-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin: 24px 0 20px;
+    }
+
+    .intro-card h2 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .intro-card p {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* TARJETA DE ESTABLECIMIENTO FIJADO (QR / LINK DIRECTO) */
+    .institution-lock-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--brand-bg);
+      border: 1px solid rgba(0, 201, 107, .35);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .institution-lock-card .lock-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--brand-d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+    }
+
+    .institution-lock-card .lock-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .institution-lock-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--brand-d);
+    }
+
+    .institution-lock-card strong {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .institution-lock-card .lock-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* FORM CARD SECTIONS */
+    .form-section {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .sec-title {
+      font-size: 15.5px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .subsec-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin: 20px 0 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subsec-desc {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin: -6px 0 14px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group.bordered-item {
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .form-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: -2px 0 8px;
+    }
+
+    .form-select,
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%235b6470'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 12px center;
+      padding-right: 32px;
+    }
+
+    .form-select:focus,
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--brand);
+      background: var(--bg);
+      box-shadow: 0 0 0 3px var(--brand-bg);
+    }
+
+    /* CHIP SELECTORS (RADIO SEGMENTADO) */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip-btn {
+      flex: 1;
+      min-width: 110px;
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: center;
+      transition: all .18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+
+    .chip-btn:hover {
+      border-color: var(--brand);
+      background: #f0fdf4;
+    }
+
+    .chip-btn.active {
+      background: var(--brand-bg);
+      border-color: var(--brand);
+      color: var(--brand-d);
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(0, 201, 107, .2);
+    }
+
+    /* BOTONES RATING (LIKERT / ACUERDO CON N/A Y NS/NR) */
+    .rating-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr) 76px;
+      gap: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .rating-row {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .rating-row .opt-na {
+        grid-column: 1 / -1;
+        margin-top: 2px;
+        flex-direction: row;
+        padding: 6px 12px;
+        gap: 6px;
+      }
+      .rating-row .opt-na .rate-face {
+        margin: 0;
+      }
+    }
+
+    .btn-rate {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 8px 3px 7px;
+      cursor: pointer;
+      text-align: center;
+      transition: all .18s ease;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-rate .rate-face {
+      font-size: 25px;
+      line-height: 1;
+      margin: 0 0 4px;
+      transition: transform .18s ease, color .18s ease;
+      font-variation-settings: 'FILL' 0, 'wght' 500;
+    }
+
+    .btn-rate .rate-label {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      line-height: 1.15;
+      text-align: center;
+      transition: color .18s ease;
+    }
+
+    /* Colores base semáforo para los íconos */
+    .btn-rate[data-val="1"] .rate-face { color: #DC2626; }
+    .btn-rate[data-val="2"] .rate-face { color: #EA580C; }
+    .btn-rate[data-val="3"] .rate-face { color: #D97706; }
+    .btn-rate[data-val="4"] .rate-face { color: #65A30D; }
+    .btn-rate[data-val="5"] .rate-face { color: #059669; }
+
+    .btn-rate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .05);
+    }
+    .btn-rate:hover .rate-face {
+      transform: scale(1.12);
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .btn-rate[data-val="1"]:hover { border-color: #EF4444; background: #FEF2F2; }
+    .btn-rate[data-val="2"]:hover { border-color: #F97316; background: #FFF7ED; }
+    .btn-rate[data-val="3"]:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .btn-rate[data-val="4"]:hover { border-color: #84CC16; background: #F7FEE7; }
+    .btn-rate[data-val="5"]:hover { border-color: #10B981; background: #ECFDF5; }
+
+    /* Estados Activos (Seleccionados) */
+    .btn-rate.active {
+      transform: translateY(-1px);
+    }
+    .btn-rate.active .rate-face {
+      font-variation-settings: 'FILL' 1;
+      transform: scale(1.12);
+    }
+    .btn-rate.active .rate-label {
+      font-weight: 800;
+    }
+
+    .btn-rate[data-val="1"].active {
+      background: #FEE2E2;
+      border-color: #DC2626;
+      box-shadow: 0 3px 10px rgba(220, 38, 38, .22);
+    }
+    .btn-rate[data-val="1"].active .rate-label { color: #991B1B; }
+
+    .btn-rate[data-val="2"].active {
+      background: #FFEDD5;
+      border-color: #EA580C;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, .22);
+    }
+    .btn-rate[data-val="2"].active .rate-label { color: #9A3412; }
+
+    .btn-rate[data-val="3"].active {
+      background: #FEF3C7;
+      border-color: #D97706;
+      box-shadow: 0 3px 10px rgba(217, 119, 6, .22);
+    }
+    .btn-rate[data-val="3"].active .rate-label { color: #92400E; }
+
+    .btn-rate[data-val="4"].active {
+      background: #ECFCCB;
+      border-color: #65A30D;
+      box-shadow: 0 3px 10px rgba(101, 163, 13, .22);
+    }
+    .btn-rate[data-val="4"].active .rate-label { color: #3F6212; }
+
+    .btn-rate[data-val="5"].active {
+      background: #D1FAE5;
+      border-color: #059669;
+      box-shadow: 0 3px 10px rgba(5, 150, 105, .22);
+    }
+    .btn-rate[data-val="5"].active .rate-label { color: #065F46; }
+
+    /* BOTÓN ESPECIAL N/A y NS/NR */
+    .btn-rate.opt-na {
+      background: var(--bg-alt);
+      border: 1.5px dashed var(--line);
+      border-radius: var(--radius-sm);
+    }
+    .btn-rate.opt-na .rate-face {
+      font-size: 20px;
+      color: var(--ink-soft);
+    }
+    .btn-rate.opt-na:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .btn-rate.opt-na.active {
+      background: #e2e8f0;
+      border-color: #475569;
+      border-style: solid;
+      box-shadow: 0 2px 8px rgba(71, 85, 105, .2);
+    }
+    .btn-rate.opt-na.active .rate-label {
+      color: #1e293b;
+      font-weight: 800;
+    }
+
+    /* BOTONES NPS 1-10 */
+    .nps-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 4px;
+    }
+
+    .btn-nps {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 2px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      transition: all .15s ease;
+      font-family: inherit;
+    }
+
+    .btn-nps:hover {
+      border-color: var(--brand);
+      transform: translateY(-1px);
+    }
+
+    .btn-nps.detractor.active {
+      background: var(--c-alertas);
+      color: #fff;
+      border-color: var(--c-alertas);
+      box-shadow: 0 3px 10px rgba(211, 47, 47, .3);
+    }
+
+    .btn-nps.pasivo.active {
+      background: var(--c-naranja);
+      color: #fff;
+      border-color: var(--c-naranja);
+      box-shadow: 0 3px 10px rgba(242, 124, 0, .3);
+    }
+
+    .btn-nps.promotor.active {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+      box-shadow: 0 3px 10px rgba(0, 201, 107, .35);
+    }
+
+    /* BOTÓN SUBMIT */
+    .btn-submit {
+      width: 100%;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 4px 14px rgba(0, 201, 107, .35);
+      transition: all .2s var(--ease-standard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 28px 0 40px;
+    }
+
+    .btn-submit:hover {
+      background: var(--brand-d);
+      transform: translateY(-1px);
+    }
+
+    /* MODAL ÉXITO */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 14, .65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 28px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lift);
+    }
+
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="logo">
+        <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+      </div>
+
+      <div class="badge-chip">
+        <span class="material-symbols-outlined" style="font-size:16px;">school</span>
+        Educación Municipal
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="wrap">
+
+    <!-- INTRO CARD -->
+    <div class="intro-card">
+      <h2 id="intro-title">
+        <span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">family_restroom</span>
+        Evaluación de Familias sobre el Cuidado y Educación
+      </h2>
+      <p id="intro-desc">
+        Tu participación es fundamental para acompañar el crecimiento, cuidado, contención y estimulación de los más pequeños.
+        Esta encuesta es <b>anónima</b> y toma menos de 2 minutos.
+      </p>
+    </div>
+
+    <form id="edu-survey-form">
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 1: DATOS GENERALES -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--brand);">badge</span>
+          Bloque 1 — Datos generales
+        </div>
+
+        <!-- TARJETA FIJADA CUANDO SE ABRE DESDE ENLACE DE DIFUSIÓN -->
+        <div id="institucion-locked-card" class="institution-lock-card hidden">
+          <div class="lock-icon">
+            <span class="material-symbols-outlined">school</span>
+          </div>
+          <div class="lock-info">
+            <span class="institution-lock-tag">Institución Educativa Asignada</span>
+            <strong id="lock-inst-nombre">Nombre de la Institución</strong>
+            <span class="lock-sub" id="lock-inst-sub">Dirección</span>
+            <div id="lock-inst-detalle" style="font-size:12px; color:var(--brand-d); font-weight:700; margin-top:3px;" class="hidden"></div>
+          </div>
+        </div>
+
+        <!-- Inputs ocultos para metadatos precompletados -->
+        <input type="hidden" name="turno_asignado" id="input-turno-asignado">
+        <input type="hidden" name="sala_espacio" id="input-sala-espacio">
+
+        <!-- P1: ¿A qué Jardín Maternal Municipal / Sala Cuna asiste tu hijo/a? -->
+        <div class="form-group" id="group-institucion-select">
+          <label class="form-label" for="select-institucion">1. ¿A qué Jardín Maternal Municipal / Sala Cuna asiste tu hijo/a? *</label>
+          <select id="select-institucion" name="institucion_id" class="form-select" required>
+            <option value="">Selecciona la institución a la que asiste tu hijo/a...</option>
+          </select>
+          <div id="institucion-info-badge" style="font-size:12px; color:var(--brand-d); font-weight:600; margin-top:6px;" class="hidden"></div>
+        </div>
+
+        <!-- P2: ¿Hace cuánto tiempo asiste tu hijo/a a este jardín/sala? -->
+        <div class="form-group bordered-item">
+          <label class="form-label">2. ¿Hace cuánto tiempo asiste tu hijo/a a este jardín/sala? *</label>
+          <div class="chip-group" data-chip-group="tiempo_asistencia">
+            <button type="button" class="chip-btn" data-val="Este año">
+              <span class="material-symbols-outlined" style="font-size:16px;">calendar_today</span> Este año
+            </button>
+            <button type="button" class="chip-btn" data-val="Más de 1 año">
+              <span class="material-symbols-outlined" style="font-size:16px;">history</span> Más de 1 año
+            </button>
+            <button type="button" class="chip-btn" data-val="Más de 2 años">
+              <span class="material-symbols-outlined" style="font-size:16px;">verified</span> Más de 2 años
+            </button>
+          </div>
+          <input type="hidden" name="tiempo_asistencia" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 2: ATENCIÓN Y ORGANIZACIÓN INSTITUCIONAL -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-naranja);">corporate_fare</span>
+          Bloque 2 — Atención y Organización Institucional
+        </div>
+
+        <!-- Subsección: Inscripción y comunicación institucional -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">how_to_reg</span>
+          Inscripción y comunicación institucional
+        </div>
+        <p class="subsec-desc">Atención brindada por el equipo durante el proceso de inscripción y primeros contactos.</p>
+
+        <!-- P3 -->
+        <div class="form-group">
+          <label class="form-label">3. ¿Cómo valorás la atención recibida por parte de las docentes durante la inscripción y en la comunicación institucional? *</label>
+          <div class="rating-row" data-rating-group="atencion_inscripcion_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="atencion_inscripcion_nota" required>
+        </div>
+
+        <!-- Subsección: Organización institucional -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">schedule</span>
+          Organización institucional
+        </div>
+        <p class="subsec-desc">Pautas operativas, dinamismo diario, cumplimiento de horarios y respuesta del espacio.</p>
+
+        <!-- P4 -->
+        <div class="form-group">
+          <label class="form-label">4. ¿Cómo valorás los horarios y la organización general del espacio? *</label>
+          <div class="rating-row" data-rating-group="horarios_organizacion_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="horarios_organizacion_nota" required>
+        </div>
+
+        <!-- P5 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">5. ¿Cómo valorás el ingreso y egreso de los niños/as? *</label>
+          <div class="rating-row" data-rating-group="ingreso_egreso_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="ingreso_egreso_nota" required>
+        </div>
+
+        <!-- P6 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">6. ¿Considerás que las normas y pautas institucionales son claras? *</label>
+          <div class="rating-row" data-rating-group="normas_claras_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="normas_claras_nota" required>
+        </div>
+
+        <!-- P7 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">7. ¿Cómo valorás la respuesta de la institución ante situaciones o necesidades particulares? *</label>
+          <div class="rating-row" data-rating-group="respuesta_institucional_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="respuesta_institucional_nota" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 3: INFRAESTRUCTURA Y LIMPIEZA -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-salud);">apartment</span>
+          Bloque 3 — Infraestructura y limpieza
+        </div>
+        <p class="form-sub" style="margin-top:-6px; margin-bottom:14px;">Evaluación de las condiciones edilicias, seguridad del espacio, equipamiento y mantenimiento de la higiene.</p>
+
+        <!-- P8 -->
+        <div class="form-group">
+          <label class="form-label">8. ¿Cómo valorás la infraestructura y las instalaciones del jardín/sala cuna? *</label>
+          <div class="rating-row" data-rating-group="infraestructura_instalaciones_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="infraestructura_instalaciones_nota" required>
+        </div>
+
+        <!-- P9 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">9. ¿Cómo valorás las condiciones de seguridad del espacio? *</label>
+          <div class="rating-row" data-rating-group="seguridad_espacio_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="seguridad_espacio_nota" required>
+        </div>
+
+        <!-- P10 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">10. ¿Cómo valorás la disponibilidad y variedad de materiales y recursos? *</label>
+          <div class="rating-row" data-rating-group="materiales_recursos_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="materiales_recursos_nota" required>
+        </div>
+
+        <!-- P11 -->
+        <div class="form-group bordered-item">
+          <label class="form-label">11. ¿Cómo valorás la limpieza del espacio? *</label>
+          <div class="rating-row" data-rating-group="limpieza_espacio_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="limpieza_espacio_nota" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 4: EVALUACIÓN DE DOCENTES -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--brand);">psychology</span>
+          Bloque 4 — Evaluación de docentes
+        </div>
+
+        <!-- P12a -->
+        <div class="form-group">
+          <label class="form-label" for="select-docente">12a. Seleccioná a la/el docente de la sala de tu hijo/a *</label>
+          <select id="select-docente" name="docente_nombre" class="form-select" required>
+            <option value="">Primero selecciona la institución arriba...</option>
+          </select>
+        </div>
+
+        <!-- Subdimensión: Comunicación con las familias -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">forum</span>
+          Subdimensión: Comunicación con las familias
+        </div>
+
+        <!-- P12b -->
+        <div class="form-group">
+          <label class="form-label">12b. ¿Cómo valorás la información que recibís sobre las actividades y experiencias de los niños/as? *</label>
+          <div class="rating-row" data-rating-group="docente_info_actividades_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_info_actividades_nota" required>
+        </div>
+
+        <!-- P12c -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12c. ¿Los canales de comunicación utilizados por la/el docente te resultan adecuados? *</label>
+          <div class="rating-row" data-rating-group="docente_canales_adecuados_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_canales_adecuados_nota" required>
+        </div>
+
+        <!-- P12d -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12d. ¿La información se brinda de manera clara y oportuna? *</label>
+          <div class="rating-row" data-rating-group="docente_info_clara_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_info_clara_nota" required>
+        </div>
+
+        <!-- P12e -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12e. ¿Considerás que la/el docente genera espacios para escuchar a las familias? *</label>
+          <div class="rating-row" data-rating-group="docente_espacios_escucha_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_espacios_escucha_nota" required>
+        </div>
+
+        <!-- P12f -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12f. ¿Considerás que existe una comunicación fluida con la/el docente? *</label>
+          <div class="rating-row" data-rating-group="docente_comunicacion_fluida_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_comunicacion_fluida_nota" required>
+        </div>
+
+        <!-- P12g -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12g. ¿Te sentís escuchado/a cuando planteás una inquietud o necesidad? *</label>
+          <div class="rating-row" data-rating-group="docente_sentirse_escuchado_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_sentirse_escuchado_nota" required>
+        </div>
+
+        <!-- Subdimensión: Vínculo con las docentes -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">favorite</span>
+          Subdimensión: Vínculo con las docentes
+        </div>
+
+        <!-- P12h -->
+        <div class="form-group">
+          <label class="form-label">12h. ¿Cómo valorás el vínculo entre tu hijo/a y la/el docente? *</label>
+          <div class="rating-row" data-rating-group="docente_vinculo_nino_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_vinculo_nino_nota" required>
+        </div>
+
+        <!-- P12i -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12i. ¿Cómo valorás la contención hacia tu hijo/a? *</label>
+          <div class="rating-row" data-rating-group="docente_contencion_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_contencion_nota" required>
+        </div>
+
+        <!-- P12j -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12j. ¿Sentís que la/el docente conoce y atiende las particularidades de tu hijo/a? *</label>
+          <div class="rating-row" data-rating-group="docente_conoce_particularidades_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_conoce_particularidades_nota" required>
+        </div>
+
+        <!-- Subdimensión: Cuidado y bienestar -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">health_and_safety</span>
+          Subdimensión: Cuidado y bienestar
+        </div>
+
+        <!-- P12k -->
+        <div class="form-group">
+          <label class="form-label">12k. ¿Te sentís tranquilo/a y confiado/a al dejar a tu hijo/a en la institución? *</label>
+          <div class="rating-row" data-rating-group="docente_tranquilidad_confianza_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_tranquilidad_confianza_nota" required>
+        </div>
+
+        <!-- P12l -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12l. ¿Considerás que tu hijo/a recibe un trato afectuoso y respetuoso? *</label>
+          <div class="rating-row" data-rating-group="docente_trato_afectuoso_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_trato_afectuoso_nota" required>
+        </div>
+
+        <!-- P12m -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12m. ¿Cómo valorás la atención que se brinda a las necesidades individuales de tu hijo/a? (alimentación, sueño, cambio de pañales) *</label>
+          <div class="rating-row" data-rating-group="docente_atencion_necesidades_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_atencion_necesidades_nota" required>
+        </div>
+
+        <!-- P12n -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12n. ¿Considerás que se promueve un ambiente seguro y de bienestar? *</label>
+          <div class="rating-row" data-rating-group="docente_ambiente_seguro_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_ambiente_seguro_nota" required>
+        </div>
+
+        <!-- Subdimensión: Propuesta pedagógica -->
+        <div class="subsec-title">
+          <span class="material-symbols-outlined" style="font-size:16px;">toys</span>
+          Subdimensión: Propuesta pedagógica
+        </div>
+
+        <!-- P12o -->
+        <div class="form-group">
+          <label class="form-label">12o. ¿Considerás que las propuestas son adecuadas para la edad y las necesidades de los niños/as? *</label>
+          <div class="rating-row" data-rating-group="docente_propuestas_adecuadas_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            <button type="button" data-val="NSNR" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">help_outline</span><span class="rate-label">NS/NR</span></button>
+          </div>
+          <input type="hidden" name="docente_propuestas_adecuadas_nota" required>
+        </div>
+
+        <!-- P12p -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12p. ¿Cómo valorás las experiencias de juego, exploración y aprendizaje que se ofrecen? *</label>
+          <div class="rating-row" data-rating-group="docente_experiencias_juego_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_experiencias_juego_nota" required>
+        </div>
+
+        <!-- P12q -->
+        <div class="form-group bordered-item">
+          <label class="form-label">12q. ¿Cómo valorás la variedad de las propuestas? *</label>
+          <div class="rating-row" data-rating-group="docente_variedad_propuestas_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="docente_variedad_propuestas_nota" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 5: EVALUACIÓN DE AUXILIARES -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-gobierno);">cleaning_services</span>
+          Bloque 5 — Evaluación de auxiliares
+        </div>
+
+        <!-- P13a -->
+        <div class="form-group">
+          <label class="form-label" for="select-auxiliar">13a. Seleccioná a la/el auxiliar de la sala de tu hijo/a *</label>
+          <select id="select-auxiliar" name="auxiliar_nombre" class="form-select" required>
+            <option value="">Primero selecciona la institución arriba...</option>
+          </select>
+        </div>
+
+        <!-- P13b -->
+        <div class="form-group bordered-item">
+          <label class="form-label">13b. ¿Cómo evaluás el desempeño general del/la auxiliar? *</label>
+          <div class="rating-row" data-rating-group="auxiliar_desempeno_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy malo</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Malo</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Bueno</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy bueno</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="auxiliar_desempeno_nota" required>
+        </div>
+
+        <!-- P13c -->
+        <div class="form-group bordered-item">
+          <label class="form-label">13c. ¿Cómo valorás el orden y las condiciones de higiene del espacio a cargo del/la auxiliar? *</label>
+          <div class="rating-row" data-rating-group="auxiliar_higiene_orden_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="auxiliar_higiene_orden_nota" required>
+        </div>
+
+        <!-- P13d -->
+        <div class="form-group bordered-item">
+          <label class="form-label">13d. ¿Cómo valorás la contención que brinda hacia tu hijo/a? *</label>
+          <div class="rating-row" data-rating-group="auxiliar_contencion_nota">
+            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Muy mala</span></button>
+            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">Mala</span></button>
+            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Regular</span></button>
+            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">Buena</span></button>
+            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Muy buena</span></button>
+            <button type="button" data-val="NA" class="btn-rate opt-na"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">N/A</span></button>
+          </div>
+          <input type="hidden" name="auxiliar_contencion_nota" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 6: COMENTARIO ABIERTO -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-violeta);">forum</span>
+          Bloque 6 — Comentario abierto
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="textarea-mejora">14. ¿Deseás contarnos brevemente qué podríamos mejorar? (Opcional)</label>
+          <textarea id="textarea-mejora" name="comentario_mejora" rows="3" class="form-textarea"
+            placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 7: RECOMENDACIÓN (NPS) -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-educacion);">recommend</span>
+          Bloque 7 — Recomendación (NPS)
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">15. ¿Recomendarías este jardín/sala cuna a un familiar o conocido? *</label>
+          <p class="form-sub">Escala numérica del 1 al 10:</p>
+
+          <div class="nps-grid" id="nps-container">
+            <button type="button" data-nps="1" class="btn-nps detractor">1</button>
+            <button type="button" data-nps="2" class="btn-nps detractor">2</button>
+            <button type="button" data-nps="3" class="btn-nps detractor">3</button>
+            <button type="button" data-nps="4" class="btn-nps detractor">4</button>
+            <button type="button" data-nps="5" class="btn-nps detractor">5</button>
+            <button type="button" data-nps="6" class="btn-nps detractor">6</button>
+            <button type="button" data-nps="7" class="btn-nps pasivo">7</button>
+            <button type="button" data-nps="8" class="btn-nps pasivo">8</button>
+            <button type="button" data-nps="9" class="btn-nps promotor">9</button>
+            <button type="button" data-nps="10" class="btn-nps promotor">10</button>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-soft); margin-top:6px;">
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-alertas); margin:0;">cancel</span>
+              1 = Nada probable
+            </span>
+            <span style="display:inline-flex; align-items:center; gap:4px;">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--c-educacion); margin:0;">check_circle</span>
+              10 = Totalmente seguro
+            </span>
+          </div>
+          <input type="hidden" name="nps_puntaje" id="input-nps" required>
+        </div>
+      </div>
+
+      <button type="submit" id="btn-submit" class="btn-submit">
+        <span class="material-symbols-outlined" style="font-size:18px; margin:0;">send</span>
+        Enviar Evaluación
+      </button>
+
+    </form>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="modal-success" class="modal-overlay">
+      <div class="modal-box">
+        <div
+          style="width:56px; height:56px; border-radius:50%; background:var(--tint-verde); color:var(--brand-d); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:28px;">
+          <span class="material-symbols-outlined" style="font-size:32px; margin:0;">check_circle</span>
+        </div>
+        <h3 style="font-size:19px; font-weight:800; margin:0 0 6px;">¡Muchas gracias por tu respuesta!</h3>
+        <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 20px; line-height:1.45;">
+          Tu opinión nos ayuda a seguir fortaleciendo y mejorando la calidad, cuidado y aprendizaje en los Jardines Maternales y Salas Cuna de nuestra ciudad.
+        </p>
+        <button type="button" onclick="resetFormAndCloseModal()" class="btn-submit" style="margin:0; padding:10px 18px;">
+          Cargar otra respuesta
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Dirección de Estadística · Secretaría de Educación y Primera Infancia</b><br>
+      Municipalidad de Río Cuarto · Gobierno de la Ciudad
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrhg-bnnwGEhCE48DzPlkt_TZtz8fD8_2MMf_Za1N-kg6LnaWcc9hlIfVleOZSHIf75Q/exec";
+
+    let catalogoEducacion = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+    let institucionSeleccionada = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initInstitucionesSelect();
+      initChipSelectors();
+      initRatingButtons();
+      initNpsButtons();
+      handleUrlParameters();
+      initFormSubmission();
+    });
+
+    function initInstitucionesSelect() {
+      const select = document.getElementById('select-institucion');
+      select.innerHTML = '<option value="">Selecciona la institución a la que asiste tu hijo/a...</option>';
+
+      const tipos = [...new Set(catalogoEducacion.map(i => i.tipo))];
+      tipos.forEach(tipo => {
+        const optGroup = document.createElement('optgroup');
+        optGroup.label = tipo;
+        catalogoEducacion.filter(i => i.tipo === tipo).forEach(inst => {
+          const opt = document.createElement('option');
+          opt.value = inst.id;
+          opt.textContent = `${inst.nombre} (${inst.barrio})`;
+          optGroup.appendChild(opt);
+        });
+        select.appendChild(optGroup);
+      });
+
+      select.addEventListener('change', (e) => {
+        onInstitucionChange(e.target.value);
+      });
+    }
+
+    function onInstitucionChange(instId, isDirectLink = false, prefillData = {}) {
+      const selectDocente = document.getElementById('select-docente');
+      const selectAuxiliar = document.getElementById('select-auxiliar');
+      const badge = document.getElementById('institucion-info-badge');
+      const lockCard = document.getElementById('institucion-locked-card');
+      const lockDetalle = document.getElementById('lock-inst-detalle');
+      const groupSelect = document.getElementById('group-institucion-select');
+      const inputTurno = document.getElementById('input-turno-asignado');
+      const inputSala = document.getElementById('input-sala-espacio');
+
+      institucionSeleccionada = catalogoEducacion.find(i => i.id === instId);
+
+      if (!institucionSeleccionada) {
+        selectDocente.innerHTML = '<option value="">Primero selecciona la institución arriba...</option>';
+        selectDocente.disabled = true;
+        selectAuxiliar.innerHTML = '<option value="">Primero selecciona la institución arriba...</option>';
+        selectAuxiliar.disabled = true;
+        badge.classList.add('hidden');
+        if (lockCard) lockCard.classList.add('hidden');
+        if (lockDetalle) lockDetalle.classList.add('hidden');
+        if (groupSelect) groupSelect.classList.remove('hidden');
+        if (inputTurno) inputTurno.value = "";
+        if (inputSala) inputSala.value = "";
+        document.getElementById('intro-title').innerHTML = '<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">family_restroom</span> Evaluación de Familias sobre el Cuidado y Educación';
+        document.getElementById('intro-desc').innerHTML = 'Tu participación es fundamental para acompañar el crecimiento, cuidado, contención y estimulación de los más pequeños. Esta encuesta es <b>anónima</b> y toma menos de 2 minutos.';
+        return;
+      }
+
+      const turnoVal = prefillData.turno || (inputTurno ? inputTurno.value : "");
+      const salaVal = prefillData.sala || (inputSala ? inputSala.value : "");
+      const docenteVal = prefillData.docente || "";
+      const auxiliarVal = prefillData.auxiliar || "";
+
+      if (inputTurno && turnoVal) inputTurno.value = turnoVal;
+      if (inputSala && salaVal) inputSala.value = salaVal;
+
+      if (isDirectLink) {
+        if (groupSelect) groupSelect.classList.add('hidden');
+        if (lockCard) {
+          document.getElementById('lock-inst-nombre').textContent = institucionSeleccionada.nombre;
+          document.getElementById('lock-inst-sub').innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin-right:3px;">location_on</span>${institucionSeleccionada.direccion} · B° ${institucionSeleccionada.barrio}`;
+          
+          const detalles = [];
+          if (salaVal) detalles.push(`Sala: ${salaVal}`);
+          if (turnoVal) detalles.push(`Turno: ${turnoVal}`);
+          if (docenteVal) detalles.push(`Docente: ${docenteVal}`);
+
+          if (detalles.length > 0 && lockDetalle) {
+            lockDetalle.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin-right:3px;">school</span>${detalles.join(' · ')}`;
+            lockDetalle.classList.remove('hidden');
+          } else if (lockDetalle) {
+            lockDetalle.classList.add('hidden');
+          }
+
+          lockCard.classList.remove('hidden');
+        }
+        document.getElementById('intro-title').innerHTML = `<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">family_restroom</span> ¡Hola familia de ${institucionSeleccionada.nombre}!`;
+        document.getElementById('intro-desc').innerHTML = `Tu opinión sobre el cuidado, la organización y la propuesta pedagógica en <b>${institucionSeleccionada.nombre}</b> es fundamental para seguir mejorando. Encuesta anónima · 2 minutos.`;
+      } else {
+        if (lockCard) lockCard.classList.add('hidden');
+        if (groupSelect) groupSelect.classList.remove('hidden');
+        badge.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; vertical-align:-3px; margin-right:4px;">location_on</span>${institucionSeleccionada.direccion} · B° ${institucionSeleccionada.barrio}`;
+        badge.classList.remove('hidden');
+      }
+
+      // Poblar desplegable de Docentes (P12a) con el padrón oficial del jardín
+      selectDocente.innerHTML = '<option value="">Selecciona la/el docente de la sala...</option>';
+      selectDocente.appendChild(new Option("Equipo Docente General / Institucional", "Equipo Docente General"));
+
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        let filtradas = institucionSeleccionada.distribucion;
+        if (turnoVal) filtradas = filtradas.filter(f => f.turno.toLowerCase().includes(turnoVal.toLowerCase()) || turnoVal.toLowerCase().includes(f.turno.toLowerCase()));
+        if (salaVal) filtradas = filtradas.filter(f => f.sala.toLowerCase().includes(salaVal.toLowerCase()) || salaVal.toLowerCase().includes(f.sala.toLowerCase()));
+        if (filtradas.length === 0) filtradas = institucionSeleccionada.distribucion;
+
+        const uniqueDocs = [...new Set(filtradas.map(f => f.docente))].filter(Boolean);
+        uniqueDocs.forEach(doc => {
+          const row = filtradas.find(f => f.docente === doc);
+          const label = row ? `${doc} (${row.sala} - Turno ${row.turno})` : doc;
+          const opt = new Option(label, doc);
+          selectDocente.appendChild(opt);
+        });
+      } else if (institucionSeleccionada.docentes && institucionSeleccionada.docentes.length > 0) {
+        institucionSeleccionada.docentes.forEach(doc => {
+          selectDocente.appendChild(new Option(doc, doc));
+        });
+      } else {
+        ["Docente de Sala - Turno Mañana", "Docente de Sala - Turno Tarde", "Docente a cargo de Sala"].forEach(doc => {
+          selectDocente.appendChild(new Option(doc, doc));
+        });
+      }
+      selectDocente.disabled = false;
+
+      // Auto-seleccionar docente si viene por URL
+      if (docenteVal) {
+        for (let i = 0; i < selectDocente.options.length; i++) {
+          const opt = selectDocente.options[i];
+          if (opt.value && (opt.value.toLowerCase().includes(docenteVal.toLowerCase()) || docenteVal.toLowerCase().includes(opt.value.toLowerCase()))) {
+            selectDocente.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      // Poblar desplegable de Auxiliares (P13a)
+      selectAuxiliar.innerHTML = '<option value="">Selecciona la/el auxiliar de la sala...</option>';
+      const auxiliaresList = [
+        "Equipo de Auxiliares de la Institución",
+        "Auxiliar Maternal / Personal de Cuidado",
+        "Auxiliar de Sala - Turno Mañana",
+        "Auxiliar de Sala - Turno Tarde"
+      ];
+      auxiliaresList.forEach(aux => {
+        selectAuxiliar.appendChild(new Option(aux, aux));
+      });
+      selectAuxiliar.disabled = false;
+
+      // Auto-seleccionar auxiliar si viene por URL
+      if (auxiliarVal) {
+        for (let i = 0; i < selectAuxiliar.options.length; i++) {
+          const opt = selectAuxiliar.options[i];
+          if (opt.value && (opt.value.toLowerCase().includes(auxiliarVal.toLowerCase()) || auxiliarVal.toLowerCase().includes(opt.value.toLowerCase()))) {
+            selectAuxiliar.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    function initChipSelectors() {
+      document.querySelectorAll('[data-chip-group]').forEach(group => {
+        const groupName = group.getAttribute('data-chip-group');
+        const hiddenInput = document.querySelector(`input[name="${groupName}"]`);
+        const buttons = group.querySelectorAll('.chip-btn');
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            hiddenInput.value = btn.getAttribute('data-val');
+          });
+        });
+      });
+    }
+
+    function initRatingButtons() {
+      document.querySelectorAll('[data-rating-group]').forEach(group => {
+        const groupName = group.getAttribute('data-rating-group');
+        const hiddenInput = document.querySelector(`input[name="${groupName}"]`);
+        const buttons = group.querySelectorAll('.btn-rate');
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            hiddenInput.value = btn.getAttribute('data-val');
+          });
+        });
+      });
+    }
+
+    function initNpsButtons() {
+      const container = document.getElementById('nps-container');
+      const hiddenNps = document.getElementById('input-nps');
+      const buttons = container.querySelectorAll('.btn-nps');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          hiddenNps.value = btn.getAttribute('data-nps');
+        });
+      });
+    }
+
+    function handleUrlParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const centroParam = urlParams.get('centro') || urlParams.get('c') || urlParams.get('inst');
+      const turnoParam = urlParams.get('turno') || urlParams.get('t');
+      const salaParam = urlParams.get('sala') || urlParams.get('s');
+      const docenteParam = urlParams.get('docente') || urlParams.get('doc');
+      const auxiliarParam = urlParams.get('auxiliar') || urlParams.get('aux');
+
+      if (centroParam) {
+        const select = document.getElementById('select-institucion');
+        for (let i = 0; i < select.options.length; i++) {
+          const opt = select.options[i];
+          if (opt.value && (opt.value.toUpperCase() === centroParam.toUpperCase() || opt.value.toUpperCase().includes(centroParam.toUpperCase()) || centroParam.toUpperCase().includes(opt.value.toUpperCase()))) {
+            select.selectedIndex = i;
+            onInstitucionChange(opt.value, true, {
+              turno: turnoParam,
+              sala: salaParam,
+              docente: docenteParam,
+              auxiliar: auxiliarParam
+            });
+            break;
+          }
+        }
+      }
+    }
+
+    function initFormSubmission() {
+      const form = document.getElementById('edu-survey-form');
+      const btnSubmit = document.getElementById('btn-submit');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Validar que todos los campos requeridos estén completos
+        const requiredInputs = form.querySelectorAll('input[type="hidden"][required]');
+        for (let input of requiredInputs) {
+          if (!input.value) {
+            alert("Por favor completa todas las calificaciones y selecciones requeridas antes de enviar.");
+            input.closest('.form-group').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+        }
+
+        const formData = new FormData(form);
+        const payload = {
+          tipo_encuesta: "educacion",
+          institucion_id: formData.get('institucion_id'),
+          institucion_nombre: institucionSeleccionada ? institucionSeleccionada.nombre : "",
+          tipo_institucion: institucionSeleccionada ? institucionSeleccionada.tipo : "",
+          barrio: institucionSeleccionada ? institucionSeleccionada.barrio : "",
+          turno: formData.get('turno_asignado') || "",
+          sala: formData.get('sala_espacio') || "",
+          tiempo_asistencia: formData.get('tiempo_asistencia'),
+          
+          // Bloque 2: Atención y Organización
+          atencion_inscripcion_nota: formData.get('atencion_inscripcion_nota'),
+          horarios_organizacion_nota: formData.get('horarios_organizacion_nota'),
+          ingreso_egreso_nota: formData.get('ingreso_egreso_nota'),
+          normas_claras_nota: formData.get('normas_claras_nota'),
+          respuesta_institucional_nota: formData.get('respuesta_institucional_nota'),
+
+          // Bloque 3: Infraestructura y Limpieza
+          infraestructura_instalaciones_nota: formData.get('infraestructura_instalaciones_nota'),
+          seguridad_espacio_nota: formData.get('seguridad_espacio_nota'),
+          materiales_recursos_nota: formData.get('materiales_recursos_nota'),
+          limpieza_espacio_nota: formData.get('limpieza_espacio_nota'),
+
+          // Bloque 4: Docentes
+          docente_nombre: formData.get('docente_nombre') || "Equipo Docente",
+          docente_info_actividades_nota: formData.get('docente_info_actividades_nota'),
+          docente_canales_adecuados_nota: formData.get('docente_canales_adecuados_nota'),
+          docente_info_clara_nota: formData.get('docente_info_clara_nota'),
+          docente_espacios_escucha_nota: formData.get('docente_espacios_escucha_nota'),
+          docente_comunicacion_fluida_nota: formData.get('docente_comunicacion_fluida_nota'),
+          docente_sentirse_escuchado_nota: formData.get('docente_sentirse_escuchado_nota'),
+          docente_vinculo_nino_nota: formData.get('docente_vinculo_nino_nota'),
+          docente_contencion_nota: formData.get('docente_contencion_nota'),
+          docente_conoce_particularidades_nota: formData.get('docente_conoce_particularidades_nota'),
+          docente_tranquilidad_confianza_nota: formData.get('docente_tranquilidad_confianza_nota'),
+          docente_trato_afectuoso_nota: formData.get('docente_trato_afectuoso_nota'),
+          docente_atencion_necesidades_nota: formData.get('docente_atencion_necesidades_nota'),
+          docente_ambiente_seguro_nota: formData.get('docente_ambiente_seguro_nota'),
+          docente_propuestas_adecuadas_nota: formData.get('docente_propuestas_adecuadas_nota'),
+          docente_experiencias_juego_nota: formData.get('docente_experiencias_juego_nota'),
+          docente_variedad_propuestas_nota: formData.get('docente_variedad_propuestas_nota'),
+
+          // Bloque 5: Auxiliares
+          auxiliar_nombre: formData.get('auxiliar_nombre') || "Equipo Auxiliar",
+          auxiliar_desempeno_nota: formData.get('auxiliar_desempeno_nota'),
+          auxiliar_higiene_orden_nota: formData.get('auxiliar_higiene_orden_nota'),
+          auxiliar_contencion_nota: formData.get('auxiliar_contencion_nota'),
+
+          // Bloque 6: Comentario abierto
+          comentario_mejora: formData.get('comentario_mejora') || "",
+
+          // Bloque 7: NPS
+          nps_puntaje: formData.get('nps_puntaje'),
+
+          dispositivo: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
+        };
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Enviando respuestas...`;
+
+        try {
+          saveToLocalStorage(payload);
+
+          const params = new URLSearchParams();
+          for (const key in payload) {
+            params.append(key, payload[key]);
+          }
+
+          if (SCRIPT_URL) {
+            await fetch(SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: params
+            });
+          }
+
+          document.getElementById('modal-success').classList.add('open');
+        } catch (err) {
+          console.warn("Envío directo con contingencia offline:", err);
+          document.getElementById('modal-success').classList.add('open');
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<span class="material-symbols-outlined">send</span> Enviar Evaluación`;
+        }
+      });
+    }
+
+    function saveToLocalStorage(payload) {
+      try {
+        let queue = JSON.parse(localStorage.getItem('encuestas_educacion_guardadas') || '[]');
+        queue.push({
+          fecha: new Date().toISOString(),
+          ...payload
+        });
+        localStorage.setItem('encuestas_educacion_guardadas', JSON.stringify(queue));
+      } catch (e) {
+        console.error("Error guardando en localStorage:", e);
+      }
+    }
+
+    function resetFormAndCloseModal() {
+      document.getElementById('modal-success').classList.remove('open');
+      const form = document.getElementById('edu-survey-form');
+      form.reset();
+      document.querySelectorAll('.btn-rate.active').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.chip-btn.active').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('centro') || urlParams.get('c')) {
+        handleUrlParameters();
+      } else {
+        onInstitucionChange("");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

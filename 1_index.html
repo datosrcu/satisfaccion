@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Satisfacción Ciudadana · Salud y Educación · Gabinete Social + LMetB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #009DE0;
+      --brand-d: #0079ac;
+      --brand-bg: #dbf1fb;
+
+      /* Paleta institucional */
+      --c-salud: #009DE0;
+      --c-salud-alt: #0079ac;
+      --c-educacion: #00C96B;
+      --c-educacion-d: #009b52;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-deporte: #FF3CB2;
+
+      /* Tints suaves */
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+      --tint-magenta: #ffe4f4;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #102d39;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+        --tint-magenta: #3e1b30;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      padding-top: 14px;
+      padding-bottom: 12px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-muni {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 48px 0 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      margin: 0 0 10px;
+      line-height: 1.1;
+    }
+
+    .hero h1 .accent {
+      color: var(--brand);
+    }
+
+    .hero p.sub {
+      font-size: 16px;
+      color: var(--ink-soft);
+      max-width: 780px;
+      margin: 0 0 28px;
+      line-height: 1.5;
+    }
+
+    /* HERO STATS (1px hairline grid matching GS+LMetB) */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      background: var(--bg);
+      padding: 18px 20px;
+      position: relative;
+    }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3.5px;
+      background: var(--kc, var(--brand));
+    }
+
+    .hero-stat .stat-label {
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .hero-stat .stat-label .material-symbols-outlined {
+      color: var(--kc, var(--brand));
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .hero-stat .stat-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* GRID DE MÓDULOS AGRUPADOS POR DOMINIO */
+    .domain-section {
+      margin-top: 36px;
+    }
+
+    .domain-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .domain-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    .domain-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .grid-pair {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portal-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      transition: transform .25s var(--ease-standard), box-shadow .25s var(--ease-standard), border-color .25s var(--ease-standard);
+      position: relative;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lift);
+      border-color: var(--brand);
+    }
+
+    .portal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .chip-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .portal-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 12px 0 6px;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+
+    .portal-desc {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all .2s var(--ease-standard);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-salud {
+      background: var(--c-salud);
+      color: #fff;
+    }
+
+    .btn-salud:hover {
+      background: var(--brand-d);
+      box-shadow: 0 4px 14px rgba(0, 157, 224, .35);
+    }
+
+    .btn-educacion {
+      background: var(--c-educacion);
+      color: #fff;
+    }
+
+    .btn-educacion:hover {
+      background: var(--c-educacion-d);
+      box-shadow: 0 4px 14px rgba(0, 201, 107, .35);
+    }
+
+    .btn-outline {
+      background: var(--bg-alt);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+      background: var(--brand-bg);
+    }
+
+    /* SECCIÓN HERRAMIENTAS DE DIFUSIÓN */
+    .tool-section {
+      padding: 44px 0 10px;
+    }
+
+    .sec-head {
+      margin-bottom: 22px;
+    }
+
+    .sec-head h2 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-head p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .tool-field {
+      margin-bottom: 16px;
+    }
+
+    .tool-field label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    .tool-field select {
+      width: 100%;
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s ease;
+    }
+
+    .tool-field select:focus {
+      border-color: var(--brand);
+      background: var(--bg);
+    }
+
+    /* CARTEL A4 DE SALUD */
+    #printable-poster {
+      background: #fff;
+      border: 2px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg-alt);
+      padding: 28px 0;
+      margin-top: 56px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+
+      .print-active,
+      .print-active * {
+        visibility: visible !important;
+      }
+
+      .print-active {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 25mm 20mm !important;
+        border: none !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-row">
+        <div class="logo">
+          <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+        </div>
+
+        <div class="badge-chip">
+          <span class="material-symbols-outlined" style="color:var(--brand);">hub</span>
+          Salud y Educación Inicial
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Sistema de Encuestas y Tableros Descentralizados</span>
+      <h1>Centro de Control de Satisfacción <span class="accent">Ciudadana</span></h1>
+      <p class="sub">
+        Ecosistema analítico para la recolección y medición continua de la calidad percibida en la Red de Salud (CAPS, CS,
+        Salud 24 Horas y Postas) y la Red de Educación (Salas Cuna, Jardines Maternales y Espacios Lúdicos).
+      </p>
+
+      <!-- STATS HERO (Hairline 1px) -->
+      <div class="hero-stats">
+        <div class="hero-stat" style="--kc:var(--c-salud);">
+          <div class="stat-label"><span class="material-symbols-outlined">local_hospital</span>Salud Municipal</div>
+          <strong>Red de Salud</strong>
+          <div class="stat-sub">CAPS, CS, Salud 24 Horas y Postas</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-educacion);">
+          <div class="stat-label"><span class="material-symbols-outlined">child_care</span>Educación Municipal</div>
+          <strong>Red de Educación</strong>
+          <div class="stat-sub">Salas Cuna y Jardines</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-gobierno);">
+          <div class="stat-label"><span class="material-symbols-outlined">insights</span>Metodología</div>
+          <strong>NPS + Likert</strong>
+          <div class="stat-sub">0-10 & Escala 1 a 5</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-deporte);">
+          <div class="stat-label"><span class="material-symbols-outlined">cloud_sync</span>Base Unificada</div>
+          <strong>Google Sheets</strong>
+          <div class="stat-sub">Apps Script API REST</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="wrap">
+
+    <!-- SECCIÓN DOMINIO 1: SALUD MUNICIPAL -->
+    <section class="domain-section">
+      <div class="domain-header">
+        <div class="domain-tag" style="background:var(--tint-sky); color:var(--brand-d);">
+          <span class="material-symbols-outlined" style="font-size:18px;">local_hospital</span> Red de Salud Municipal
+        </div>
+        <p class="domain-desc">CAPS, CS, Salud 24 Horas y Postas Sanitarias</p>
+      </div>
+
+      <div class="grid-pair">
+        <!-- CARD 1: ENCUESTA SALUD -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">assignment</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Relevamiento en Sala (QR)</span>
+            </div>
+            <h3 class="portal-title">Encuesta de Salud Municipal</h3>
+            <p class="portal-desc">
+              Formulario accesible para pacientes de la Red de Salud. Cascada por centro, especialidad y médico, tiempos
+              de espera y recomendación.
+            </p>
+          </div>
+          <a href="encuesta-salud.html" target="_blank" class="btn-pill btn-salud">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">open_in_new</span>
+            Abrir Formulario de Salud
+          </a>
+        </div>
+
+        <!-- CARD 2: TABLERO SALUD -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand-d);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">analytics</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Gestión y Analítica</span>
+            </div>
+            <h3 class="portal-title">Tablero de Salud Municipal</h3>
+            <p class="portal-desc">
+              Monitor de pulso NPS en vivo, comparativa en la Red de Salud, ranking por profesional y matriz de
+              tiempos de espera.
+            </p>
+          </div>
+          <a href="tablero-salud.html" target="_blank" class="btn-pill btn-outline">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">dashboard</span>
+            Ver Tablero de Salud
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DOMINIO 2: EDUCACIÓN MUNICIPAL -->
+    <section class="domain-section">
+      <div class="domain-header">
+        <div class="domain-tag" style="background:var(--tint-verde); color:var(--c-educacion-d);">
+          <span class="material-symbols-outlined" style="font-size:18px;">child_care</span> Red de Educación
+        </div>
+        <p class="domain-desc">Salas Cuna, Jardines Maternales y Centros de Formación</p>
+      </div>
+
+      <div class="grid-pair">
+        <!-- CARD 3: ENCUESTA EDUCACIÓN -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-verde); color:var(--c-educacion);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">assignment</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-verde); color:var(--c-educacion-d);">Difusión WhatsApp / Email</span>
+            </div>
+            <h3 class="portal-title">Encuesta de Educación Municipal</h3>
+            <p class="portal-desc">
+              Evaluación orientada a padres y familias de la Red de Educación Municipal sobre afecto, estimulación temprana, servicio nutricional y vínculo familiar.
+            </p>
+          </div>
+          <a href="encuesta-educacion.html" target="_blank" class="btn-pill btn-educacion">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">open_in_new</span>
+            Abrir Formulario de Educación
+          </a>
+        </div>
+
+        <!-- CARD 4: TABLERO EDUCACIÓN -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-verde); color:var(--c-educacion-d);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">analytics</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-verde); color:var(--c-educacion-d);">Gestión y Analítica</span>
+            </div>
+            <h3 class="portal-title">Tablero de Educación Municipal</h3>
+            <p class="portal-desc">
+              Diagnóstico multidimensional en gráfico de radar, comparativa en la Red de Educación Municipal, turnos y muro de
+              testimonios de familias.
+            </p>
+          </div>
+          <a href="tablero-educacion.html" target="_blank" class="btn-pill btn-outline">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">dashboard</span>
+            Ver Tablero de Educación
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN HERRAMIENTAS DE DESPLIEGUE EN TERRITORIO -->
+    <section class="tool-section">
+      <div class="sec-head">
+        <h2><span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">tune</span> Canales de
+          Despliegue y Difusión</h2>
+        <p>Herramientas automáticas para generar carteles QR en la Red de Salud y plantillas de WhatsApp/Email para la Red de Educación Municipal.</p>
+      </div>
+
+      <div class="tool-grid">
+
+        <!-- CANAL 1: SALUD (CARTELERÍA QR) -->
+        <div class="tool-box" id="modulo-salud-qr">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d);">
+              <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Red de Salud · Cartelería QR
+            </span>
+            <span style="font-size:11px; font-weight:700; color:var(--ink-soft); background:var(--bg-alt); padding:3px 8px; border-radius:6px; border:1px solid var(--line);">
+              Padrón Oficial 2026
+            </span>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0 0 16px;">
+            Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada centro o posta sanitaria.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:14px;">
+            <div class="tool-field">
+              <label>1. Centro de Salud / CAPS / Posta *</label>
+              <select id="qr-select-salud"></select>
+            </div>
+            <div class="tool-field">
+              <label>2. Especialidad / Consultorio (Opcional)</label>
+              <select id="qr-select-salud-esp">
+                <option value="">Todas las especialidades (Cartel General de Sala)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- VISTA PREVIA CARTEL -->
+          <div id="printable-poster">
+            <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:36px; width:auto; margin:0 auto 10px; display:block;">
+            <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Secretaría de Salud · Dirección de Estadística</div>
+
+            <div style="margin:12px 0;">
+              <h3 style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
+              <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1
+              </div>
+              <div id="poster-salud-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
+              <div id="poster-salud-esp-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; background:var(--tint-sky); color:var(--brand-d); padding:3px 10px; border-radius:999px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">medical_services</span>
+                <span id="poster-salud-esp-text">Atención General de Sala</span>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:center; margin:14px 0;">
+              <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px;"></div>
+            </div>
+
+            <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+              Escaneá con la cámara de tu celular
+            </p>
+            <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+          </div>
+
+          <div style="display:flex; gap:10px; margin-top:14px;">
+            <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1;">
+              <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir Cartel
+            </button>
+            <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="flex:1;">
+              <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+            </button>
+          </div>
+        </div>
+
+        <!-- CANAL 2: EDUCACIÓN (PRECOMPLETADO, WHATSAPP Y QR POR SALA / DOCENTE) -->
+        <div class="tool-box" id="modulo-educacion-envio">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <span class="badge-chip" style="background:var(--tint-verde); color:var(--c-educacion-d);">
+              <span class="material-symbols-outlined" style="font-size:16px;">send</span> Red de Educación · Difusión & Enlaces Precompletados
+            </span>
+            <span style="font-size:11px; font-weight:700; color:var(--ink-soft); background:var(--bg-alt); padding:3px 8px; border-radius:6px; border:1px solid var(--line);">
+              Padrón Oficial 2026
+            </span>
+          </div>
+          <p style="font-size:13px; color:var(--ink-soft); margin:0 0 16px;">
+            Genera enlaces directos, carteles QR y mensajes de WhatsApp precompletados por Jardín, Turno, Sala y Docente para las familias.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div class="tool-field" style="grid-column: 1 / -1;">
+              <label>1. Jardín Maternal / Sala Cuna *</label>
+              <select id="select-educacion-envio"></select>
+            </div>
+            <div class="tool-field">
+              <label>2. Turno (Opcional)</label>
+              <select id="select-educacion-turno">
+                <option value="">Todos los turnos</option>
+              </select>
+            </div>
+            <div class="tool-field">
+              <label>3. Sala / Espacio (Opcional)</label>
+              <select id="select-educacion-sala">
+                <option value="">Todas las salas</option>
+              </select>
+            </div>
+            <div class="tool-field" style="grid-column: 1 / -1;">
+              <label>4. Docente de Sala a evaluar (Opcional)</label>
+              <select id="select-educacion-docente">
+                <option value="">Todo el equipo docente</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- VISTA PREVIA CARTEL QR EDUCACION -->
+          <div id="printable-poster-edu" style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px; margin:14px 0 0; text-align:center;">
+            <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:34px; width:auto; margin:0 auto 8px; display:block;">
+            <div style="font-size:11.5px; font-weight:800; text-transform:uppercase; color:var(--c-educacion-d); letter-spacing:.04em; margin-bottom:4px;">
+              Secretaría de Educación · Dirección de Estadística
+            </div>
+            <h4 id="poster-edu-nombre" style="font-size:16px; font-weight:900; margin:0 0 2px; color:var(--ink);">Jardín</h4>
+            <div id="poster-edu-sub" style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">B° Centro</div>
+            
+            <div style="display:flex; justify-content:center; margin:10px 0;">
+              <div id="qrcode-target-edu" style="padding:10px; background:#fff; border-radius:12px; display:inline-block; box-shadow:0 2px 8px rgba(0,0,0,.05);"></div>
+            </div>
+
+            <div id="poster-edu-detalle-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; background:var(--tint-verde); color:var(--c-educacion-d); padding:4px 12px; border-radius:999px; margin-bottom:6px;">
+              <span class="material-symbols-outlined" style="font-size:14px; margin:0;">school</span>
+              <span id="poster-edu-detalle-text">Encuesta General</span>
+            </div>
+
+            <p style="font-size:12.5px; font-weight:700; margin:6px 0 2px; display:flex; align-items:center; justify-content:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:17px; color:var(--c-educacion-d); margin:0;">qr_code_scanner</span>
+              Escaneá con tu celular para responder
+            </p>
+            <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta anónima para familias · 2 minutos</p>
+          </div>
+
+          <!-- MENSAJE WHATSAPP -->
+          <div style="margin-top:14px;">
+            <div style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
+              <span style="display:flex; align-items:center; gap:5px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">chat</span>
+                Mensaje WhatsApp para Familias:
+              </span>
+              <button type="button" id="btn-copy-link-edu" style="border:none; background:transparent; font-size:11.5px; color:var(--brand-d); font-weight:700; cursor:pointer; text-decoration:underline;">
+                Copiar solo link
+              </button>
+            </div>
+            <div id="whatsapp-preview-box"
+              style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+            <button type="button" id="btn-copy-wsp" class="btn-pill btn-educacion" style="flex:1; min-width:130px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
+            </button>
+            <button type="button" id="btn-open-wsp" class="btn-pill btn-outline" style="flex:1; min-width:130px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
+            </button>
+            <button type="button" onclick="printEduPoster()" class="btn-pill btn-outline" style="flex:1; min-width:130px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir QR
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Dirección de Estadística · Gobierno de Río Cuarto</b><br>
+      Infraestructura del Observatorio Social · Gabinete Social + LMetB
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    let qrcodeSalud = null;
+    let qrcodeEdu = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initSaludQr();
+      initEducacionEnvio();
+    });
+
+    function initSaludQr() {
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+
+      centros.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `${c.nombre} (${c.barrio})`;
+        opt.dataset.nombre = c.nombre;
+        opt.dataset.barrio = c.barrio;
+        selectSalud.appendChild(opt);
+      });
+
+      function onSaludCentroChange() {
+        const centroId = selectSalud.value;
+        const centro = centros.find(c => c.id === centroId);
+        selectEsp.innerHTML = '<option value="">Todas las especialidades (Cartel General de Sala)</option>';
+        if (centro && centro.especialidades) {
+          centro.especialidades.forEach(esp => {
+            const optEsp = document.createElement('option');
+            optEsp.value = esp.nombre;
+            optEsp.textContent = esp.nombre;
+            selectEsp.appendChild(optEsp);
+          });
+        }
+        updateSaludPoster();
+      }
+
+      selectSalud.addEventListener('change', onSaludCentroChange);
+      selectEsp.addEventListener('change', updateSaludPoster);
+
+      onSaludCentroChange();
+
+      document.getElementById('btn-copy-link-salud').addEventListener('click', () => {
+        const opt = selectSalud.selectedOptions[0];
+        if (!opt) return;
+        const currentUrl = new URL('encuesta-salud.html', window.location.href);
+        currentUrl.searchParams.set('centro', opt.value);
+        if (selectEsp.value) {
+          currentUrl.searchParams.set('especialidad', selectEsp.value);
+        }
+        navigator.clipboard.writeText(currentUrl.toString());
+        alert('¡Enlace directo copiado al portapapeles!');
+      });
+    }
+
+    function updateSaludPoster() {
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const opt = selectSalud.selectedOptions[0];
+      if (!opt) return;
+
+      const espVal = selectEsp.value;
+
+      document.getElementById('poster-salud-nombre').textContent = opt.dataset.nombre;
+      document.getElementById('poster-salud-barrio').textContent = `B° ${opt.dataset.barrio} · Río Cuarto`;
+      document.getElementById('poster-salud-esp-text').textContent = espVal ? `Consultorio: ${espVal}` : 'Atención General de Sala';
+
+      const targetUrl = new URL('encuesta-salud.html', window.location.href);
+      targetUrl.searchParams.set('centro', opt.value);
+      if (espVal) {
+        targetUrl.searchParams.set('especialidad', espVal);
+      }
+
+      const qrContainer = document.getElementById('qrcode-target-salud');
+      qrContainer.innerHTML = '';
+
+      qrcodeSalud = new QRCode(qrContainer, {
+        text: targetUrl.toString(),
+        width: 170,
+        height: 170,
+        colorDark: "#14171A",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function printSaludPoster() {
+      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
+      document.getElementById('printable-poster').classList.add('print-active');
+      window.print();
+    }
+
+    function printEduPoster() {
+      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
+      document.getElementById('printable-poster-edu').classList.add('print-active');
+      window.print();
+    }
+
+    function initEducacionEnvio() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
+      const selectSala = document.getElementById('select-educacion-sala');
+      const selectDocente = document.getElementById('select-educacion-docente');
+
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+
+      insts.forEach(i => {
+        const opt = document.createElement('option');
+        opt.value = i.id;
+        opt.textContent = `${i.nombre} (${i.barrio})`;
+        selectEdu.appendChild(opt);
+      });
+
+      selectEdu.addEventListener('change', () => {
+        onEduInstChange();
+        updateEduOutputs();
+      });
+
+      selectTurno.addEventListener('change', () => {
+        onEduTurnoOrSalaChange();
+        updateEduOutputs();
+      });
+
+      selectSala.addEventListener('change', () => {
+        onEduTurnoOrSalaChange();
+        updateEduOutputs();
+      });
+
+      selectDocente.addEventListener('change', updateEduOutputs);
+
+      onEduInstChange();
+      updateEduOutputs();
+
+      document.getElementById('btn-copy-wsp').addEventListener('click', () => {
+        const text = document.getElementById('whatsapp-preview-box').innerText;
+        navigator.clipboard.writeText(text);
+        alert('¡Mensaje copiado al portapapeles! Listo para pegar en WhatsApp.');
+      });
+
+      document.getElementById('btn-open-wsp').addEventListener('click', () => {
+        const text = encodeURIComponent(document.getElementById('whatsapp-preview-box').innerText);
+        window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+      });
+
+      document.getElementById('btn-copy-link-edu').addEventListener('click', () => {
+        const url = buildEduUrl();
+        navigator.clipboard.writeText(url);
+        alert('¡Enlace directo copiado al portapapeles!');
+      });
+    }
+
+    function onEduInstChange() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
+      const selectSala = document.getElementById('select-educacion-sala');
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+
+      // Poblar Turnos
+      selectTurno.innerHTML = '<option value="">Todos los turnos</option>';
+      if (inst && inst.turnos) {
+        inst.turnos.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          opt.textContent = `Turno ${t}`;
+          selectTurno.appendChild(opt);
+        });
+      }
+
+      // Poblar Salas
+      selectSala.innerHTML = '<option value="">Todas las salas</option>';
+      if (inst && inst.salas) {
+        inst.salas.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s;
+          opt.textContent = `Sala: ${s}`;
+          selectSala.appendChild(opt);
+        });
+      }
+
+      onEduTurnoOrSalaChange();
+    }
+
+    function onEduTurnoOrSalaChange() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
+      const selectSala = document.getElementById('select-educacion-sala');
+      const selectDocente = document.getElementById('select-educacion-docente');
+
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+
+      const turnoVal = selectTurno.value;
+      const salaVal = selectSala.value;
+
+      selectDocente.innerHTML = '<option value="">Todo el equipo docente</option>';
+
+      if (inst && inst.distribucion) {
+        let filtradas = inst.distribucion;
+        if (turnoVal) filtradas = filtradas.filter(f => f.turno === turnoVal);
+        if (salaVal) filtradas = filtradas.filter(f => f.sala === salaVal);
+
+        const uniqueDocs = [...new Set(filtradas.map(f => f.docente))].filter(Boolean);
+        uniqueDocs.forEach(doc => {
+          const opt = document.createElement('option');
+          opt.value = doc;
+          // Buscar info de sala y turno para la docente
+          const docRow = filtradas.find(f => f.docente === doc);
+          opt.textContent = docRow ? `${doc} (${docRow.sala} - ${docRow.turno})` : doc;
+          selectDocente.appendChild(opt);
+        });
+      } else if (inst && inst.docentes) {
+        inst.docentes.forEach(doc => {
+          const opt = document.createElement('option');
+          opt.value = doc;
+          opt.textContent = doc;
+          selectDocente.appendChild(opt);
+        });
+      }
+    }
+
+    function buildEduUrl() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
+      const selectSala = document.getElementById('select-educacion-sala');
+      const selectDocente = document.getElementById('select-educacion-docente');
+
+      const targetUrl = new URL('encuesta-educacion.html', window.location.href);
+      if (selectEdu.value) targetUrl.searchParams.set('centro', selectEdu.value);
+      if (selectTurno.value) targetUrl.searchParams.set('turno', selectTurno.value);
+      if (selectSala.value) targetUrl.searchParams.set('sala', selectSala.value);
+      if (selectDocente.value) targetUrl.searchParams.set('docente', selectDocente.value);
+
+      return targetUrl.toString();
+    }
+
+    function updateEduOutputs() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
+      const selectSala = document.getElementById('select-educacion-sala');
+      const selectDocente = document.getElementById('select-educacion-docente');
+
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+      if (!inst) return;
+
+      const turnoVal = selectTurno.value;
+      const salaVal = selectSala.value;
+      const docVal = selectDocente.value;
+
+      const linkStr = buildEduUrl();
+
+      // Poster elements
+      document.getElementById('poster-edu-nombre').textContent = inst.nombre;
+      document.getElementById('poster-edu-sub').textContent = `${inst.direccion} · B° ${inst.barrio}`;
+
+      const detalleItems = [];
+      if (salaVal) detalleItems.push(`Sala: ${salaVal}`);
+      if (turnoVal) detalleItems.push(`Turno: ${turnoVal}`);
+      if (docVal) detalleItems.push(`Docente: ${docVal}`);
+
+      const detalleText = detalleItems.length > 0 ? detalleItems.join(' · ') : 'Evaluación General de Familias';
+      document.getElementById('poster-edu-detalle-text').textContent = detalleText;
+
+      // QR Code
+      const qrContainer = document.getElementById('qrcode-target-edu');
+      qrContainer.innerHTML = '';
+      qrcodeEdu = new QRCode(qrContainer, {
+        text: linkStr,
+        width: 170,
+        height: 170,
+        colorDark: "#14171A",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // WhatsApp Message Text
+      let headerGreeting = `👋 *Estimadas familias de ${inst.nombre}`;
+      if (salaVal || turnoVal || docVal) {
+        const subSpecs = [];
+        if (salaVal) subSpecs.push(`Sala ${salaVal}`);
+        if (turnoVal) subSpecs.push(`Turno ${turnoVal}`);
+        if (docVal) subSpecs.push(`Seño ${docVal}`);
+        headerGreeting += ` (${subSpecs.join(' - ')})`;
+      }
+      headerGreeting += ':*';
+
+      const wspText = `${headerGreeting}
+
+Desde la Secretaría de Educación y la Dirección de Estadística de la Municipalidad de Río Cuarto los invitamos a participar de una breve *encuesta de satisfacción anónima* (demora 2 minutos) sobre el cuidado, la organización institucional, la propuesta pedagógica y el acompañamiento de nuestros chicos.
+
+Su opinión es fundamental para seguir mejorando día a día.
+
+👉 *Completar encuesta precompletada aquí:*
+${linkStr}
+
+¡Muchas gracias por acompañarnos en el crecimiento y aprendizaje de sus hijos! 💙`;
+
+      document.getElementById('whatsapp-preview-box').innerText = wspText;
+    }
+  </script>
+</body>
+
+</html>

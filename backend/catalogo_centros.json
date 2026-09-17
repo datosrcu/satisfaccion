@@ -1,0 +1,668 @@
+{
+  "version": "1.0",
+  "actualizado": "2026-09-09",
+  "salud": {
+    "centros": [
+      {
+        "id": "CS_CABRERA",
+        "nombre": "Centro de Salud Municipal (Calle Cabrera)",
+        "tipo": "Centro 24 Horas",
+        "barrio": "Centro",
+        "direccion": "Cabrera 1322",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Martín Gómez", "Dra. Carolina Rossi", "Dr. Alejandro Morales", "Dra. Mariana Lucero"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz", "Dr. Fabián Herrero", "Dra. Sandra Ojeda", "Dr. Lucas Ferreyra"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Dra. Ana Laura Peiovich", "Dra. Silvina Silva", "Dr. Marcelo Pedraza", "Lic. Mónica Roda"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dr. Gonzalo Pereyra", "Dra. Valeria Busto", "Dra. Florencia Mansilla"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Lic. Andrea Molina", "Enf. Roberto Suárez", "Enf. Paola Giménez"]
+          },
+          {
+            "nombre": "Salud Mental y Psicología",
+            "profesionales": ["Lic. Sofía Carrizo", "Lic. Federico Albarracín", "Lic. Camila Ortiz"]
+          },
+          {
+            "nombre": "Nutrición y Trabajo Social",
+            "profesionales": ["Lic. Lucía Menéndez", "Lic. Daniela Varela"]
+          },
+          {
+            "nombre": "Guardia Médica 24hs",
+            "profesionales": ["Médico de Guardia", "Equipo de Guardia"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_01",
+        "nombre": "Dispensario N° 1 (B° Alberdi)",
+        "tipo": "CAPS",
+        "barrio": "Alberdi",
+        "direccion": "Alberdi y Pasaje Público",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Martín Gómez", "Dra. Estela Maris Blanco"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz", "Dra. Sandra Ojeda"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Lic. Mónica Roda", "Dra. Silvina Silva"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dr. Gonzalo Pereyra"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Roberto Suárez", "Enf. Paola Giménez"]
+          },
+          {
+            "nombre": "Salud Mental y Trabajo Social",
+            "profesionales": ["Lic. Sofía Carrizo", "Lic. Daniela Varela"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_02",
+        "nombre": "Dispensario N° 2 (B° Banda Norte)",
+        "tipo": "CAPS",
+        "barrio": "Banda Norte",
+        "direccion": "Marcelo T. de Alvear y Chile",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Alejandro Morales", "Dra. Carolina Rossi"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Fabián Herrero", "Dr. Lucas Ferreyra"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Dra. Ana Laura Peiovich", "Lic. María José Marino"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dra. Valeria Busto"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Lic. Andrea Molina", "Enf. Luciana Peralta"]
+          },
+          {
+            "nombre": "Psicología",
+            "profesionales": ["Lic. Federico Albarracín"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_03",
+        "nombre": "Dispensario N° 3 (B° Bimaco)",
+        "tipo": "CAPS",
+        "barrio": "Bimaco",
+        "direccion": "Av. Presidente Perón y Larrea",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Mariana Lucero", "Dr. Claudio Funes"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Lic. Hebe Saucedo", "Lic. Cecilia Peñeñory"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Carlos Domínguez", "Enf. Marina López"]
+          },
+          {
+            "nombre": "Nutrición",
+            "profesionales": ["Lic. Lucía Menéndez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_04",
+        "nombre": "Dispensario N° 4 (B° Fénix)",
+        "tipo": "CAPS",
+        "barrio": "Fénix",
+        "direccion": "Eustachio Medina y Rawson",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Martín Gómez", "Dra. Mariana Lucero"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Lucas Ferreyra"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dra. Florencia Mansilla"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Lic. Andrea Molina", "Enf. Silvia Godoy"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_05",
+        "nombre": "Dispensario N° 5 (B° Santa Rosa)",
+        "tipo": "CAPS",
+        "barrio": "Santa Rosa",
+        "direccion": "Ruta 8 y Las Higueras",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Alejandro Morales"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Sandra Ojeda"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Lic. Hebe Saucedo"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Roberto Suárez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_06",
+        "nombre": "Dispensario N° 6 (B° Roque Sáenz Peña / IPV)",
+        "tipo": "CAPS",
+        "barrio": "Roque Sáenz Peña",
+        "direccion": "Gdor. Guzmán 1450",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Carolina Rossi"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Fabián Herrero"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Dra. Gabriela Alcántara"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Paola Giménez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_07",
+        "nombre": "Dispensario N° 7 (B° Abilene)",
+        "tipo": "CAPS",
+        "barrio": "Abilene",
+        "direccion": "Capitán Giachino y Gaudard",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Claudio Funes"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dra. Valeria Busto"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Luciana Peralta"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_08",
+        "nombre": "Dispensario N° 8 (B° Tiro Federal / Pizarro)",
+        "tipo": "CAPS",
+        "barrio": "Pizarro",
+        "direccion": "Tiro Federal y Pasaje Pizarro",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Mariana Lucero"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Sandra Ojeda"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Lic. Mónica Roda"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Carlos Domínguez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_09",
+        "nombre": "Dispensario N° 9 (B° Oncativo)",
+        "tipo": "CAPS",
+        "barrio": "Oncativo",
+        "direccion": "Oncativo y Río Limay",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Martín Gómez"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Lucas Ferreyra"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Silvia Godoy"]
+          },
+          {
+            "nombre": "Trabajo Social",
+            "profesionales": ["Lic. Daniela Varela"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_10",
+        "nombre": "Dispensario N° 10 (B° Castelli)",
+        "tipo": "CAPS",
+        "barrio": "Castelli",
+        "direccion": "Castelli y Mosconi",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Carolina Rossi"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Fabián Herrero"]
+          },
+          {
+            "nombre": "Ginecología y Obstetricia",
+            "profesionales": ["Dra. Gabriela Alcántara"]
+          },
+          {
+            "nombre": "Odontología",
+            "profesionales": ["Dr. Gonzalo Pereyra"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Lic. Andrea Molina"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_11",
+        "nombre": "Dispensario N° 11 (B° Las Delicias)",
+        "tipo": "CAPS",
+        "barrio": "Las Delicias",
+        "direccion": "Quirico Porreca y Colombia",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Alejandro Morales"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Sandra Ojeda"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Roberto Suárez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_12",
+        "nombre": "Dispensario N° 12 (B° Güemes)",
+        "tipo": "CAPS",
+        "barrio": "Güemes",
+        "direccion": "Güemes y Pasaje Público",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Mariana Lucero"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Paola Giménez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_13",
+        "nombre": "Dispensario N° 13 (B° Jardín Norte)",
+        "tipo": "CAPS",
+        "barrio": "Jardín Norte",
+        "direccion": "Chiclana y Laguna Blanca",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Claudio Funes"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Lucas Ferreyra"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Luciana Peralta"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_14",
+        "nombre": "Dispensario N° 14 (B° Hipódromo)",
+        "tipo": "CAPS",
+        "barrio": "Hipódromo",
+        "direccion": "Av. Gdor. Sabattini y Pje. Hipódromo",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Martín Gómez"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dr. Fabián Herrero"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Carlos Domínguez"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_15",
+        "nombre": "Dispensario N° 15 (B° 130 Viviendas)",
+        "tipo": "CAPS",
+        "barrio": "130 Viviendas",
+        "direccion": "Banda Norte 130 Viv.",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dra. Carolina Rossi"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Sandra Ojeda"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Silvia Godoy"]
+          }
+        ]
+      },
+      {
+        "id": "CAPS_16",
+        "nombre": "Dispensario N° 16 (B° Alberdi Norte)",
+        "tipo": "CAPS",
+        "barrio": "Alberdi Norte",
+        "direccion": "Alberdi Norte",
+        "especialidades": [
+          {
+            "nombre": "Medicina General / Clínica Médica",
+            "profesionales": ["Dr. Alejandro Morales"]
+          },
+          {
+            "nombre": "Pediatría",
+            "profesionales": ["Dra. Gladys Díaz"]
+          },
+          {
+            "nombre": "Enfermería y Vacunatorio",
+            "profesionales": ["Enf. Roberto Suárez"]
+          }
+        ]
+      },
+      {
+        "id": "POSTA_MALVINAS",
+        "nombre": "Posta Sanitaria Malvinas Argentinas",
+        "tipo": "Posta Sanitaria",
+        "barrio": "Malvinas",
+        "direccion": "Malvinas Argentinas",
+        "especialidades": [
+          {
+            "nombre": "Medicina General y Enfermería",
+            "profesionales": ["Equipo de Salud Comunitaria", "Enf. Luciana Peralta"]
+          },
+          {
+            "nombre": "Vacunación y Control",
+            "profesionales": ["Lic. Andrea Molina"]
+          }
+        ]
+      },
+      {
+        "id": "POSTA_SAN_CAYETANO",
+        "nombre": "Posta Sanitaria San Cayetano",
+        "tipo": "Posta Sanitaria",
+        "barrio": "San Cayetano",
+        "direccion": "San Cayetano",
+        "especialidades": [
+          {
+            "nombre": "Medicina General y Enfermería",
+            "profesionales": ["Equipo de Salud Comunitaria", "Enf. Carlos Domínguez"]
+          },
+          {
+            "nombre": "Vacunación y Control",
+            "profesionales": ["Enf. Paola Giménez"]
+          }
+        ]
+      }
+    ]
+  },
+  "educacion": {
+    "instituciones": [
+      {
+        "id": "SC_SAN_ROQUE",
+        "nombre": "Sala Cuna San Roque",
+        "tipo": "Sala Cuna Municipal",
+        "barrio": "San Roque",
+        "direccion": "Pasaje San Roque 450",
+        "salas": [
+          {
+            "nombre": "Lactantes y Deambuladores (45 días a 1 año)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Claudia Romero", "Aux. Patricia Moyano"]
+          },
+          {
+            "nombre": "Sala de 2 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Lorena Bazán", "Seño Natalia Gigena"]
+          },
+          {
+            "nombre": "Sala de 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Mariana Aguirre", "Aux. Romina Flores"]
+          }
+        ]
+      },
+      {
+        "id": "SC_RAYITO_SOL",
+        "nombre": "Sala Cuna Rayito de Sol",
+        "tipo": "Sala Cuna Municipal",
+        "barrio": "Banda Norte",
+        "direccion": "Calle Pública s/n - Banda Norte",
+        "salas": [
+          {
+            "nombre": "Lactantes y Deambuladores (45 días a 1 año)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Gabriela Torres", "Aux. Laura Toledo"]
+          },
+          {
+            "nombre": "Sala de 2 y 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Valeria Rossi", "Seño Florencia Viale"]
+          }
+        ]
+      },
+      {
+        "id": "SC_RINCON_SUENOS",
+        "nombre": "Sala Cuna Rincón de Sueños",
+        "tipo": "Sala Cuna Municipal",
+        "barrio": "Alberdi",
+        "direccion": "Av. Colombres y Tejerina",
+        "salas": [
+          {
+            "nombre": "Lactantes (45 días a 1 año)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Carolina Benítez", "Aux. Marisa Gómez"]
+          },
+          {
+            "nombre": "Sala de 2 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Eugenia Silva"]
+          },
+          {
+            "nombre": "Sala de 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Andrea Palacios"]
+          }
+        ]
+      },
+      {
+        "id": "SC_HORNERITOS",
+        "nombre": "Sala Cuna Los Horneritos",
+        "tipo": "Sala Cuna Municipal",
+        "barrio": "Oncativo",
+        "direccion": "Río Limay y Oncativo",
+        "salas": [
+          {
+            "nombre": "Lactantes y Deambuladores",
+            "turnos": ["Turno Mañana"],
+            "educadores": ["Seño Silvana Castro", "Aux. Miriam Sosa"]
+          },
+          {
+            "nombre": "Sala Integrada (2 y 3 años)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Carla Quiroga", "Seño Daniela Ortiz"]
+          }
+        ]
+      },
+      {
+        "id": "SC_PEQUENOS_PASOS",
+        "nombre": "Sala Cuna Pequeños Pasos",
+        "tipo": "Sala Cuna Municipal",
+        "barrio": "Bimaco",
+        "direccion": "Larrea 890",
+        "salas": [
+          {
+            "nombre": "Lactantes y Deambuladores",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Melina Godoy", "Aux. Lucía Correa"]
+          },
+          {
+            "nombre": "Sala de 2 y 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Seño Verónica Bustos"]
+          }
+        ]
+      },
+      {
+        "id": "JM_CAMINITO",
+        "nombre": "Jardín Maternal Municipal Caminito",
+        "tipo": "Jardín Maternal",
+        "barrio": "Centro",
+        "direccion": "Constitución y 25 de Mayo",
+        "salas": [
+          {
+            "nombre": "Lactantes",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Prof. Marisa Cardozo", "Aux. Viviana Rivas"]
+          },
+          {
+            "nombre": "Sala de 2 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Prof. Belén Carrizo", "Prof. Nadia Molina"]
+          },
+          {
+            "nombre": "Sala de 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde", "Jornada Extendida"],
+            "educadores": ["Prof. Gisela Fuentes", "Prof. Noelia Mansilla"]
+          }
+        ]
+      },
+      {
+        "id": "JM_PULGARCITO",
+        "nombre": "Jardín Maternal Municipal Pulgarcito",
+        "tipo": "Jardín Maternal",
+        "barrio": "Fénix",
+        "direccion": "Rawson 420",
+        "salas": [
+          {
+            "nombre": "Sala de 1 y 2 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Prof. Luciana Vega", "Aux. Sandra Pereyra"]
+          },
+          {
+            "nombre": "Sala de 3 años",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Prof. Jimena Olmedo", "Prof. Carla Duarte"]
+          }
+        ]
+      },
+      {
+        "id": "EL_ALBERDI",
+        "nombre": "Espacio Lúdico y de Aprendizaje Alberdi",
+        "tipo": "Espacio Lúdico",
+        "barrio": "Alberdi",
+        "direccion": "Centro Social Alberdi",
+        "salas": [
+          {
+            "nombre": "Taller de Primera Infancia y Juego (1 a 3 años)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Equipo Psicomotricidad y Juego", "Prof. Soledad Ramos"]
+          },
+          {
+            "nombre": "Espacio de Apoyo y Estimulación Temprana",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Lic. Romina Lucero", "Prof. Camila Ferreyra"]
+          }
+        ]
+      },
+      {
+        "id": "EL_BANDA_NORTE",
+        "nombre": "Espacio Lúdico y de Aprendizaje Banda Norte",
+        "tipo": "Espacio Lúdico",
+        "barrio": "Banda Norte",
+        "direccion": "Parque Sarmiento / Banda Norte",
+        "salas": [
+          {
+            "nombre": "Taller de Primera Infancia y Juego (1 a 3 años)",
+            "turnos": ["Turno Mañana", "Turno Tarde"],
+            "educadores": ["Equipo de Estimulación y Recreación", "Prof. Mariana Gil"]
+          }
+        ]
+      }
+    ]
+  }
+}
