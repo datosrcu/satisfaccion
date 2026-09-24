@@ -220,7 +220,7 @@ function doPost(e) {
         params.limpieza_espacio_nota || "",
         
         // Bloque 4: P12a–P12q
-        params.docente_nombre || "Equipo Docente",
+        params.docente_nombre || "",
         params.docente_info_actividades_nota || "",
         params.docente_canales_adecuados_nota || "",
         params.docente_info_clara_nota || "",
@@ -239,7 +239,7 @@ function doPost(e) {
         params.docente_variedad_propuestas_nota || "",
         
         // Bloque 5: P13a–P13d
-        params.auxiliar_nombre || "Equipo Auxiliar",
+        params.auxiliar_nombre || "",
         params.auxiliar_desempeno_nota || "",
         params.auxiliar_higiene_orden_nota || "",
         params.auxiliar_contencion_nota || "",

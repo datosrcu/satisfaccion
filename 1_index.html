@@ -802,7 +802,7 @@
             <div class="tool-field" style="grid-column: 1 / -1;">
               <label>4. Docente de Sala a evaluar (Opcional)</label>
               <select id="select-educacion-docente">
-                <option value="">Todo el equipo docente</option>
+                <option value="">Sin docente prefijado (la familia seleccionará en la encuesta)</option>
               </select>
             </div>
           </div>
@@ -1071,7 +1071,7 @@
       const turnoVal = selectTurno.value;
       const salaVal = selectSala.value;
 
-      selectDocente.innerHTML = '<option value="">Todo el equipo docente</option>';
+      selectDocente.innerHTML = '<option value="">Sin docente prefijado (la familia seleccionará en la encuesta)</option>';
 
       if (inst && inst.distribucion) {
         let filtradas = inst.distribucion;

@@ -1399,7 +1399,6 @@
 
       // Poblar desplegable de Docentes (P12a) con el padrón oficial del jardín
       selectDocente.innerHTML = '<option value="">Selecciona la/el docente de la sala...</option>';
-      selectDocente.appendChild(new Option("Equipo Docente General / Institucional", "Equipo Docente General"));
 
       if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
         let filtradas = institucionSeleccionada.distribucion;
@@ -1438,15 +1437,24 @@
 
       // Poblar desplegable de Auxiliares (P13a)
       selectAuxiliar.innerHTML = '<option value="">Selecciona la/el auxiliar de la sala...</option>';
-      const auxiliaresList = [
-        "Equipo de Auxiliares de la Institución",
-        "Auxiliar Maternal / Personal de Cuidado",
-        "Auxiliar de Sala - Turno Mañana",
-        "Auxiliar de Sala - Turno Tarde"
-      ];
-      auxiliaresList.forEach(aux => {
-        selectAuxiliar.appendChild(new Option(aux, aux));
-      });
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        let filtradasAux = institucionSeleccionada.distribucion;
+        if (turnoVal) filtradasAux = filtradasAux.filter(f => f.turno.toLowerCase().includes(turnoVal.toLowerCase()) || turnoVal.toLowerCase().includes(f.turno.toLowerCase()));
+        if (salaVal) filtradasAux = filtradasAux.filter(f => f.sala.toLowerCase().includes(salaVal.toLowerCase()) || salaVal.toLowerCase().includes(f.sala.toLowerCase()));
+        if (filtradasAux.length === 0) filtradasAux = institucionSeleccionada.distribucion;
+
+        const uniqueAux = [...new Set(filtradasAux.map(f => f.auxiliar))].filter(Boolean);
+        uniqueAux.forEach(aux => {
+          const row = filtradasAux.find(f => f.auxiliar === aux);
+          const label = row && row.sala ? `${aux} (${row.sala} - Turno ${row.turno})` : aux;
+          selectAuxiliar.appendChild(new Option(label, aux));
+        });
+      }
+      if (selectAuxiliar.options.length <= 1) {
+        ["Auxiliar de Sala - Turno Mañana", "Auxiliar de Sala - Turno Tarde", "Auxiliar Maternal / Personal de Cuidado"].forEach(aux => {
+          selectAuxiliar.appendChild(new Option(aux, aux));
+        });
+      }
       selectAuxiliar.disabled = false;
 
       // Auto-seleccionar auxiliar si viene por URL
@@ -1459,6 +1467,44 @@
           }
         }
       }
+
+      // Sincronizar automáticamente sala, turno y auxiliar al seleccionar docente
+      selectDocente.onchange = () => {
+        const chosenDoc = selectDocente.value;
+        if (!chosenDoc || !institucionSeleccionada || !institucionSeleccionada.distribucion) return;
+        const match = institucionSeleccionada.distribucion.find(d => d.docente === chosenDoc);
+        if (match) {
+          if (match.turno && inputTurno) inputTurno.value = match.turno;
+          if (match.sala && inputSala) inputSala.value = match.sala;
+          if (match.auxiliar && selectAuxiliar && (!selectAuxiliar.value || selectAuxiliar.selectedIndex === 0)) {
+            for (let i = 0; i < selectAuxiliar.options.length; i++) {
+              if (selectAuxiliar.options[i].value === match.auxiliar) {
+                selectAuxiliar.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        }
+      };
+
+      // Sincronizar automáticamente sala, turno y docente al seleccionar auxiliar
+      selectAuxiliar.onchange = () => {
+        const chosenAux = selectAuxiliar.value;
+        if (!chosenAux || !institucionSeleccionada || !institucionSeleccionada.distribucion) return;
+        const match = institucionSeleccionada.distribucion.find(d => d.auxiliar === chosenAux);
+        if (match) {
+          if (match.turno && inputTurno && !inputTurno.value) inputTurno.value = match.turno;
+          if (match.sala && inputSala && !inputSala.value) inputSala.value = match.sala;
+          if (match.docente && selectDocente && (!selectDocente.value || selectDocente.selectedIndex === 0)) {
+            for (let i = 0; i < selectDocente.options.length; i++) {
+              if (selectDocente.options[i].value === match.docente) {
+                selectDocente.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        }
+      };
     }
 
     function initChipSelectors() {
@@ -1575,7 +1621,7 @@
           limpieza_espacio_nota: formData.get('limpieza_espacio_nota'),
 
           // Bloque 4: Docentes
-          docente_nombre: formData.get('docente_nombre') || "Equipo Docente",
+          docente_nombre: formData.get('docente_nombre') || "",
           docente_info_actividades_nota: formData.get('docente_info_actividades_nota'),
           docente_canales_adecuados_nota: formData.get('docente_canales_adecuados_nota'),
           docente_info_clara_nota: formData.get('docente_info_clara_nota'),
@@ -1594,7 +1640,7 @@
           docente_variedad_propuestas_nota: formData.get('docente_variedad_propuestas_nota'),
 
           // Bloque 5: Auxiliares
-          auxiliar_nombre: formData.get('auxiliar_nombre') || "Equipo Auxiliar",
+          auxiliar_nombre: formData.get('auxiliar_nombre') || "No aplica / Sin auxiliar",
           auxiliar_desempeno_nota: formData.get('auxiliar_desempeno_nota'),
           auxiliar_higiene_orden_nota: formData.get('auxiliar_higiene_orden_nota'),
           auxiliar_contencion_nota: formData.get('auxiliar_contencion_nota'),

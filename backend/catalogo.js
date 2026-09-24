@@ -1,11 +1,11 @@
 // Catálogo maestro de Centros de Salud y Red de Educación Inicial - Municipalidad de Río Cuarto
-// Conectado e integrado directamente con el padrón oficial del proyecto «Presencia del Estado».
-// Padrón de Salud y Educación actualizado con base oficial: 2026-09-11
+// Conectado e integrado directamente con la BBDD Única para Encuestas de Satisfacción (Hoja «Jardines Maternales Municipales»).
+// Padrón de Salud y Educación actualizado con base oficial: 2026-09-24
 
 window.CATALOGO_MUNICIPAL = {
   "version": "2.0",
-  "actualizado": "2026-09-11",
-  "fuente": "Padrón Oficial Presencia del Estado - Municipalidad de Río Cuarto",
+  "actualizado": "2026-09-24",
+  "fuente": "Padrón Oficial Presencia del Estado y BBDD Única de Satisfacción Ciudadana - Municipalidad de Río Cuarto",
   "salud": {
     "categoria": "Centros de salud, maternidad y postas sanitarias",
     "total": 24,
@@ -1848,118 +1848,9 @@ window.CATALOGO_MUNICIPAL = {
     ]
   },
   "educacion": {
-    "categoria": "Jardines de infantes, salas cuna y centros de formación",
-    "total": 30,
+    "categoria": "Jardines maternales y salas cuna municipales",
+    "total": 24,
     "instituciones": [
-      {
-        "id": "JM_GORRIONCITOS",
-        "nombre": "Jardin de Infantes Gorrioncitos",
-        "tipo": "Jardín Maternal Municipal",
-        "barrio": "Santa Teodora",
-        "sector": "C (Centro)",
-        "direccion": "JAIME GIL 230, RIO CUARTO, CORDOBA",
-        "telefono": "03584768410 (Int. 310)",
-        "whatsapp": "3584114553",
-        "email": "programajardinesmaternales@gmail.com",
-        "instagram": "educacion.rc",
-        "coordenadas": "-33.11865350228839, -64.34434841967725",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
-        ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
-        ]
-      },
       {
         "id": "JM_AGEC",
         "nombre": "Jardín de Infantes AGEC",
@@ -1982,24 +1873,20 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "María del Carmen Spizzirri",
-          "Georgina Longhi",
-          "María del Carmen Carbonel"
+          "María Del Carmen Carbonel"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "María del Carmen Spizzirri"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Georgina Longhi"
+            "docente": "María del Carmen Spizzirri",
+            "auxiliar": "Georgina Longhi"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "María del Carmen Carbonel"
+            "docente": "María Del Carmen Carbonel",
+            "auxiliar": ""
           }
         ],
         "estructura": [
@@ -2021,6 +1908,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Georgina Longhi"
         ]
       },
       {
@@ -2044,35 +1934,26 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
-          "Sandra Crespi",
-          "Analía Sergent",
-          "Evelyn Sosa"
+          "Sandra Crespi"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Sandra Crespi"
+            "docente": "Sandra Crespi",
+            "auxiliar": "Analía Sergent"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Analía Sergent"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Evelyn Sosa"
+            "docente": "Sandra Crespi",
+            "auxiliar": "Evelyn Sosa"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Sandra Crespi"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Analía Sergent"
+            "docente": "Sandra Crespi",
+            "auxiliar": "Analía Sergent"
           }
         ],
         "estructura": [
@@ -2096,6 +1977,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Analía Sergent",
+          "Evelyn Sosa"
         ]
       },
       {
@@ -2118,19 +2003,14 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
-          "Enma Contreras",
-          "Soledad Agüero"
+          "Enma Contreras"
         ],
         "distribucion": [
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Enma Contreras"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Soledad Agüero"
+            "docente": "Enma Contreras",
+            "auxiliar": "Soledad Agüero"
           }
         ],
         "estructura": [
@@ -2146,6 +2026,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Soledad Agüero"
         ]
       },
       {
@@ -2168,19 +2051,14 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "María Gabriela Rossarolli",
-          "Julieta Díaz"
+          "María Gabriela Rossarolli"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "María Gabriela Rossarolli"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Julieta Díaz"
+            "docente": "María Gabriela Rossarolli",
+            "auxiliar": "Julieta Díaz"
           }
         ],
         "estructura": [
@@ -2196,6 +2074,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Julieta Díaz"
         ]
       },
       {
@@ -2223,74 +2104,65 @@ window.CATALOGO_MUNICIPAL = {
         "docentes": [
           "Ángeles Campos",
           "Rosa Carrizo",
-          "Carolina Villarreal",
           "Nadia Elizabeth Piussi",
           "María Florencia Schiavi",
-          "Daniela Rodriguez",
           "Analía Barrera",
-          "Karen Álvarez",
           "Valeria Cooreman"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "2 años",
-            "docente": "Ángeles Campos"
+            "docente": "Ángeles Campos",
+            "auxiliar": "Carolina Villarreal"
           },
           {
             "turno": "Mañana",
             "sala": "2 años",
-            "docente": "Rosa Carrizo"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "2 años",
-            "docente": "Carolina Villarreal"
+            "docente": "Rosa Carrizo",
+            "auxiliar": "Carolina Villarreal"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
-            "docente": "Nadia Elizabeth Piussi"
+            "docente": "Ángeles Campos",
+            "auxiliar": "Daniela Rodriguez"
+          },
+          {
+            "turno": "Mañana",
+            "sala": "3 años",
+            "docente": "Rosa Carrizo",
+            "auxiliar": "Carolina Villarreal"
+          },
+          {
+            "turno": "Mañana",
+            "sala": "3 años",
+            "docente": "Nadia Elizabeth Piussi",
+            "auxiliar": "Daniela Rodriguez"
           },
           {
             "turno": "Mañana",
             "sala": "Lactarios",
-            "docente": "María Florencia Schiavi"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Lactarios",
-            "docente": "Daniela Rodriguez"
+            "docente": "María Florencia Schiavi",
+            "auxiliar": "Daniela Rodriguez"
           },
           {
             "turno": "Tarde",
             "sala": "Lactarios",
-            "docente": "Analía Barrera"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Lactarios",
-            "docente": "Karen Álvarez"
+            "docente": "Analía Barrera",
+            "auxiliar": "Karen Álvarez"
           },
           {
             "turno": "Tarde",
             "sala": "3 años",
-            "docente": "Valeria Cooreman"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "3 años",
-            "docente": "Daniela Rodriguez"
+            "docente": "Valeria Cooreman",
+            "auxiliar": "Daniela Rodriguez"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
-            "docente": "Rosa Carrizo"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "2 años",
-            "docente": "Carolina Villarreal"
+            "docente": "Rosa Carrizo",
+            "auxiliar": "Carolina Villarreal"
           }
         ],
         "estructura": [
@@ -2351,115 +2223,11 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
-      },
-      {
-        "id": "JM_EL_OSO_MELOSO",
-        "nombre": "Jardín de Infantes El Oso Meloso",
-        "tipo": "Jardín Maternal Municipal",
-        "barrio": "Jardín",
-        "sector": "B (Banda Norte)",
-        "direccion": "JUJUY 1142, RIO CUARTO, CORDOBA",
-        "telefono": "3584768410 (Int. 310)",
-        "whatsapp": "3584114553",
-        "email": "programajardinesmaternales@gmail.com",
-        "instagram": "educacion.rc",
-        "coordenadas": "-33.102889645639344, -64.33134428713039",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
         ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
+        "auxiliares": [
+          "Carolina Villarreal",
+          "Daniela Rodriguez",
+          "Karen Álvarez"
         ]
       },
       {
@@ -2485,8 +2253,6 @@ window.CATALOGO_MUNICIPAL = {
         "docentes": [
           "Verónica Rucci",
           "Analía Barrera",
-          "Camila Chávez",
-          "Yesica Petruzzi",
           "Carina Fischer",
           "Carla Depetris"
         ],
@@ -2494,42 +2260,26 @@ window.CATALOGO_MUNICIPAL = {
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Verónica Rucci"
+            "docente": "Verónica Rucci",
+            "auxiliar": "Camila Chávez"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Analía Barrera"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Camila Chávez"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Yesica Petruzzi"
+            "docente": "Analía Barrera",
+            "auxiliar": "Yesica Petruzzi"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Carina Fischer"
+            "docente": "Carina Fischer",
+            "auxiliar": "Camila Chávez"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Carla Depetris"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Camila Chávez"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Yesica Petruzzi"
+            "docente": "Carla Depetris",
+            "auxiliar": "Yesica Petruzzi"
           }
         ],
         "estructura": [
@@ -2556,6 +2306,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Camila Chávez",
+          "Yesica Petruzzi"
         ]
       },
       {
@@ -2579,30 +2333,20 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
-          "Carina Baldoncini",
-          "Iohanna Busso",
-          "Ihoanna Busso"
+          "Carina Baldoncini"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Carina Baldoncini"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Iohanna Busso"
+            "docente": "Carina Baldoncini",
+            "auxiliar": "Iohanna Busso"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Carina Baldoncini"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Ihoanna Busso"
+            "docente": "Carina Baldoncini",
+            "auxiliar": "Iohanna Busso"
           }
         ],
         "estructura": [
@@ -2625,6 +2369,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Iohanna Busso"
         ]
       },
       {
@@ -2649,30 +2396,20 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Vanina Vargas",
-          "Nadia Sosa",
-          "Julieta Robledo",
-          "Laura Aguirre"
+          "Julieta Robledo"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Vanina Vargas"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Nadia Sosa"
+            "docente": "Vanina Vargas",
+            "auxiliar": "Nadia Sosa"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Julieta Robledo"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Laura Aguirre"
+            "docente": "Julieta Robledo",
+            "auxiliar": "Laura Aguirre"
           }
         ],
         "estructura": [
@@ -2695,6 +2432,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Nadia Sosa",
+          "Laura Aguirre"
         ]
       },
       {
@@ -2718,42 +2459,34 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "Marta Romero",
-          "Cora Barra",
-          "Gabriela Méndez",
           "Marianela Romagnoli",
-          "Belén Torres"
+          "Marta Romero",
+          "Cora Barra"
         ],
         "distribucion": [
           {
-            "turno": "Tarde",
+            "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Marta Romero"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Cora Barra"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Gabriela Méndez"
+            "docente": "Marianela Romagnoli",
+            "auxiliar": "Gabriela Méndez"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Marianela Romagnoli"
+            "docente": "Marianela Romagnoli",
+            "auxiliar": "Belén Torres"
           },
           {
-            "turno": "Mañana",
+            "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Gabriela Méndez"
+            "docente": "Marta Romero",
+            "auxiliar": "Gabriela Méndez"
           },
           {
-            "turno": "Mañana",
+            "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Belén Torres"
+            "docente": "Cora Barra",
+            "auxiliar": "Gabriela Méndez"
           }
         ],
         "estructura": [
@@ -2778,6 +2511,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Gabriela Méndez",
+          "Belén Torres"
         ]
       },
       {
@@ -2794,52 +2531,37 @@ window.CATALOGO_MUNICIPAL = {
         "coordenadas": "-33.119478098289434, -64.32589901924807",
         "programas": "",
         "salas": [
-          "Múltiple",
+          "1 y 2 años",
           "2 y 3 años",
-          "1 y 2 años"
+          "Múltiple"
         ],
         "turnos": [
           "Tarde",
           "Mañana"
         ],
         "docentes": [
-          "Lucía Díaz",
-          "Ana Arrieta",
-          "Marta Romero",
-          "Mayra Vargas",
           "Julieta Macarena Requelme",
-          "Johana Avedaño"
+          "Marta Romero",
+          "Lucía Díaz"
         ],
         "distribucion": [
           {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Lucía Díaz"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Ana Arrieta"
+            "turno": "Mañana",
+            "sala": "1 y 2 años",
+            "docente": "Julieta Macarena Requelme",
+            "auxiliar": "Johana Avendaño"
           },
           {
             "turno": "Mañana",
             "sala": "2 y 3 años",
-            "docente": "Marta Romero"
+            "docente": "Marta Romero",
+            "auxiliar": "Mayra Vargas"
           },
           {
-            "turno": "Mañana",
-            "sala": "2 y 3 años",
-            "docente": "Mayra Vargas"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "1 y 2 años",
-            "docente": "Julieta Macarena Requelme"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "1 y 2 años",
-            "docente": "Johana Avedaño"
+            "turno": "Tarde",
+            "sala": "Múltiple",
+            "docente": "Lucía Díaz",
+            "auxiliar": "Ana Arrieta"
           }
         ],
         "estructura": [
@@ -2879,115 +2601,11 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
-      },
-      {
-        "id": "JM_INDIECITOS",
-        "nombre": "Jardín de Infantes Indiecitos",
-        "tipo": "Jardín Maternal Municipal",
-        "barrio": "Jardín Norte",
-        "sector": "B (Banda Norte)",
-        "direccion": "OMAGUACAS & 17 DE OCTUBRE , RIO CUARTO, CORDOBA",
-        "telefono": "3584768410 (Int. 310)",
-        "whatsapp": "3584114553",
-        "email": "programajardinesmaternales@gmail.com",
-        "instagram": "educacion.rc",
-        "coordenadas": "-33.08953475227366, -64.33055688708845",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
         ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
+        "auxiliares": [
+          "Johana Avendaño",
+          "Mayra Vargas",
+          "Ana Arrieta"
         ]
       },
       {
@@ -3012,29 +2630,20 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Juan Ignacio Quinteros",
-          "Celina Palacios",
           "Marianela Romagnoli"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Juan Ignacio Quinteros"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Celina Palacios"
+            "docente": "Juan Ignacio Quinteros",
+            "auxiliar": "Celina Palacios"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Marianela Romagnoli"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Celina Palacios"
+            "docente": "Marianela Romagnoli",
+            "auxiliar": "Celina Palacios"
           }
         ],
         "estructura": [
@@ -3057,6 +2666,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Celina Palacios"
         ]
       },
       {
@@ -3080,31 +2692,21 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "Lucía Coria",
-          "Sandra Cuitiño",
           "Noelia Brarda",
-          "Paola Sarandon"
+          "Lucía Coria"
         ],
         "distribucion": [
           {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Lucía Coria"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Sandra Cuitiño"
-          },
-          {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Noelia Brarda"
+            "docente": "Noelia Brarda",
+            "auxiliar": "Paola Sarandon"
           },
           {
-            "turno": "Mañana",
+            "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Paola Sarandon"
+            "docente": "Lucía Coria",
+            "auxiliar": "Sandra Cuitiño"
           }
         ],
         "estructura": [
@@ -3127,6 +2729,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Paola Sarandon",
+          "Sandra Cuitiño"
         ]
       },
       {
@@ -3152,43 +2758,27 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
-          "María Berte",
-          "Florencia Tissera",
-          "Mónica Mercado",
-          "Erica Cordi",
           "Marina Berte",
-          "Romina Soria"
+          "Mónica Mercado"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "2 años",
-            "docente": "María Berte"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "2 años",
-            "docente": "Florencia Tissera"
+            "docente": "Marina Berte",
+            "auxiliar": "Florencia Tissera"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
-            "docente": "Mónica Mercado"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "3 años",
-            "docente": "Erica Cordi"
+            "docente": "Mónica Mercado",
+            "auxiliar": "Erica Cordi"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Marina Berte"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Romina Soria"
+            "docente": "Marina Berte",
+            "auxiliar": "Romina Soria"
           }
         ],
         "estructura": [
@@ -3228,6 +2818,11 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Florencia Tissera",
+          "Erica Cordi",
+          "Romina Soria"
         ]
       },
       {
@@ -3254,52 +2849,33 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Selva Savorgnano",
-          "Maricel Juarez",
           "Carla Moreno",
-          "Analía Ávila",
-          "Emilia Domínguez",
-          "Paola Lequin"
+          "Emilia Domínguez"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "1 y 2 años",
-            "docente": "Selva Savorgnano"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "1 y 2 años",
-            "docente": "Maricel Juarez"
+            "docente": "Selva Savorgnano",
+            "auxiliar": "Maricel Juarez"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
-            "docente": "Carla Moreno"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "3 años",
-            "docente": "Analía Ávila"
+            "docente": "Carla Moreno",
+            "auxiliar": "Analía Ávila"
           },
           {
             "turno": "Tarde",
             "sala": "1 y 2 años",
-            "docente": "Selva Savorgnano"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "1 y 2 años",
-            "docente": "Analía Ávila"
+            "docente": "Selva Savorgnano",
+            "auxiliar": "Analía Ávila"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Emilia Domínguez"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Paola Lequin"
+            "docente": "Emilia Domínguez",
+            "auxiliar": "Paola Lequin"
           }
         ],
         "estructura": [
@@ -3346,6 +2922,11 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Maricel Juarez",
+          "Analía Ávila",
+          "Paola Lequin"
         ]
       },
       {
@@ -3370,29 +2951,20 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Lucía Díaz",
-          "Tania Altamirano",
           "Julieta Rufino"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Lucía Díaz"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Tania Altamirano"
+            "docente": "Lucía Díaz",
+            "auxiliar": "Tania Altamirano"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Julieta Rufino"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Tania Altamirano"
+            "docente": "Julieta Rufino",
+            "auxiliar": "Tania Altamirano"
           }
         ],
         "estructura": [
@@ -3415,6 +2987,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Tania Altamirano"
         ]
       },
       {
@@ -3437,19 +3012,14 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "María Cecilia Báez",
-          "Claudia Palandri"
+          "María Cecilia Báez"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "María Cecilia Báez"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Claudia Palandri"
+            "docente": "María Cecilia Báez",
+            "auxiliar": "Claudia Palandri"
           }
         ],
         "estructura": [
@@ -3465,115 +3035,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
-      },
-      {
-        "id": "JM_APRENDIENDO_A_CRECER",
-        "nombre": "Jardín de Infantes Aprendiendo a Crecer",
-        "tipo": "Jardín Maternal Municipal",
-        "barrio": "San Eduardo",
-        "sector": "C (Centro)",
-        "direccion": "LUIS REINAUDI 2727, RIO CUARTO, CORDOBA",
-        "telefono": "3584768410 (Int. 310)",
-        "whatsapp": "3584114553",
-        "email": "programajardinesmaternales@gmail.com",
-        "instagram": "educacion.rc",
-        "coordenadas": "-33.14209166418225, -64.37215368171195",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
         ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
+        "auxiliares": [
+          "Claudia Palandri"
         ]
       },
       {
@@ -3602,7 +3066,8 @@ window.CATALOGO_MUNICIPAL = {
           {
             "turno": "Mañana",
             "sala": "Lactarios",
-            "docente": "Débora Ullan"
+            "docente": "Débora Ullan",
+            "auxiliar": ""
           }
         ],
         "estructura": [
@@ -3617,7 +3082,8 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
+        ],
+        "auxiliares": []
       },
       {
         "id": "JM_SAN_ANTONIO_DE_PADUA",
@@ -3639,19 +3105,14 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
-          "Marina Fossati",
-          "Verónica Bravo"
+          "Marina Fossati"
         ],
         "distribucion": [
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Marina Fossati"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Verónica Bravo"
+            "docente": "Marina Fossati",
+            "auxiliar": "Verónica Bravo"
           }
         ],
         "estructura": [
@@ -3667,6 +3128,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Verónica Bravo"
         ]
       },
       {
@@ -3691,34 +3155,26 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Sandra Blanco",
-          "Gabriela Ochello",
           "Carla Moreno"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Sandra Blanco"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Gabriela Ochello"
+            "docente": "Sandra Blanco",
+            "auxiliar": "Gabriela Ochello"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Sandra Blanco"
+            "docente": "Sandra Blanco",
+            "auxiliar": "Gabriela Ochello"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
-            "docente": "Carla Moreno"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Múltiple",
-            "docente": "Gabriela Ochello"
+            "docente": "Carla Moreno",
+            "auxiliar": "Gabriela Ochello"
           }
         ],
         "estructura": [
@@ -3742,6 +3198,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Gabriela Ochello"
         ]
       },
       {
@@ -3764,19 +3223,14 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "Julieta Robledo",
-          "Luciana Villarreal"
+          "Julieta Robledo"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Julieta Robledo"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Luciana Villarreal"
+            "docente": "Julieta Robledo",
+            "auxiliar": "Luciana Villarreal"
           }
         ],
         "estructura": [
@@ -3792,6 +3246,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Luciana Villarreal"
         ]
       },
       {
@@ -3814,19 +3271,14 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "Carla Depetris",
-          "Rosana Carranza"
+          "Carla Depetris"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Carla Depetris"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Rosana Carranza"
+            "docente": "Carla Depetris",
+            "auxiliar": "Rosana Carranza"
           }
         ],
         "estructura": [
@@ -3842,115 +3294,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
-      },
-      {
-        "id": "JM_RINCONCITO_TIBIO",
-        "nombre": "Jardín de Infantes Rinconcito Tibio",
-        "tipo": "Jardín Maternal Municipal",
-        "barrio": "Fénix",
-        "sector": "C (Centro)",
-        "direccion": "SUCRE 453, RIO CUARTO, CORDOBA",
-        "telefono": "3584768410 (Int. 310)",
-        "whatsapp": "3584114553",
-        "email": "programajardinesmaternales@gmail.com",
-        "instagram": "educacion.rc",
-        "coordenadas": "-33.14068810159306, -64.34576055234547",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
         ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
+        "auxiliares": [
+          "Rosana Carranza"
         ]
       },
       {
@@ -3977,83 +3323,54 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Ayelén Bassani",
-          "Paola Lequin",
           "Jesica Ferreyra",
-          "Sandra Mónaco",
-          "Belén Torres",
           "Yanel Herrera",
-          "Ana Arrieta",
           "Romina Gisela Estabre",
           "Nora Ledesma",
-          "Verónica Aguirre",
-          "María Florencia Schiavi",
-          "Evelyn Sosa"
+          "María Florencia Schiavi"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "2 años",
-            "docente": "Ayelén Bassani"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "2 años",
-            "docente": "Paola Lequin"
+            "docente": "Ayelén Bassani",
+            "auxiliar": "Paola Lequin"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
-            "docente": "Jesica Ferreyra"
+            "docente": "Jesica Ferreyra",
+            "auxiliar": "Sandra Mónaco"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
-            "docente": "Sandra Mónaco"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "3 años",
-            "docente": "Belén Torres"
+            "docente": "Jesica Ferreyra",
+            "auxiliar": "Belén Torres"
           },
           {
             "turno": "Mañana",
             "sala": "Lactarios",
-            "docente": "Yanel Herrera"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Lactarios",
-            "docente": "Ana Arrieta"
+            "docente": "Yanel Herrera",
+            "auxiliar": "Ana Arrieta"
           },
           {
             "turno": "Tarde",
             "sala": "Lactarios",
-            "docente": "Romina Gisela Estabre"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Lactarios",
-            "docente": "Sandra Mónaco"
+            "docente": "Romina Gisela Estabre",
+            "auxiliar": "Sandra Mónaco"
           },
           {
             "turno": "Tarde",
             "sala": "3 años",
-            "docente": "Nora Ledesma"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "3 años",
-            "docente": "Verónica Aguirre"
+            "docente": "Nora Ledesma",
+            "auxiliar": "Verónica Aguirre"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
-            "docente": "María Florencia Schiavi"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "2 años",
-            "docente": "Evelyn Sosa"
+            "docente": "María Florencia Schiavi",
+            "auxiliar": "Evelyn Sosa"
           }
         ],
         "estructura": [
@@ -4115,6 +3432,14 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Paola Lequin",
+          "Sandra Mónaco",
+          "Belén Torres",
+          "Ana Arrieta",
+          "Verónica Aguirre",
+          "Evelyn Sosa"
         ]
       },
       {
@@ -4137,19 +3462,14 @@ window.CATALOGO_MUNICIPAL = {
           "Mañana"
         ],
         "docentes": [
-          "Cristina Sola",
-          "Sandra Cuitiño"
+          "Cristina Sola"
         ],
         "distribucion": [
           {
             "turno": "Mañana",
             "sala": "Múltiple",
-            "docente": "Cristina Sola"
-          },
-          {
-            "turno": "Mañana",
-            "sala": "Múltiple",
-            "docente": "Sandra Cuitiño"
+            "docente": "Cristina Sola",
+            "auxiliar": "Sandra Cuitiño"
           }
         ],
         "estructura": [
@@ -4165,6 +3485,9 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
+        ],
+        "auxiliares": [
+          "Sandra Cuitiño"
         ]
       },
       {
@@ -4189,30 +3512,20 @@ window.CATALOGO_MUNICIPAL = {
         ],
         "docentes": [
           "Brunella Siracussa",
-          "Iohanna Vargas",
-          "Ayelén Bassani",
-          "Rosana Benítez"
+          "Ayelén Bassani"
         ],
         "distribucion": [
           {
             "turno": "Tarde",
             "sala": "1 año",
-            "docente": "Brunella Siracussa"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "1 año",
-            "docente": "Iohanna Vargas"
+            "docente": "Brunella Siracussa",
+            "auxiliar": "Iohanna Vargas"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
-            "docente": "Ayelén Bassani"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "2 años",
-            "docente": "Rosana Benítez"
+            "docente": "Ayelén Bassani",
+            "auxiliar": "Rosana Benítez"
           }
         ],
         "estructura": [
@@ -4240,115 +3553,10 @@ window.CATALOGO_MUNICIPAL = {
               }
             ]
           }
-        ]
-      },
-      {
-        "id": "EMCO_CARPINTERIA",
-        "nombre": "Taller Escuela de Carpintería Municipal",
-        "tipo": "Centro de Capacitación y Oficios",
-        "barrio": "Pueblo Alberdi",
-        "sector": "A (Alberdi)",
-        "direccion": "Pedro Goyena 532",
-        "telefono": "",
-        "whatsapp": "",
-        "email": "",
-        "instagram": "",
-        "coordenadas": "-33.136489093321345, -64.33472679447313",
-        "programas": "",
-        "salas": [
-          "Sala de 1 año",
-          "Sala de 2 años",
-          "Sala de 3 años",
-          "Lactantes"
         ],
-        "turnos": [
-          "Mañana",
-          "Tarde"
-        ],
-        "docentes": [
-          "Docente de Sala"
-        ],
-        "distribucion": [
-          {
-            "turno": "Mañana",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Mañana"
-          },
-          {
-            "turno": "Tarde",
-            "sala": "Sala General",
-            "docente": "Docente de Sala - Turno Tarde"
-          }
-        ],
-        "estructura": [
-          {
-            "nombre": "Sala de 1 año",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 2 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Sala de 3 años",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          },
-          {
-            "nombre": "Lactantes",
-            "turnos": [
-              {
-                "nombre": "Mañana",
-                "docentes": [
-                  "Docente de Sala - Turno Mañana"
-                ]
-              },
-              {
-                "nombre": "Tarde",
-                "docentes": [
-                  "Docente de Sala - Turno Tarde"
-                ]
-              }
-            ]
-          }
+        "auxiliares": [
+          "Iohanna Vargas",
+          "Rosana Benítez"
         ]
       }
     ]
