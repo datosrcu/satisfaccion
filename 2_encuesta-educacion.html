@@ -226,6 +226,43 @@
       gap: 4px;
     }
 
+    .lock-person-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+    }
+
+    .lock-person-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .lock-person-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--ink-soft);
+    }
+
+    .lock-person-nombre {
+      font-size: 14.5px;
+      color: var(--ink);
+      font-weight: 800;
+      display: block;
+      margin-top: 1px;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -888,12 +925,21 @@
           Bloque 4 — Evaluación de docentes
         </div>
 
-        <!-- P12a -->
-        <div class="form-group">
+        <!-- P12a: DOCENTE (SELECCIÓN O BLOQUEADO CUANDO VIENE PREFIJADO) -->
+        <div class="form-group" id="group-docente-select">
           <label class="form-label" for="select-docente">12a. Seleccioná a la/el docente de la sala de tu hijo/a *</label>
           <select id="select-docente" name="docente_nombre" class="form-select" required>
             <option value="">Primero selecciona la institución arriba...</option>
           </select>
+        </div>
+        <div id="locked-docente-card" class="lock-person-card hidden">
+          <div class="lock-person-icon" style="background:var(--tint-verde); color:var(--brand-d);">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div>
+            <div class="lock-person-tag">Docente a Cargo Prefijada</div>
+            <strong id="locked-docente-nombre" class="lock-person-nombre"></strong>
+          </div>
         </div>
 
         <!-- Subdimensión: Comunicación con las familias -->
@@ -1154,12 +1200,21 @@
           Bloque 5 — Evaluación de auxiliares
         </div>
 
-        <!-- P13a -->
-        <div class="form-group">
+        <!-- P13a: AUXILIAR (SELECCIÓN O BLOQUEADO CUANDO VIENE PREFIJADO) -->
+        <div class="form-group" id="group-auxiliar-select">
           <label class="form-label" for="select-auxiliar">13a. Seleccioná a la/el auxiliar de la sala de tu hijo/a *</label>
           <select id="select-auxiliar" name="auxiliar_nombre" class="form-select" required>
             <option value="">Primero selecciona la institución arriba...</option>
           </select>
+        </div>
+        <div id="locked-auxiliar-card" class="lock-person-card hidden">
+          <div class="lock-person-icon" style="background:var(--tint-amarillo); color:var(--c-naranja);">
+            <span class="material-symbols-outlined">cleaning_services</span>
+          </div>
+          <div>
+            <div class="lock-person-tag">Personal Auxiliar Prefijado</div>
+            <strong id="locked-auxiliar-nombre" class="lock-person-nombre"></strong>
+          </div>
         </div>
 
         <!-- P13b -->
@@ -1363,7 +1418,16 @@
       const turnoVal = prefillData.turno || (inputTurno ? inputTurno.value : "");
       const salaVal = prefillData.sala || (inputSala ? inputSala.value : "");
       const docenteVal = prefillData.docente || "";
-      const auxiliarVal = prefillData.auxiliar || "";
+      let auxiliarVal = prefillData.auxiliar || "";
+
+      if (!auxiliarVal && institucionSeleccionada.distribucion) {
+        const match = institucionSeleccionada.distribucion.find(d => 
+          (!turnoVal || d.turno.toLowerCase().includes(turnoVal.toLowerCase()) || turnoVal.toLowerCase().includes(d.turno.toLowerCase())) &&
+          (!salaVal || d.sala.toLowerCase().includes(salaVal.toLowerCase()) || salaVal.toLowerCase().includes(d.sala.toLowerCase())) &&
+          (!docenteVal || d.docente.toLowerCase().includes(docenteVal.toLowerCase()) || docenteVal.toLowerCase().includes(d.docente.toLowerCase()))
+        );
+        if (match && match.auxiliar) auxiliarVal = match.auxiliar;
+      }
 
       if (inputTurno && turnoVal) inputTurno.value = turnoVal;
       if (inputSala && salaVal) inputSala.value = salaVal;
@@ -1375,12 +1439,13 @@
           document.getElementById('lock-inst-sub').innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin-right:3px;">location_on</span>${institucionSeleccionada.direccion} · B° ${institucionSeleccionada.barrio}`;
           
           const detalles = [];
-          if (salaVal) detalles.push(`Sala: ${salaVal}`);
-          if (turnoVal) detalles.push(`Turno: ${turnoVal}`);
-          if (docenteVal) detalles.push(`Docente: ${docenteVal}`);
+          if (salaVal) detalles.push(`Sala: <strong>${salaVal}</strong>`);
+          if (turnoVal) detalles.push(`Turno: <strong>${turnoVal}</strong>`);
+          if (docenteVal) detalles.push(`Docente: <strong>${docenteVal}</strong>`);
+          if (auxiliarVal) detalles.push(`Auxiliar: <strong>${auxiliarVal}</strong>`);
 
           if (detalles.length > 0 && lockDetalle) {
-            lockDetalle.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin-right:3px;">school</span>${detalles.join(' · ')}`;
+            lockDetalle.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; vertical-align:-3px; margin-right:4px;">lock</span>${detalles.join(' &nbsp;·&nbsp; ')}`;
             lockDetalle.classList.remove('hidden');
           } else if (lockDetalle) {
             lockDetalle.classList.add('hidden');
@@ -1389,7 +1454,7 @@
           lockCard.classList.remove('hidden');
         }
         document.getElementById('intro-title').innerHTML = `<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">family_restroom</span> ¡Hola familia de ${institucionSeleccionada.nombre}!`;
-        document.getElementById('intro-desc').innerHTML = `Tu opinión sobre el cuidado, la organización y la propuesta pedagógica en <b>${institucionSeleccionada.nombre}</b> es fundamental para seguir mejorando. Encuesta anónima · 2 minutos.`;
+        document.getElementById('intro-desc').innerHTML = `Tu opinión sobre el cuidado, la organización y la propuesta pedagógica en la <b>Sala ${salaVal || ''} (${turnoVal ? 'Turno ' + turnoVal : ''})</b> es fundamental para seguir mejorando. Encuesta anónima · 2 minutos.`;
       } else {
         if (lockCard) lockCard.classList.add('hidden');
         if (groupSelect) groupSelect.classList.remove('hidden');
@@ -1424,15 +1489,34 @@
       }
       selectDocente.disabled = false;
 
-      // Auto-seleccionar docente si viene por URL
+      // Auto-seleccionar y bloquear tarjeta de docente si viene prefijado
+      const lockDocCard = document.getElementById('locked-docente-card');
+      const lockDocNombre = document.getElementById('locked-docente-nombre');
+      const groupDocSelect = document.getElementById('group-docente-select');
+
       if (docenteVal) {
+        let found = false;
         for (let i = 0; i < selectDocente.options.length; i++) {
           const opt = selectDocente.options[i];
           if (opt.value && (opt.value.toLowerCase().includes(docenteVal.toLowerCase()) || docenteVal.toLowerCase().includes(opt.value.toLowerCase()))) {
             selectDocente.selectedIndex = i;
+            docenteVal = opt.value;
+            found = true;
             break;
           }
         }
+        if (!found && docenteVal) {
+          selectDocente.appendChild(new Option(docenteVal, docenteVal, true, true));
+        }
+
+        if (isDirectLink && lockDocCard && lockDocNombre && groupDocSelect) {
+          lockDocNombre.textContent = docenteVal;
+          lockDocCard.classList.remove('hidden');
+          groupDocSelect.classList.add('hidden');
+        }
+      } else {
+        if (lockDocCard) lockDocCard.classList.add('hidden');
+        if (groupDocSelect) groupDocSelect.classList.remove('hidden');
       }
 
       // Poblar desplegable de Auxiliares (P13a)
@@ -1457,15 +1541,34 @@
       }
       selectAuxiliar.disabled = false;
 
-      // Auto-seleccionar auxiliar si viene por URL
+      // Auto-seleccionar y bloquear tarjeta de auxiliar si viene prefijado
+      const lockAuxCard = document.getElementById('locked-auxiliar-card');
+      const lockAuxNombre = document.getElementById('locked-auxiliar-nombre');
+      const groupAuxSelect = document.getElementById('group-auxiliar-select');
+
       if (auxiliarVal) {
+        let found = false;
         for (let i = 0; i < selectAuxiliar.options.length; i++) {
           const opt = selectAuxiliar.options[i];
           if (opt.value && (opt.value.toLowerCase().includes(auxiliarVal.toLowerCase()) || auxiliarVal.toLowerCase().includes(opt.value.toLowerCase()))) {
             selectAuxiliar.selectedIndex = i;
+            auxiliarVal = opt.value;
+            found = true;
             break;
           }
         }
+        if (!found && auxiliarVal) {
+          selectAuxiliar.appendChild(new Option(auxiliarVal, auxiliarVal, true, true));
+        }
+
+        if (isDirectLink && lockAuxCard && lockAuxNombre && groupAuxSelect) {
+          lockAuxNombre.textContent = auxiliarVal;
+          lockAuxCard.classList.remove('hidden');
+          groupAuxSelect.classList.add('hidden');
+        }
+      } else {
+        if (lockAuxCard) lockAuxCard.classList.add('hidden');
+        if (groupAuxSelect) groupAuxSelect.classList.remove('hidden');
       }
 
       // Sincronizar automáticamente sala, turno y auxiliar al seleccionar docente
@@ -1596,9 +1699,15 @@
           }
         }
 
-        const formData = new FormData(form);
+        const submissionId = 'EDU-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        const slotToken = `${formData.get('institucion_id') || ''}_${formData.get('turno_asignado') || ''}_${formData.get('sala_espacio') || ''}_${formData.get('docente_nombre') || ''}`;
+
         const payload = {
           tipo_encuesta: "educacion",
+          id: submissionId,
+          id_respuesta: submissionId,
+          slot_token: slotToken,
+          fecha_hora: new Date().toISOString(),
           institucion_id: formData.get('institucion_id'),
           institucion_nombre: institucionSeleccionada ? institucionSeleccionada.nombre : "",
           tipo_institucion: institucionSeleccionada ? institucionSeleccionada.tipo : "",
@@ -1673,6 +1782,11 @@
             });
           }
 
+          // Guardar registro en sesión para evitar duplicados inmediatos
+          try {
+            sessionStorage.setItem('encuesta_completada_' + slotToken, Date.now().toString());
+          } catch(e) {}
+
           document.getElementById('modal-success').classList.add('open');
         } catch (err) {
           console.warn("Envío directo con contingencia offline:", err);
@@ -1687,11 +1801,15 @@
     function saveToLocalStorage(payload) {
       try {
         let queue = JSON.parse(localStorage.getItem('encuestas_educacion_guardadas') || '[]');
-        queue.push({
-          fecha: new Date().toISOString(),
-          ...payload
-        });
-        localStorage.setItem('encuestas_educacion_guardadas', JSON.stringify(queue));
+        // Evitar pisamiento o duplicación por ID único
+        if (!queue.some(item => (item.id === payload.id || (item.id_respuesta && item.id_respuesta === payload.id_respuesta)))) {
+          queue.push({
+            id: payload.id || payload.id_respuesta,
+            fecha: payload.fecha_hora || new Date().toISOString(),
+            ...payload
+          });
+          localStorage.setItem('encuestas_educacion_guardadas', JSON.stringify(queue));
+        }
       } catch (e) {
         console.error("Error guardando en localStorage:", e);
       }

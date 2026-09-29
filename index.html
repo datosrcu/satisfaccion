@@ -768,7 +768,7 @@
           </div>
         </div>
 
-        <!-- CANAL 2: EDUCACIÓN (PRECOMPLETADO, WHATSAPP Y QR POR SALA / DOCENTE) -->
+        <!-- CANAL 2: EDUCACIÓN (PRECOMPLETADO Y MENSAJES DE WHATSAPP POR SALA / DOCENTE) -->
         <div class="tool-box" id="modulo-educacion-envio">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
             <span class="badge-chip" style="background:var(--tint-verde); color:var(--c-educacion-d);">
@@ -779,7 +779,7 @@
             </span>
           </div>
           <p style="font-size:13px; color:var(--ink-soft); margin:0 0 16px;">
-            Genera enlaces directos, carteles QR y mensajes de WhatsApp precompletados por Jardín, Turno, Sala y Docente para las familias.
+            Genera enlaces directos y mensajes de WhatsApp precompletados por Jardín, Turno, Sala y Docente para las familias.
           </p>
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
@@ -788,48 +788,31 @@
               <select id="select-educacion-envio"></select>
             </div>
             <div class="tool-field">
-              <label>2. Turno (Opcional)</label>
-              <select id="select-educacion-turno">
-                <option value="">Todos los turnos</option>
-              </select>
+              <label>2. Turno *</label>
+              <select id="select-educacion-turno"></select>
             </div>
             <div class="tool-field">
-              <label>3. Sala / Espacio (Opcional)</label>
-              <select id="select-educacion-sala">
-                <option value="">Todas las salas</option>
-              </select>
+              <label>3. Sala / Espacio *</label>
+              <select id="select-educacion-sala"></select>
             </div>
             <div class="tool-field" style="grid-column: 1 / -1;">
-              <label>4. Docente de Sala a evaluar (Opcional)</label>
-              <select id="select-educacion-docente">
-                <option value="">Sin docente prefijado (la familia seleccionará en la encuesta)</option>
-              </select>
+              <label>4. Docente de Sala *</label>
+              <select id="select-educacion-docente"></select>
             </div>
           </div>
 
-          <!-- VISTA PREVIA CARTEL QR EDUCACION -->
-          <div id="printable-poster-edu" style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px; margin:14px 0 0; text-align:center;">
-            <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:34px; width:auto; margin:0 auto 8px; display:block;">
-            <div style="font-size:11.5px; font-weight:800; text-transform:uppercase; color:var(--c-educacion-d); letter-spacing:.04em; margin-bottom:4px;">
-              Secretaría de Educación · Dirección de Estadística
+          <!-- ENLACE ÚNICO GENERADO -->
+          <div style="margin-top:14px;">
+            <label style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">link</span>
+              Enlace Único de Encuesta (Prefijado e Inmutable):
+            </label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="input-link-edu-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+              <button type="button" id="btn-copy-link-edu-field" class="btn-pill btn-outline" style="padding:0 16px; font-size:12.5px; height:auto; min-width:auto;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+              </button>
             </div>
-            <h4 id="poster-edu-nombre" style="font-size:16px; font-weight:900; margin:0 0 2px; color:var(--ink);">Jardín</h4>
-            <div id="poster-edu-sub" style="font-size:12px; color:var(--ink-soft); margin-bottom:10px;">B° Centro</div>
-            
-            <div style="display:flex; justify-content:center; margin:10px 0;">
-              <div id="qrcode-target-edu" style="padding:10px; background:#fff; border-radius:12px; display:inline-block; box-shadow:0 2px 8px rgba(0,0,0,.05);"></div>
-            </div>
-
-            <div id="poster-edu-detalle-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; background:var(--tint-verde); color:var(--c-educacion-d); padding:4px 12px; border-radius:999px; margin-bottom:6px;">
-              <span class="material-symbols-outlined" style="font-size:14px; margin:0;">school</span>
-              <span id="poster-edu-detalle-text">Encuesta General</span>
-            </div>
-
-            <p style="font-size:12.5px; font-weight:700; margin:6px 0 2px; display:flex; align-items:center; justify-content:center; gap:5px;">
-              <span class="material-symbols-outlined" style="font-size:17px; color:var(--c-educacion-d); margin:0;">qr_code_scanner</span>
-              Escaneá con tu celular para responder
-            </p>
-            <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta anónima para familias · 2 minutos</p>
           </div>
 
           <!-- MENSAJE WHATSAPP -->
@@ -839,9 +822,6 @@
                 <span class="material-symbols-outlined" style="font-size:16px; margin:0;">chat</span>
                 Mensaje WhatsApp para Familias:
               </span>
-              <button type="button" id="btn-copy-link-edu" style="border:none; background:transparent; font-size:11.5px; color:var(--brand-d); font-weight:700; cursor:pointer; text-decoration:underline;">
-                Copiar solo link
-              </button>
             </div>
             <div id="whatsapp-preview-box"
               style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
@@ -849,14 +829,11 @@
           </div>
 
           <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-            <button type="button" id="btn-copy-wsp" class="btn-pill btn-educacion" style="flex:1; min-width:130px;">
+            <button type="button" id="btn-copy-wsp" class="btn-pill btn-educacion" style="flex:1; min-width:140px;">
               <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
             </button>
-            <button type="button" id="btn-open-wsp" class="btn-pill btn-outline" style="flex:1; min-width:130px;">
+            <button type="button" id="btn-open-wsp" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
               <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
-            </button>
-            <button type="button" onclick="printEduPoster()" class="btn-pill btn-outline" style="flex:1; min-width:130px;">
-              <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir QR
             </button>
           </div>
         </div>
@@ -877,7 +854,6 @@
   <!-- SCRIPT -->
   <script>
     let qrcodeSalud = null;
-    let qrcodeEdu = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       initSaludQr();
@@ -968,12 +944,6 @@
       window.print();
     }
 
-    function printEduPoster() {
-      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
-      document.getElementById('printable-poster-edu').classList.add('print-active');
-      window.print();
-    }
-
     function initEducacionEnvio() {
       const selectEdu = document.getElementById('select-educacion-envio');
       const selectTurno = document.getElementById('select-educacion-turno');
@@ -995,12 +965,12 @@
       });
 
       selectTurno.addEventListener('change', () => {
-        onEduTurnoOrSalaChange();
+        onEduTurnoChange();
         updateEduOutputs();
       });
 
       selectSala.addEventListener('change', () => {
-        onEduTurnoOrSalaChange();
+        onEduSalaChange();
         updateEduOutputs();
       });
 
@@ -1012,7 +982,7 @@
       document.getElementById('btn-copy-wsp').addEventListener('click', () => {
         const text = document.getElementById('whatsapp-preview-box').innerText;
         navigator.clipboard.writeText(text);
-        alert('¡Mensaje copiado al portapapeles! Listo para pegar en WhatsApp.');
+        alert('¡Mensaje copiado al portapapeles! Listo para enviar a las familias por WhatsApp.');
       });
 
       document.getElementById('btn-open-wsp').addEventListener('click', () => {
@@ -1020,46 +990,72 @@
         window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
       });
 
-      document.getElementById('btn-copy-link-edu').addEventListener('click', () => {
-        const url = buildEduUrl();
-        navigator.clipboard.writeText(url);
-        alert('¡Enlace directo copiado al portapapeles!');
-      });
+      const copyFieldBtn = document.getElementById('btn-copy-link-edu-field');
+      if (copyFieldBtn) {
+        copyFieldBtn.addEventListener('click', () => {
+          const url = buildEduUrl();
+          navigator.clipboard.writeText(url);
+          alert('¡Enlace único de la sala copiado al portapapeles!');
+        });
+      }
     }
 
     function onEduInstChange() {
       const selectEdu = document.getElementById('select-educacion-envio');
       const selectTurno = document.getElementById('select-educacion-turno');
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+      if (!inst) return;
+
+      // Poblar Turnos
+      selectTurno.innerHTML = '';
+      const turnos = (inst.distribucion && inst.distribucion.length > 0)
+        ? [...new Set(inst.distribucion.map(d => d.turno))].filter(Boolean)
+        : (inst.turnos || ['Mañana', 'Tarde']);
+
+      turnos.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = `Turno ${t}`;
+        selectTurno.appendChild(opt);
+      });
+
+      onEduTurnoChange();
+    }
+
+    function onEduTurnoChange() {
+      const selectEdu = document.getElementById('select-educacion-envio');
+      const selectTurno = document.getElementById('select-educacion-turno');
       const selectSala = document.getElementById('select-educacion-sala');
       const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
       const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+      if (!inst) return;
 
-      // Poblar Turnos
-      selectTurno.innerHTML = '<option value="">Todos los turnos</option>';
-      if (inst && inst.turnos) {
-        inst.turnos.forEach(t => {
-          const opt = document.createElement('option');
-          opt.value = t;
-          opt.textContent = `Turno ${t}`;
-          selectTurno.appendChild(opt);
-        });
+      const turnoVal = selectTurno.value;
+
+      // Poblar Salas para el turno seleccionado
+      selectSala.innerHTML = '';
+      let salas = [];
+      if (inst.distribucion && inst.distribucion.length > 0) {
+        salas = [...new Set(inst.distribucion.filter(d => d.turno === turnoVal).map(d => d.sala))].filter(Boolean);
+        if (salas.length === 0) {
+          salas = [...new Set(inst.distribucion.map(d => d.sala))].filter(Boolean);
+        }
+      } else if (inst.salas) {
+        salas = inst.salas;
       }
 
-      // Poblar Salas
-      selectSala.innerHTML = '<option value="">Todas las salas</option>';
-      if (inst && inst.salas) {
-        inst.salas.forEach(s => {
-          const opt = document.createElement('option');
-          opt.value = s;
-          opt.textContent = `Sala: ${s}`;
-          selectSala.appendChild(opt);
-        });
-      }
+      salas.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = `Sala: ${s}`;
+        selectSala.appendChild(opt);
+      });
 
-      onEduTurnoOrSalaChange();
+      onEduSalaChange();
     }
 
-    function onEduTurnoOrSalaChange() {
+    function onEduSalaChange() {
       const selectEdu = document.getElementById('select-educacion-envio');
       const selectTurno = document.getElementById('select-educacion-turno');
       const selectSala = document.getElementById('select-educacion-sala');
@@ -1067,27 +1063,29 @@
 
       const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
       const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+      if (!inst) return;
 
       const turnoVal = selectTurno.value;
       const salaVal = selectSala.value;
 
-      selectDocente.innerHTML = '<option value="">Sin docente prefijado (la familia seleccionará en la encuesta)</option>';
+      selectDocente.innerHTML = '';
 
-      if (inst && inst.distribucion) {
-        let filtradas = inst.distribucion;
-        if (turnoVal) filtradas = filtradas.filter(f => f.turno === turnoVal);
-        if (salaVal) filtradas = filtradas.filter(f => f.sala === salaVal);
+      if (inst.distribucion && inst.distribucion.length > 0) {
+        let filtradas = inst.distribucion.filter(f => f.turno === turnoVal && f.sala === salaVal);
+        if (filtradas.length === 0) {
+          filtradas = inst.distribucion.filter(f => f.turno === turnoVal);
+        }
+        if (filtradas.length === 0) {
+          filtradas = inst.distribucion;
+        }
 
-        const uniqueDocs = [...new Set(filtradas.map(f => f.docente))].filter(Boolean);
-        uniqueDocs.forEach(doc => {
+        filtradas.forEach(d => {
           const opt = document.createElement('option');
-          opt.value = doc;
-          // Buscar info de sala y turno para la docente
-          const docRow = filtradas.find(f => f.docente === doc);
-          opt.textContent = docRow ? `${doc} (${docRow.sala} - ${docRow.turno})` : doc;
+          opt.value = d.docente;
+          opt.textContent = d.auxiliar ? `${d.docente} (Auxiliar: ${d.auxiliar})` : d.docente;
           selectDocente.appendChild(opt);
         });
-      } else if (inst && inst.docentes) {
+      } else if (inst.docentes) {
         inst.docentes.forEach(doc => {
           const opt = document.createElement('option');
           opt.value = doc;
@@ -1103,11 +1101,25 @@
       const selectSala = document.getElementById('select-educacion-sala');
       const selectDocente = document.getElementById('select-educacion-docente');
 
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
+
       const targetUrl = new URL('encuesta-educacion.html', window.location.href);
       if (selectEdu.value) targetUrl.searchParams.set('centro', selectEdu.value);
       if (selectTurno.value) targetUrl.searchParams.set('turno', selectTurno.value);
       if (selectSala.value) targetUrl.searchParams.set('sala', selectSala.value);
       if (selectDocente.value) targetUrl.searchParams.set('docente', selectDocente.value);
+
+      if (inst && inst.distribucion) {
+        const match = inst.distribucion.find(d => 
+          d.turno === selectTurno.value && 
+          d.sala === selectSala.value && 
+          d.docente === selectDocente.value
+        );
+        if (match && match.auxiliar) {
+          targetUrl.searchParams.set('auxiliar', match.auxiliar);
+        }
+      }
 
       return targetUrl.toString();
     }
@@ -1126,42 +1138,28 @@
       const salaVal = selectSala.value;
       const docVal = selectDocente.value;
 
+      let auxVal = "";
+      if (inst && inst.distribucion) {
+        const match = inst.distribucion.find(d => 
+          d.turno === turnoVal && 
+          d.sala === salaVal && 
+          d.docente === docVal
+        );
+        if (match && match.auxiliar) {
+          auxVal = match.auxiliar;
+        }
+      }
+
       const linkStr = buildEduUrl();
 
-      // Poster elements
-      document.getElementById('poster-edu-nombre').textContent = inst.nombre;
-      document.getElementById('poster-edu-sub').textContent = `${inst.direccion} · B° ${inst.barrio}`;
-
-      const detalleItems = [];
-      if (salaVal) detalleItems.push(`Sala: ${salaVal}`);
-      if (turnoVal) detalleItems.push(`Turno: ${turnoVal}`);
-      if (docVal) detalleItems.push(`Docente: ${docVal}`);
-
-      const detalleText = detalleItems.length > 0 ? detalleItems.join(' · ') : 'Evaluación General de Familias';
-      document.getElementById('poster-edu-detalle-text').textContent = detalleText;
-
-      // QR Code
-      const qrContainer = document.getElementById('qrcode-target-edu');
-      qrContainer.innerHTML = '';
-      qrcodeEdu = new QRCode(qrContainer, {
-        text: linkStr,
-        width: 170,
-        height: 170,
-        colorDark: "#14171A",
-        colorLight: "#FFFFFF",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-
       // WhatsApp Message Text
-      let headerGreeting = `👋 *Estimadas familias de ${inst.nombre}`;
-      if (salaVal || turnoVal || docVal) {
-        const subSpecs = [];
-        if (salaVal) subSpecs.push(`Sala ${salaVal}`);
-        if (turnoVal) subSpecs.push(`Turno ${turnoVal}`);
-        if (docVal) subSpecs.push(`Seño ${docVal}`);
-        headerGreeting += ` (${subSpecs.join(' - ')})`;
-      }
-      headerGreeting += ':*';
+      const details = [];
+      if (salaVal) details.push(`Sala: ${salaVal}`);
+      if (turnoVal) details.push(`Turno: ${turnoVal}`);
+      if (docVal) details.push(`Docente: ${docVal}`);
+      if (auxVal) details.push(`Auxiliar: ${auxVal}`);
+
+      const headerGreeting = `👋 *Estimadas familias de ${inst.nombre} (${details.join(' · ')}):*`;
 
       const wspText = `${headerGreeting}
 
@@ -1173,6 +1171,9 @@ Su opinión es fundamental para seguir mejorando día a día.
 ${linkStr}
 
 ¡Muchas gracias por acompañarnos en el crecimiento y aprendizaje de sus hijos! 💙`;
+
+      const inputLink = document.getElementById('input-link-edu-url');
+      if (inputLink) inputLink.value = linkStr;
 
       document.getElementById('whatsapp-preview-box').innerText = wspText;
     }
