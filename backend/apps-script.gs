@@ -98,12 +98,12 @@ const HEADERS_EDUCACION = [
   "Auxiliar_Higiene_Orden_Nota",
   "Auxiliar_Contencion_Nota",
   
-  // Bloque 6: Comentarios Abiertos (P14)
-  "Comentario_Mejora",
-  
-  // Bloque 7: Recomendación NPS (P15)
+  // Bloque 6: Recomendación NPS (P14)
   "NPS_Puntaje",
   "NPS_Categoria",
+
+  // Bloque 7: Comentarios Abiertos (P15)
+  "Comentario_Mejora",
   
   // Metadatos Técnicos
   "Dispositivo"
@@ -244,12 +244,12 @@ function doPost(e) {
         params.auxiliar_higiene_orden_nota || "",
         params.auxiliar_contencion_nota || "",
         
-        // Bloque 6: P14
-        params.comentario_mejora || params.sugerencias_mejora || "",
-        
-        // Bloque 7: P15
+        // Bloque 6: NPS (P14)
         npsNum,
         npsCat,
+
+        // Bloque 7: Comentarios (P15)
+        params.comentario_mejora || params.sugerencias_mejora || "",
         
         params.dispositivo || "Web/Mobile"
       ];

@@ -1305,32 +1305,16 @@
       </div>
 
       <!-- ========================================================= -->
-      <!-- BLOQUE 6: COMENTARIO ABIERTO -->
-      <!-- ========================================================= -->
-      <div class="form-section">
-        <div class="sec-title">
-          <span class="material-symbols-outlined" style="color:var(--c-violeta);">forum</span>
-          Bloque 6 — Comentario abierto
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="textarea-mejora">14. ¿Deseás contarnos brevemente qué podríamos mejorar? (Opcional)</label>
-          <textarea id="textarea-mejora" name="comentario_mejora" rows="3" class="form-textarea"
-            placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
-        </div>
-      </div>
-
-      <!-- ========================================================= -->
-      <!-- BLOQUE 7: RECOMENDACIÓN (NPS) -->
+      <!-- BLOQUE 6: RECOMENDACIÓN (NPS) -->
       <!-- ========================================================= -->
       <div class="form-section">
         <div class="sec-title">
           <span class="material-symbols-outlined" style="color:var(--c-educacion);">recommend</span>
-          Bloque 7 — Recomendación (NPS)
+          Bloque 6 — Recomendación (NPS)
         </div>
 
         <div class="form-group">
-          <label class="form-label">15. ¿Recomendarías este jardín/sala cuna a un familiar o conocido? *</label>
+          <label class="form-label">14. ¿Recomendarías este jardín/sala cuna a un familiar o conocido? *</label>
           <p class="form-sub">Escala numérica del 1 al 10:</p>
 
           <div class="nps-grid" id="nps-container">
@@ -1356,6 +1340,22 @@
             </span>
           </div>
           <input type="hidden" name="nps_puntaje" id="input-nps" required>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- BLOQUE 7: COMENTARIO ABIERTO -->
+      <!-- ========================================================= -->
+      <div class="form-section">
+        <div class="sec-title">
+          <span class="material-symbols-outlined" style="color:var(--c-violeta);">forum</span>
+          Bloque 7 — Comentario abierto
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="textarea-mejora">15. ¿Deseás contarnos brevemente qué podríamos mejorar? (Opcional)</label>
+          <textarea id="textarea-mejora" name="comentario_mejora" rows="3" class="form-textarea"
+            placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
         </div>
       </div>
 
@@ -2042,11 +2042,11 @@
           auxiliar_higiene_orden_nota: formData.get('auxiliar_higiene_orden_nota'),
           auxiliar_contencion_nota: formData.get('auxiliar_contencion_nota'),
 
-          // Bloque 6: Comentario abierto
-          comentario_mejora: formData.get('comentario_mejora') || "",
-
-          // Bloque 7: NPS
+          // Bloque 6: NPS
           nps_puntaje: formData.get('nps_puntaje'),
+
+          // Bloque 7: Comentario abierto
+          comentario_mejora: formData.get('comentario_mejora') || "",
 
           dispositivo: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
         };
