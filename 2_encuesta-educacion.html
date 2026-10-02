@@ -972,6 +972,7 @@
           <label class="form-label" for="select-docente">12a. Seleccioná a la/el docente de la sala de tu hijo/a *</label>
           <select id="select-docente" name="docente_nombre" class="form-select" required>
             <option value="">Primero selecciona la institución arriba...</option>
+            <option value="No conozco el nombre de la docente">No conozco el nombre de la docente</option>
           </select>
         </div>
         <div id="locked-docente-card" class="lock-person-card hidden">
@@ -1247,6 +1248,7 @@
           <label class="form-label" for="select-auxiliar">13a. Seleccioná a la/el auxiliar de la sala de tu hijo/a *</label>
           <select id="select-auxiliar" name="auxiliar_nombre" class="form-select" required>
             <option value="">Primero selecciona la institución arriba...</option>
+            <option value="No conozco el nombre de la auxiliar">No conozco el nombre de la auxiliar</option>
           </select>
         </div>
         <div id="locked-auxiliar-card" class="lock-person-card hidden">
@@ -1525,7 +1527,7 @@
       if (inputSala) inputSala.value = salaVal;
 
       selectDocenteBloque1.innerHTML = '<option value="">Selecciona la/el docente...</option>';
-      selectAuxiliarBloque1.innerHTML = '<option value="">Sin auxiliar asignada</option>';
+      selectAuxiliarBloque1.innerHTML = '<option value="">Selecciona la/el auxiliar...</option>';
 
       if (!salaVal) {
         selectDocenteBloque1.disabled = true;
@@ -1551,13 +1553,9 @@
         });
       }
 
+      // Opción permanente para medir desconocimiento
+      selectDocenteBloque1.appendChild(new Option("No conozco el nombre de la docente", "No conozco el nombre de la docente"));
       selectDocenteBloque1.disabled = false;
-
-      // Si sólo hay una opción de docente, auto-seleccionar y conectar auxiliar
-      if (selectDocenteBloque1.options.length === 2) {
-        selectDocenteBloque1.selectedIndex = 1;
-        onCascadaDocenteChange();
-      }
     }
 
     function onCascadaDocenteChange() {
@@ -1590,7 +1588,7 @@
       }
 
       let auxVal = "";
-      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+      if (docVal && docVal !== "No conozco el nombre de la docente" && institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
         const match = institucionSeleccionada.distribucion.find(d => 
           d.turno === turnoVal && d.sala === salaVal && d.docente === docVal
         );
@@ -1599,11 +1597,16 @@
         }
       }
 
-      selectAuxiliarBloque1.innerHTML = '';
+      selectAuxiliarBloque1.innerHTML = '<option value="">Selecciona la/el auxiliar...</option>';
       if (auxVal) {
         selectAuxiliarBloque1.appendChild(new Option(`Auxiliar: ${auxVal}`, auxVal));
+      }
+      selectAuxiliarBloque1.appendChild(new Option("No conozco el nombre de la auxiliar", "No conozco el nombre de la auxiliar"));
+      selectAuxiliarBloque1.appendChild(new Option("Sin auxiliar asignada", "Sin auxiliar"));
+      selectAuxiliarBloque1.disabled = false;
+
+      if (auxVal) {
         selectAuxiliarBloque1.value = auxVal;
-        selectAuxiliarBloque1.disabled = false;
         if (selectAuxiliar5) {
           let found = false;
           for (let i = 0; i < selectAuxiliar5.options.length; i++) {
@@ -1615,23 +1618,6 @@
           }
           if (!found) {
             selectAuxiliar5.appendChild(new Option(auxVal, auxVal, true, true));
-          }
-        }
-      } else {
-        selectAuxiliarBloque1.appendChild(new Option('Sin auxiliar asignada', 'Sin auxiliar'));
-        selectAuxiliarBloque1.value = 'Sin auxiliar';
-        selectAuxiliarBloque1.disabled = true;
-        if (selectAuxiliar5) {
-          let found = false;
-          for (let i = 0; i < selectAuxiliar5.options.length; i++) {
-            if (selectAuxiliar5.options[i].value === 'Sin auxiliar') {
-              selectAuxiliar5.selectedIndex = i;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            selectAuxiliar5.appendChild(new Option('Sin auxiliar', 'Sin auxiliar', true, true));
           }
         }
       }
@@ -1756,6 +1742,8 @@
           selectDocente.appendChild(new Option(doc, doc));
         });
       }
+      // Opción permanente para medir desconocimiento de la docente
+      selectDocente.appendChild(new Option("No conozco el nombre de la docente", "No conozco el nombre de la docente"));
       selectDocente.disabled = false;
 
       // Auto-seleccionar y bloquear tarjeta de docente si viene prefijado
@@ -1808,6 +1796,9 @@
           selectAuxiliar.appendChild(new Option(aux, aux));
         });
       }
+      // Opciones permanentes para medir desconocimiento o salas sin auxiliar
+      selectAuxiliar.appendChild(new Option("No conozco el nombre de la auxiliar", "No conozco el nombre de la auxiliar"));
+      selectAuxiliar.appendChild(new Option("Sin auxiliar asignada", "Sin auxiliar"));
       selectAuxiliar.disabled = false;
 
       // Auto-seleccionar y bloquear tarjeta de auxiliar si viene prefijado
