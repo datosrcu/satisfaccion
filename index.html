@@ -801,98 +801,8 @@
       </div>
     </section>
 
-    <!-- SECCIÓN DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL -->
-    <section class="tool-section" style="padding-top:24px;">
-      <div class="sec-head">
-        <h2>
-          <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
-          Directorio Maestro de Efectores y Servicios (Red de Salud Municipal)
-        </h2>
-        <p>Padrón oficial de efectores de salud y servicios. Cada servicio cuenta con su enlace canónico prefijado para facilitar la difusión digital y evitar errores de carga.</p>
-      </div>
-
-      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
-            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
-            <input type="text" id="filter-padron-salud" placeholder="Buscar por centro, barrio, especialidad o tipo de efector..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
-          </div>
-        </div>
-
-        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
-          <table id="table-padron-salud" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
-            <thead>
-              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
-                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Centro de Salud & Barrio</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Tipo</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Servicio</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Profesional por Defecto</th>
-                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-padron-salud">
-              <!-- Renderizado dinámico de los servicios de salud -->
-            </tbody>
-          </table>
-        </div>
-        <div id="padron-salud-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
-          Cargando servicios oficiales de salud...
-        </div>
-      </div>
-    </section>
-
-    <!-- SECCIÓN DIRECTORIO MAESTRO DE LOS 62 ENLACES ÚNICOS DE EDUCACIÓN -->
-    <section class="tool-section" style="padding-top:24px;">
-      <div class="sec-head">
-        <h2>
-          <span class="material-symbols-outlined" style="color:var(--c-educacion-d); font-size:26px;">dataset</span>
-          Directorio Maestro de los 62 Enlaces Únicos (Red de Educación)
-        </h2>
-        <p>Padrón oficial inmutable de Jardines Maternales y Salas Cuna. Cada sala cuenta con su enlace canónico prefijado para evitar cualquier error de carga por parte de las familias.</p>
-      </div>
-
-      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
-            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
-            <input type="text" id="filter-padron-edu" placeholder="Buscar por jardín, sala, turno, docente o auxiliar..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <label style="font-size:12px; font-weight:700; color:var(--ink-soft);">Servidor de Enlaces:</label>
-            <select id="select-base-server" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--ink); outline:none;">
-              <option value="https://datosrcu.github.io/satisfaccion/" selected>GitHub Pages (Público Oficial): datosrcu.github.io/satisfaccion</option>
-              <option value="auto">Detección automática (Local para desarrollo)</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
-          <table id="table-padron-edu" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
-            <thead>
-              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
-                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Institución & Barrio</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Turno</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Sala</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Docente Asignada</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Auxiliar Asignada</th>
-                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-padron-edu">
-              <!-- Renderizado dinámico de los 62 slots -->
-            </tbody>
-          </table>
-        </div>
-        <div id="padron-edu-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
-          Cargando padrón oficial...
-        </div>
-      </div>
-    </section>
-
     <!-- SECCIÓN HERRAMIENTAS DE DESPLIEGUE EN TERRITORIO (OPCIONES 2 - GENERADORES PREFIJADOS INMUTABLES) -->
-    <section class="tool-section" style="padding-top:24px; padding-bottom:30px;">
+    <section class="tool-section" style="padding-top:24px;">
       <div class="sec-head">
         <h2><span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">hub</span> Generadores Específicos Prefijados (Opciones 2)</h2>
         <p>Herramientas de difusión segmentada con bloqueo inmutable de parámetros para envíos directos por WhatsApp a pacientes de servicios específicos o familias de cada sala y docente.</p>
@@ -1041,6 +951,96 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- SECCIÓN DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL (PARTE FINAL) -->
+    <section class="tool-section" style="padding-top:24px;">
+      <div class="sec-head">
+        <h2>
+          <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
+          Directorio Maestro de Efectores y Servicios (Red de Salud Municipal)
+        </h2>
+        <p>Padrón oficial de efectores de salud y servicios. Cada servicio cuenta con su enlace canónico prefijado para facilitar la difusión digital y evitar errores de carga.</p>
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
+            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
+            <input type="text" id="filter-padron-salud" placeholder="Buscar por centro, barrio, especialidad o tipo de efector..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
+          </div>
+        </div>
+
+        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+          <table id="table-padron-salud" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+            <thead>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
+                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Centro de Salud & Barrio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Tipo</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Servicio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Profesional por Defecto</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-padron-salud">
+              <!-- Renderizado dinámico de los servicios de salud -->
+            </tbody>
+          </table>
+        </div>
+        <div id="padron-salud-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
+          Cargando servicios oficiales de salud...
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DIRECTORIO MAESTRO DE LOS 62 ENLACES ÚNICOS DE EDUCACIÓN (PARTE FINAL) -->
+    <section class="tool-section" style="padding-top:24px; padding-bottom:30px;">
+      <div class="sec-head">
+        <h2>
+          <span class="material-symbols-outlined" style="color:var(--c-educacion-d); font-size:26px;">dataset</span>
+          Directorio Maestro de los 62 Enlaces Únicos (Red de Educación)
+        </h2>
+        <p>Padrón oficial inmutable de Jardines Maternales y Salas Cuna. Cada sala cuenta con su enlace canónico prefijado para evitar cualquier error de carga por parte de las familias.</p>
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
+            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
+            <input type="text" id="filter-padron-edu" placeholder="Buscar por jardín, sala, turno, docente o auxiliar..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:12px; font-weight:700; color:var(--ink-soft);">Servidor de Enlaces:</label>
+            <select id="select-base-server" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--ink); outline:none;">
+              <option value="https://datosrcu.github.io/satisfaccion/" selected>GitHub Pages (Público Oficial): datosrcu.github.io/satisfaccion</option>
+              <option value="auto">Detección automática (Local para desarrollo)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+          <table id="table-padron-edu" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+            <thead>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
+                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Institución & Barrio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Turno</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Sala</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Docente Asignada</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Auxiliar Asignada</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-padron-edu">
+              <!-- Renderizado dinámico de los 62 slots -->
+            </tbody>
+          </table>
+        </div>
+        <div id="padron-edu-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
+          Cargando padrón oficial...
+        </div>
       </div>
     </section>
 
