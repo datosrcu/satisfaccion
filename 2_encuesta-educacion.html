@@ -737,6 +737,48 @@
           <div id="institucion-info-badge" style="font-size:12px; color:var(--brand-d); font-weight:600; margin-top:6px;" class="hidden"></div>
         </div>
 
+        <!-- CASCADA DINÁMICA DE SELECCIÓN (Turno, Sala, Docente, Auxiliar) CUANDO NO ES ENLACE PREFIJADO -->
+        <div id="group-cascada-selectores" class="hidden" style="margin-top:14px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px;">
+          <div style="font-size:12px; font-weight:800; color:var(--brand-d); text-transform:uppercase; letter-spacing:.04em; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">account_tree</span>
+            Selección de Turno, Sala y Equipo Pedagógico
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+            <!-- Turno -->
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="select-cascada-turno" style="font-size:12.5px; font-weight:700;">1b. Turno al que asiste *</label>
+              <select id="select-cascada-turno" class="form-select" style="font-size:13px;" required>
+                <option value="">Selecciona el turno...</option>
+              </select>
+            </div>
+
+            <!-- Sala -->
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="select-cascada-sala" style="font-size:12.5px; font-weight:700;">1c. Sala / Espacio *</label>
+              <select id="select-cascada-sala" class="form-select" style="font-size:13px;" required disabled>
+                <option value="">Primero selecciona el turno...</option>
+              </select>
+            </div>
+
+            <!-- Docente -->
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="select-cascada-docente" style="font-size:12.5px; font-weight:700;">1d. Docente a cargo *</label>
+              <select id="select-cascada-docente" class="form-select" style="font-size:13px;" required disabled>
+                <option value="">Primero selecciona la sala...</option>
+              </select>
+            </div>
+
+            <!-- Auxiliar -->
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="select-cascada-auxiliar" style="font-size:12.5px; font-weight:700;">1e. Personal Auxiliar</label>
+              <select id="select-cascada-auxiliar" class="form-select" style="font-size:13px;" disabled>
+                <option value="">Sin auxiliar asignada</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <!-- P2: ¿Hace cuánto tiempo asiste tu hijo/a a este jardín/sala? -->
         <div class="form-group bordered-item">
           <label class="form-label">2. ¿Hace cuánto tiempo asiste tu hijo/a a este jardín/sala? *</label>
@@ -1358,6 +1400,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initInstitucionesSelect();
+      initCascadaListeners();
       initChipSelectors();
       initRatingButtons();
       initNpsButtons();
@@ -1387,6 +1430,213 @@
       });
     }
 
+    function initCascadaListeners() {
+      const selectTurno = document.getElementById('select-cascada-turno');
+      const selectSala = document.getElementById('select-cascada-sala');
+      const selectDocenteBloque1 = document.getElementById('select-cascada-docente');
+      const selectAuxiliarBloque1 = document.getElementById('select-cascada-auxiliar');
+
+      if (selectTurno) {
+        selectTurno.addEventListener('change', onCascadaTurnoChange);
+      }
+      if (selectSala) {
+        selectSala.addEventListener('change', onCascadaSalaChange);
+      }
+      if (selectDocenteBloque1) {
+        selectDocenteBloque1.addEventListener('change', onCascadaDocenteChange);
+      }
+      if (selectAuxiliarBloque1) {
+        selectAuxiliarBloque1.addEventListener('change', () => {
+          const val = selectAuxiliarBloque1.value;
+          const selectAux4 = document.getElementById('select-auxiliar');
+          if (selectAux4 && val) {
+            let found = false;
+            for (let i = 0; i < selectAux4.options.length; i++) {
+              if (selectAux4.options[i].value === val) {
+                selectAux4.selectedIndex = i;
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              selectAux4.appendChild(new Option(val, val, true, true));
+            }
+          }
+        });
+      }
+    }
+
+    function onCascadaTurnoChange() {
+      const selectTurno = document.getElementById('select-cascada-turno');
+      const selectSala = document.getElementById('select-cascada-sala');
+      const selectDocenteBloque1 = document.getElementById('select-cascada-docente');
+      const selectAuxiliarBloque1 = document.getElementById('select-cascada-auxiliar');
+      const inputTurno = document.getElementById('input-turno-asignado');
+
+      if (!institucionSeleccionada) return;
+
+      const turnoVal = selectTurno.value;
+      if (inputTurno) inputTurno.value = turnoVal;
+
+      selectSala.innerHTML = '<option value="">Selecciona la sala...</option>';
+      selectDocenteBloque1.innerHTML = '<option value="">Primero selecciona la sala...</option>';
+      selectDocenteBloque1.disabled = true;
+      selectAuxiliarBloque1.innerHTML = '<option value="">Sin auxiliar asignada</option>';
+      selectAuxiliarBloque1.disabled = true;
+
+      if (!turnoVal) {
+        selectSala.disabled = true;
+        return;
+      }
+
+      let salas = [];
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        salas = [...new Set(institucionSeleccionada.distribucion.filter(d => d.turno === turnoVal).map(d => d.sala))].filter(Boolean);
+        if (salas.length === 0) {
+          salas = [...new Set(institucionSeleccionada.distribucion.map(d => d.sala))].filter(Boolean);
+        }
+      } else if (institucionSeleccionada.salas) {
+        salas = institucionSeleccionada.salas;
+      }
+
+      salas.forEach(s => {
+        selectSala.appendChild(new Option(`Sala: ${s}`, s));
+      });
+      selectSala.disabled = false;
+
+      // Si sólo hay una sala disponible, seleccionarla automáticamente
+      if (salas.length === 1) {
+        selectSala.value = salas[0];
+        onCascadaSalaChange();
+      }
+    }
+
+    function onCascadaSalaChange() {
+      const selectTurno = document.getElementById('select-cascada-turno');
+      const selectSala = document.getElementById('select-cascada-sala');
+      const selectDocenteBloque1 = document.getElementById('select-cascada-docente');
+      const selectAuxiliarBloque1 = document.getElementById('select-cascada-auxiliar');
+      const inputSala = document.getElementById('input-sala-espacio');
+
+      if (!institucionSeleccionada) return;
+
+      const turnoVal = selectTurno.value;
+      const salaVal = selectSala.value;
+      if (inputSala) inputSala.value = salaVal;
+
+      selectDocenteBloque1.innerHTML = '<option value="">Selecciona la/el docente...</option>';
+      selectAuxiliarBloque1.innerHTML = '<option value="">Sin auxiliar asignada</option>';
+
+      if (!salaVal) {
+        selectDocenteBloque1.disabled = true;
+        selectAuxiliarBloque1.disabled = true;
+        return;
+      }
+
+      let distribFiltrada = [];
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        distribFiltrada = institucionSeleccionada.distribucion.filter(d => d.turno === turnoVal && d.sala === salaVal);
+        if (distribFiltrada.length === 0) {
+          distribFiltrada = institucionSeleccionada.distribucion.filter(d => d.sala === salaVal);
+        }
+      }
+
+      if (distribFiltrada.length > 0) {
+        distribFiltrada.forEach(d => {
+          selectDocenteBloque1.appendChild(new Option(d.docente, d.docente));
+        });
+      } else if (institucionSeleccionada.docentes) {
+        institucionSeleccionada.docentes.forEach(doc => {
+          selectDocenteBloque1.appendChild(new Option(doc, doc));
+        });
+      }
+
+      selectDocenteBloque1.disabled = false;
+
+      // Si sólo hay una opción de docente, auto-seleccionar y conectar auxiliar
+      if (selectDocenteBloque1.options.length === 2) {
+        selectDocenteBloque1.selectedIndex = 1;
+        onCascadaDocenteChange();
+      }
+    }
+
+    function onCascadaDocenteChange() {
+      const selectTurno = document.getElementById('select-cascada-turno');
+      const selectSala = document.getElementById('select-cascada-sala');
+      const selectDocenteBloque1 = document.getElementById('select-cascada-docente');
+      const selectAuxiliarBloque1 = document.getElementById('select-cascada-auxiliar');
+      const selectDocente4 = document.getElementById('select-docente');
+      const selectAuxiliar5 = document.getElementById('select-auxiliar');
+
+      if (!institucionSeleccionada) return;
+
+      const turnoVal = selectTurno.value;
+      const salaVal = selectSala.value;
+      const docVal = selectDocenteBloque1.value;
+
+      // Sincronizar con select de Bloque 4
+      if (selectDocente4 && docVal) {
+        let found = false;
+        for (let i = 0; i < selectDocente4.options.length; i++) {
+          if (selectDocente4.options[i].value === docVal) {
+            selectDocente4.selectedIndex = i;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          selectDocente4.appendChild(new Option(docVal, docVal, true, true));
+        }
+      }
+
+      let auxVal = "";
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        const match = institucionSeleccionada.distribucion.find(d => 
+          d.turno === turnoVal && d.sala === salaVal && d.docente === docVal
+        );
+        if (match && match.auxiliar) {
+          auxVal = match.auxiliar;
+        }
+      }
+
+      selectAuxiliarBloque1.innerHTML = '';
+      if (auxVal) {
+        selectAuxiliarBloque1.appendChild(new Option(`Auxiliar: ${auxVal}`, auxVal));
+        selectAuxiliarBloque1.value = auxVal;
+        selectAuxiliarBloque1.disabled = false;
+        if (selectAuxiliar5) {
+          let found = false;
+          for (let i = 0; i < selectAuxiliar5.options.length; i++) {
+            if (selectAuxiliar5.options[i].value === auxVal) {
+              selectAuxiliar5.selectedIndex = i;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            selectAuxiliar5.appendChild(new Option(auxVal, auxVal, true, true));
+          }
+        }
+      } else {
+        selectAuxiliarBloque1.appendChild(new Option('Sin auxiliar asignada', 'Sin auxiliar'));
+        selectAuxiliarBloque1.value = 'Sin auxiliar';
+        selectAuxiliarBloque1.disabled = true;
+        if (selectAuxiliar5) {
+          let found = false;
+          for (let i = 0; i < selectAuxiliar5.options.length; i++) {
+            if (selectAuxiliar5.options[i].value === 'Sin auxiliar') {
+              selectAuxiliar5.selectedIndex = i;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            selectAuxiliar5.appendChild(new Option('Sin auxiliar', 'Sin auxiliar', true, true));
+          }
+        }
+      }
+    }
+
     function onInstitucionChange(instId, isDirectLink = false, prefillData = {}) {
       const selectDocente = document.getElementById('select-docente');
       const selectAuxiliar = document.getElementById('select-auxiliar');
@@ -1394,12 +1644,14 @@
       const lockCard = document.getElementById('institucion-locked-card');
       const lockDetalle = document.getElementById('lock-inst-detalle');
       const groupSelect = document.getElementById('group-institucion-select');
+      const groupCascada = document.getElementById('group-cascada-selectores');
       const inputTurno = document.getElementById('input-turno-asignado');
       const inputSala = document.getElementById('input-sala-espacio');
 
       institucionSeleccionada = catalogoEducacion.find(i => i.id === instId);
 
       if (!institucionSeleccionada) {
+        if (groupCascada) groupCascada.classList.add('hidden');
         selectDocente.innerHTML = '<option value="">Primero selecciona la institución arriba...</option>';
         selectDocente.disabled = true;
         selectAuxiliar.innerHTML = '<option value="">Primero selecciona la institución arriba...</option>';
@@ -1417,7 +1669,7 @@
 
       const turnoVal = prefillData.turno || (inputTurno ? inputTurno.value : "");
       const salaVal = prefillData.sala || (inputSala ? inputSala.value : "");
-      const docenteVal = prefillData.docente || "";
+      let docenteVal = prefillData.docente || "";
       let auxiliarVal = prefillData.auxiliar || "";
 
       if (!auxiliarVal && institucionSeleccionada.distribucion) {
@@ -1433,6 +1685,7 @@
       if (inputSala && salaVal) inputSala.value = salaVal;
 
       if (isDirectLink) {
+        if (groupCascada) groupCascada.classList.add('hidden');
         if (groupSelect) groupSelect.classList.add('hidden');
         if (lockCard) {
           document.getElementById('lock-inst-nombre').textContent = institucionSeleccionada.nombre;
@@ -1458,8 +1711,24 @@
       } else {
         if (lockCard) lockCard.classList.add('hidden');
         if (groupSelect) groupSelect.classList.remove('hidden');
+        if (groupCascada) groupCascada.classList.remove('hidden');
+
         badge.innerHTML = `<span class="material-symbols-outlined" style="font-size:15px; vertical-align:-3px; margin-right:4px;">location_on</span>${institucionSeleccionada.direccion} · B° ${institucionSeleccionada.barrio}`;
         badge.classList.remove('hidden');
+
+        // Poblar Cascada de Turnos
+        const selectCascadaTurno = document.getElementById('select-cascada-turno');
+        if (selectCascadaTurno) {
+          selectCascadaTurno.innerHTML = '<option value="">Selecciona el turno...</option>';
+          const turnos = (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0)
+            ? [...new Set(institucionSeleccionada.distribucion.map(d => d.turno))].filter(Boolean)
+            : (institucionSeleccionada.turnos || ['Mañana', 'Tarde']);
+
+          turnos.forEach(t => {
+            selectCascadaTurno.appendChild(new Option(`Turno ${t}`, t));
+          });
+          onCascadaTurnoChange();
+        }
       }
 
       // Poblar desplegable de Docentes (P12a) con el padrón oficial del jardín
