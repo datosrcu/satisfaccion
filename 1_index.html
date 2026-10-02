@@ -694,20 +694,17 @@
       </div>
     </section>
 
-    <!-- SECCIÓN HERRAMIENTAS DE DESPLIEGUE EN TERRITORIO -->
+    <!-- SECCIÓN HERRAMIENTAS DE DESPLIEGUE EN TERRITORIO (OPCIONES 1 - GENERALES Y SALAS DE ESPERA) -->
     <section class="tool-section">
       <div class="sec-head">
-        <h2><span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">tune</span> Canales de
-          Despliegue y Difusión</h2>
-        <p>Herramientas automáticas para generar carteles QR en la Red de Salud y plantillas de WhatsApp/Email para la Red de Educación Municipal.</p>
+        <h2><span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">tune</span> Canales de Despliegue Directo (Opciones 1)</h2>
+        <p>Herramientas inmediatas: Generación de Cartelería QR A4 oficial para salas de espera en la Red de Salud y Enlace Universal de difusión para la Red de Educación Municipal.</p>
       </div>
 
       <div class="tool-grid">
 
-        <!-- CANAL 1: SALUD (CARTELERÍA QR Y DIFUSIÓN PREFIJADA) -->
-        <div class="tool-box" id="modulo-salud-qr" style="display:flex; flex-direction:column; gap:20px;">
-          
-          <!-- OPCIÓN 1: CARTELERÍA QR OFICIAL A4 (PARA SALAS DE ESPERA) -->
+        <!-- CANAL 1: SALUD - OPCIÓN 1: CARTELERÍA QR OFICIAL A4 (PARA SALAS DE ESPERA) -->
+        <div class="tool-box" id="modulo-salud-qr">
           <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:16px;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
               <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
@@ -741,8 +738,7 @@
 
               <div style="margin:12px 0;">
                 <h3 style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
-                <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1
-                </div>
+                <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
                 <div id="poster-salud-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
                 <div id="poster-salud-esp-text" style="display:none; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-top:4px;"></div>
               </div>
@@ -767,183 +763,46 @@
               </button>
             </div>
           </div>
+        </div>
 
-          <!-- OPCIÓN 2: GENERADOR ESPECÍFICO PREFIJADO POR SERVICIO Y PROFESIONAL -->
-          <div style="border-top:1px solid var(--line); padding-top:16px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge-chip" style="background:var(--bg-alt); color:var(--ink-soft); border:1px solid var(--line); font-weight:800;">
-                <span class="material-symbols-outlined" style="font-size:16px;">tune</span> Opción 2 · Generador Específico Prefijado por Servicio
-              </span>
-              <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:rgba(0,157,224,.1); padding:3px 8px; border-radius:6px;">
-                Bloqueo Inmutable
-              </span>
-            </div>
-            <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">
-              Genera enlaces personalizados prefijados con la especialidad y el profesional (incluyendo «No conozco el nombre del profesional») listos para WhatsApp o carteleras específicas.
-            </p>
-
-            <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:14px;">
-              <div class="tool-field">
-                <label>1. Centro de Salud / CAPS / Posta *</label>
-                <select id="select-salud-pref-centro"></select>
+        <!-- CANAL 2: EDUCACIÓN - OPCIÓN 1: ENLACE GENERAL UNIVERSAL -->
+        <div class="tool-box" id="modulo-educacion-envio">
+          <div style="background:var(--tint-verde); border:1px solid rgba(0, 201, 107, 0.3); border-radius:var(--radius-sm); padding:16px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <span class="badge-chip" style="background:#fff; color:var(--c-educacion-d); font-weight:800;">
+                  <span class="material-symbols-outlined" style="font-size:16px;">public</span> Opción 1 · Enlace General Universal (Cascada Dinámica)
+                </span>
+                <span style="font-size:11px; font-weight:700; color:var(--c-educacion-d); background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px;">
+                  Sin bloqueo prefijado · 1 solo enlace
+                </span>
               </div>
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div class="tool-field">
-                  <label>2. Especialidad / Servicio *</label>
-                  <select id="select-salud-pref-esp"></select>
-                </div>
-                <div class="tool-field">
-                  <label>3. Profesional / Médico *</label>
-                  <select id="select-salud-pref-prof"></select>
-                </div>
-              </div>
-            </div>
+              <p style="font-size:12.5px; color:var(--ink); margin:0 0 12px; line-height:1.4;">
+                Ideal para compartir en <b>redes sociales, portal web, carteleras generales o mensajes masivos</b>. Cualquier familia entra con el mismo enlace y elige su Jardín, Turno, Sala, Docente y Auxiliar desde menús desplegables inteligentes.
+              </p>
 
-            <!-- ENLACE ÚNICO GENERADO -->
-            <div style="margin-top:12px;">
-              <label style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
-                <span class="material-symbols-outlined" style="font-size:16px;">lock</span>
-                Enlace Específico de Consulta (Prefijado e Inmutable):
-              </label>
-              <div style="display:flex; gap:6px;">
-                <input type="text" id="input-link-salud-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
-                <button type="button" id="btn-copy-link-salud-field" class="btn-pill btn-outline" style="padding:0 14px; font-size:12.5px; height:auto; min-width:auto;">
-                  <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+              <div style="display:flex; gap:6px; margin-bottom:12px;">
+                <input type="text" id="input-link-edu-general" readonly style="flex:1; background:#fff; border:1px solid rgba(0, 201, 107, 0.4); border-radius:var(--radius-sm); padding:9px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+                <button type="button" id="btn-copy-link-edu-general" class="btn-pill" style="background:var(--c-educacion-d); color:#fff; padding:0 14px; font-size:12px; height:auto; min-width:auto; border:none; cursor:pointer;">
+                  <span class="material-symbols-outlined" style="font-size:15px; margin:0 4px 0 0;">content_copy</span> Copiar Link
                 </button>
-                <a id="btn-open-salud-field" href="encuesta-salud.html" target="_blank" class="btn-pill btn-outline" style="background:#fff; padding:0 12px; font-size:12px; height:auto; min-width:auto; text-decoration:none; display:inline-flex; align-items:center;">
+                <a id="btn-open-edu-general" href="encuesta-educacion.html" target="_blank" class="btn-pill btn-outline" style="background:#fff; padding:0 12px; font-size:12px; height:auto; min-width:auto; text-decoration:none; display:inline-flex; align-items:center;">
                   <span class="material-symbols-outlined" style="font-size:15px; margin:0 3px 0 0;">open_in_new</span> Abrir
                 </a>
               </div>
             </div>
 
-            <!-- MENSAJE WHATSAPP -->
-            <div style="margin-top:12px;">
-              <div style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
-                <span style="display:flex; align-items:center; gap:5px;">
-                  <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
-                  Mensaje WhatsApp Específico para este Servicio:
-                </span>
-              </div>
-              <div id="whatsapp-preview-salud-box"
-                style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
-              </div>
-            </div>
-
-            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-              <button type="button" id="btn-copy-wsp-salud" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
-                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
-              </button>
-              <button type="button" id="btn-open-wsp-salud" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
-                <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- CANAL 2: EDUCACIÓN (OPCIONES DE DIFUSIÓN) -->
-        <div class="tool-box" id="modulo-educacion-envio" style="display:flex; flex-direction:column; gap:20px;">
-          
-          <!-- OPCIÓN 1: ENLACE GENERAL UNIVERSAL (SIN BLOQUEO, SELECCIÓN DINÁMICA) -->
-          <div style="background:var(--tint-verde); border:1px solid rgba(0, 201, 107, 0.3); border-radius:var(--radius-sm); padding:16px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge-chip" style="background:#fff; color:var(--c-educacion-d); font-weight:800;">
-                <span class="material-symbols-outlined" style="font-size:16px;">public</span> Opción 1 · Enlace General Universal (Cascada Dinámica)
-              </span>
-              <span style="font-size:11px; font-weight:700; color:var(--c-educacion-d); background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px;">
-                Sin bloqueo prefijado · 1 solo enlace
-              </span>
-            </div>
-            <p style="font-size:12.5px; color:var(--ink); margin:0 0 12px; line-height:1.4;">
-              Ideal para compartir en <b>redes sociales, portal web, carteleras generales o mensajes masivos</b>. Cualquier familia entra con el mismo enlace y elige su Jardín, Turno, Sala, Docente y Auxiliar desde menús desplegables inteligentes.
-            </p>
-
-            <div style="display:flex; gap:6px; margin-bottom:10px;">
-              <input type="text" id="input-link-edu-general" readonly style="flex:1; background:#fff; border:1px solid rgba(0, 201, 107, 0.4); border-radius:var(--radius-sm); padding:9px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
-              <button type="button" id="btn-copy-link-edu-general" class="btn-pill" style="background:var(--c-educacion-d); color:#fff; padding:0 14px; font-size:12px; height:auto; min-width:auto; border:none; cursor:pointer;">
-                <span class="material-symbols-outlined" style="font-size:15px; margin:0 4px 0 0;">content_copy</span> Copiar Link
-              </button>
-              <a id="btn-open-edu-general" href="encuesta-educacion.html" target="_blank" class="btn-pill btn-outline" style="background:#fff; padding:0 12px; font-size:12px; height:auto; min-width:auto; text-decoration:none; display:inline-flex; align-items:center;">
-                <span class="material-symbols-outlined" style="font-size:15px; margin:0 3px 0 0;">open_in_new</span> Abrir
-              </a>
-            </div>
-
-            <button type="button" id="btn-copy-wsp-general" class="btn-pill" style="width:100%; background:#fff; border:1px solid #25D366; color:#065f46; font-size:12px; font-weight:700; cursor:pointer; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+            <button type="button" id="btn-copy-wsp-general" class="btn-pill" style="width:100%; background:#fff; border:1px solid #25D366; color:#065f46; font-size:12px; font-weight:700; cursor:pointer; padding:10px 14px; display:inline-flex; align-items:center; justify-content:center; gap:6px; margin-top:10px;">
               <span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#25D366;">chat</span> Copiar Mensaje General de WhatsApp (Para Todas las Familias)
             </button>
           </div>
-
-          <!-- OPCIÓN 2: GENERADOR ESPECÍFICO POR SALA Y DOCENTE (CON BLOQUEO) -->
-          <div style="border-top:1px solid var(--line); padding-top:16px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge-chip" style="background:var(--bg-alt); color:var(--ink-soft); border:1px solid var(--line); font-weight:800;">
-                <span class="material-symbols-outlined" style="font-size:16px;">tune</span> Opción 2 · Generador Específico Prefijado por Sala
-              </span>
-            </div>
-            <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">
-              Genera enlaces personalizados con bloqueo de sala y docente para grupos de WhatsApp individuales de cada sala.
-            </p>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
-              <div class="tool-field" style="grid-column: 1 / -1;">
-                <label>1. Jardín Maternal / Sala Cuna *</label>
-                <select id="select-educacion-envio"></select>
-              </div>
-              <div class="tool-field">
-                <label>2. Turno *</label>
-                <select id="select-educacion-turno"></select>
-              </div>
-              <div class="tool-field">
-                <label>3. Sala / Espacio *</label>
-                <select id="select-educacion-sala"></select>
-              </div>
-              <div class="tool-field" style="grid-column: 1 / -1;">
-                <label>4. Docente de Sala *</label>
-                <select id="select-educacion-docente"></select>
-              </div>
-            </div>
-
-            <!-- ENLACE ÚNICO GENERADO -->
-            <div style="margin-top:12px;">
-              <label style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
-                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">lock</span>
-                Enlace Específico de esta Sala (Prefijado e Inmutable):
-              </label>
-              <div style="display:flex; gap:6px;">
-                <input type="text" id="input-link-edu-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
-                <button type="button" id="btn-copy-link-edu-field" class="btn-pill btn-outline" style="padding:0 16px; font-size:12.5px; height:auto; min-width:auto;">
-                  <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
-                </button>
-              </div>
-            </div>
-
-            <!-- MENSAJE WHATSAPP -->
-            <div style="margin-top:12px;">
-              <div style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
-                <span style="display:flex; align-items:center; gap:5px;">
-                  <span class="material-symbols-outlined" style="font-size:16px; margin:0;">chat</span>
-                  Mensaje WhatsApp Específico para esta Sala:
-                </span>
-              </div>
-              <div id="whatsapp-preview-box"
-                style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
-              </div>
-            </div>
-
-            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
-              <button type="button" id="btn-copy-wsp" class="btn-pill btn-educacion" style="flex:1; min-width:140px;">
-                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
-              </button>
-              <button type="button" id="btn-open-wsp" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
-                <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
-              </button>
-            </div>
-          </div>
-
         </div>
 
+      </div>
+    </section>
+
     <!-- SECCIÓN DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL -->
-    <section class="tool-section" style="margin-top:36px;">
+    <section class="tool-section" style="padding-top:24px;">
       <div class="sec-head">
         <h2>
           <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
@@ -960,16 +819,16 @@
           </div>
         </div>
 
-        <div style="overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
           <table id="table-padron-salud" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
             <thead>
-              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em;">
-                <th style="padding:10px 12px; width:40px;">#</th>
-                <th style="padding:10px 12px;">Centro de Salud & Barrio</th>
-                <th style="padding:10px 12px;">Tipo</th>
-                <th style="padding:10px 12px;">Especialidad / Servicio</th>
-                <th style="padding:10px 12px;">Profesional por Defecto</th>
-                <th style="padding:10px 12px; text-align:right;">Acciones Rápidas</th>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
+                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Centro de Salud & Barrio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Tipo</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Servicio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Profesional por Defecto</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
               </tr>
             </thead>
             <tbody id="tbody-padron-salud">
@@ -984,7 +843,7 @@
     </section>
 
     <!-- SECCIÓN DIRECTORIO MAESTRO DE LOS 62 ENLACES ÚNICOS DE EDUCACIÓN -->
-    <section class="tool-section" style="margin-top:36px;">
+    <section class="tool-section" style="padding-top:24px;">
       <div class="sec-head">
         <h2>
           <span class="material-symbols-outlined" style="color:var(--c-educacion-d); font-size:26px;">dataset</span>
@@ -1008,17 +867,17 @@
           </div>
         </div>
 
-        <div style="overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+        <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
           <table id="table-padron-edu" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
             <thead>
-              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em;">
-                <th style="padding:10px 12px; width:40px;">#</th>
-                <th style="padding:10px 12px;">Institución & Barrio</th>
-                <th style="padding:10px 12px;">Turno</th>
-                <th style="padding:10px 12px;">Sala</th>
-                <th style="padding:10px 12px;">Docente Asignada</th>
-                <th style="padding:10px 12px;">Auxiliar Asignada</th>
-                <th style="padding:10px 12px; text-align:right;">Acciones Rápidas</th>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
+                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Institución & Barrio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Turno</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Sala</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Docente Asignada</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Auxiliar Asignada</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
               </tr>
             </thead>
             <tbody id="tbody-padron-edu">
@@ -1029,6 +888,159 @@
         <div id="padron-edu-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
           Cargando padrón oficial...
         </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN HERRAMIENTAS DE DESPLIEGUE EN TERRITORIO (OPCIONES 2 - GENERADORES PREFIJADOS INMUTABLES) -->
+    <section class="tool-section" style="padding-top:24px; padding-bottom:30px;">
+      <div class="sec-head">
+        <h2><span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">hub</span> Generadores Específicos Prefijados (Opciones 2)</h2>
+        <p>Herramientas de difusión segmentada con bloqueo inmutable de parámetros para envíos directos por WhatsApp a pacientes de servicios específicos o familias de cada sala y docente.</p>
+      </div>
+
+      <div class="tool-grid">
+
+        <!-- CANAL 1: SALUD - OPCIÓN 2: GENERADOR ESPECÍFICO PREFIJADO POR SERVICIO Y PROFESIONAL -->
+        <div class="tool-box" style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <span class="badge-chip" style="background:var(--bg-alt); color:var(--brand-d); border:1px solid var(--line); font-weight:800;">
+              <span class="material-symbols-outlined" style="font-size:16px;">tune</span> Opción 2 · Generador Específico Prefijado por Servicio
+            </span>
+            <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:rgba(0,157,224,.1); padding:3px 8px; border-radius:6px;">
+              Bloqueo Inmutable
+            </span>
+          </div>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">
+            Genera enlaces personalizados prefijados con la especialidad y el profesional (incluyendo «No conozco el nombre del profesional») listos para WhatsApp o carteleras específicas.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:14px;">
+            <div class="tool-field">
+              <label>1. Centro de Salud / CAPS / Posta *</label>
+              <select id="select-salud-pref-centro"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div class="tool-field">
+                <label>2. Especialidad / Servicio *</label>
+                <select id="select-salud-pref-esp"></select>
+              </div>
+              <div class="tool-field">
+                <label>3. Profesional / Médico *</label>
+                <select id="select-salud-pref-prof"></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- ENLACE ÚNICO GENERADO -->
+          <div style="margin-top:12px;">
+            <label style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">lock</span>
+              Enlace Específico de Consulta (Prefijado e Inmutable):
+            </label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="input-link-salud-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+              <button type="button" id="btn-copy-link-salud-field" class="btn-pill btn-outline" style="padding:0 14px; font-size:12.5px; height:auto; min-width:auto;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+              </button>
+              <a id="btn-open-salud-field" href="encuesta-salud.html" target="_blank" class="btn-pill btn-outline" style="background:#fff; padding:0 12px; font-size:12px; height:auto; min-width:auto; text-decoration:none; display:inline-flex; align-items:center;">
+                <span class="material-symbols-outlined" style="font-size:15px; margin:0 3px 0 0;">open_in_new</span> Abrir
+              </a>
+            </div>
+          </div>
+
+          <!-- MENSAJE WHATSAPP -->
+          <div style="margin-top:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
+              <span style="display:flex; align-items:center; gap:5px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
+                Mensaje WhatsApp Específico para este Servicio:
+              </span>
+            </div>
+            <div id="whatsapp-preview-salud-box"
+              style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+            <button type="button" id="btn-copy-wsp-salud" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
+            </button>
+            <button type="button" id="btn-open-wsp-salud" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- CANAL 2: EDUCACIÓN - OPCIÓN 2: GENERADOR ESPECÍFICO POR SALA Y DOCENTE (CON BLOQUEO) -->
+        <div class="tool-box" style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow);">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <span class="badge-chip" style="background:var(--bg-alt); color:var(--c-educacion-d); border:1px solid var(--line); font-weight:800;">
+              <span class="material-symbols-outlined" style="font-size:16px;">tune</span> Opción 2 · Generador Específico Prefijado por Sala
+            </span>
+            <span style="font-size:11px; font-weight:700; color:var(--c-educacion-d); background:rgba(0,201,107,.1); padding:3px 8px; border-radius:6px;">
+              Bloqueo Inmutable
+            </span>
+          </div>
+          <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">
+            Genera enlaces personalizados con bloqueo de sala y docente para grupos de WhatsApp individuales de cada sala.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
+            <div class="tool-field" style="grid-column: 1 / -1;">
+              <label>1. Jardín Maternal / Sala Cuna *</label>
+              <select id="select-educacion-envio"></select>
+            </div>
+            <div class="tool-field">
+              <label>2. Turno *</label>
+              <select id="select-educacion-turno"></select>
+            </div>
+            <div class="tool-field">
+              <label>3. Sala / Espacio *</label>
+              <select id="select-educacion-sala"></select>
+            </div>
+            <div class="tool-field" style="grid-column: 1 / -1;">
+              <label>4. Docente de Sala *</label>
+              <select id="select-educacion-docente"></select>
+            </div>
+          </div>
+
+          <!-- ENLACE ÚNICO GENERADO -->
+          <div style="margin-top:12px;">
+            <label style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">lock</span>
+              Enlace Específico de esta Sala (Prefijado e Inmutable):
+            </label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="input-link-edu-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+              <button type="button" id="btn-copy-link-edu-field" class="btn-pill btn-outline" style="padding:0 16px; font-size:12.5px; height:auto; min-width:auto;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+              </button>
+            </div>
+          </div>
+
+          <!-- MENSAJE WHATSAPP -->
+          <div style="margin-top:12px;">
+            <div style="font-size:12px; font-weight:700; color:var(--c-educacion-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
+              <span style="display:flex; align-items:center; gap:5px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">chat</span>
+                Mensaje WhatsApp Específico para esta Sala:
+              </span>
+            </div>
+            <div id="whatsapp-preview-box"
+              style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+            <button type="button" id="btn-copy-wsp" class="btn-pill btn-educacion" style="flex:1; min-width:140px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
+            </button>
+            <button type="button" id="btn-open-wsp" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
+            </button>
+          </div>
+        </div>
+
       </div>
     </section>
 
