@@ -891,8 +891,8 @@
           <div style="display:flex; align-items:center; gap:8px;">
             <label style="font-size:12px; font-weight:700; color:var(--ink-soft);">Servidor de Enlaces:</label>
             <select id="select-base-server" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--ink); outline:none;">
-              <option value="auto" selected>Detectar automáticamente (Local / Servidor actual)</option>
-              <option value="https://datosrcu.github.io/satisfaccion/">GitHub Pages (Oficial): datosrcu.github.io/satisfaccion</option>
+              <option value="https://datosrcu.github.io/satisfaccion/" selected>GitHub Pages (Público Oficial): datosrcu.github.io/satisfaccion</option>
+              <option value="auto">Detección automática (Local para desarrollo)</option>
             </select>
           </div>
         </div>
@@ -977,7 +977,7 @@
       document.getElementById('btn-copy-link-salud').addEventListener('click', () => {
         const opt = selectSalud.selectedOptions[0];
         if (!opt) return;
-        const currentUrl = new URL('encuesta-salud.html', window.location.href);
+        const currentUrl = new URL(getBaseUrl('encuesta-salud.html'));
         currentUrl.searchParams.set('centro', opt.value);
         if (selectEsp.value) {
           currentUrl.searchParams.set('especialidad', selectEsp.value);
@@ -999,7 +999,7 @@
       document.getElementById('poster-salud-barrio').textContent = `B° ${opt.dataset.barrio} · Río Cuarto`;
       document.getElementById('poster-salud-esp-text').textContent = espVal ? `Consultorio: ${espVal}` : 'Atención General de Sala';
 
-      const targetUrl = new URL('encuesta-salud.html', window.location.href);
+      const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
       targetUrl.searchParams.set('centro', opt.value);
       if (espVal) {
         targetUrl.searchParams.set('especialidad', espVal);
@@ -1135,14 +1135,23 @@ ${genUrl}
       renderPadronEduTable();
     }
 
-    function getBaseEduUrl(file = 'encuesta-educacion.html') {
+    function getBaseUrl(file = 'encuesta-educacion.html') {
       const selectServer = document.getElementById('select-base-server');
-      const val = selectServer ? selectServer.value : 'auto';
-      if (val === 'auto' || !val) {
+      const val = selectServer ? selectServer.value : 'https://datosrcu.github.io/satisfaccion/';
+      if (val && val !== 'auto') {
+        const cleanBase = val.endsWith('/') ? val : val + '/';
+        return cleanBase + file;
+      }
+      // Si estamos en entorno de desarrollo local (localhost o 127.0.0.1)
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return new URL(file, window.location.href).toString();
       }
-      const cleanBase = val.endsWith('/') ? val : val + '/';
-      return cleanBase + file;
+      // Para cualquier entorno web / Observatorio privado / Intranet: usar siempre el servidor público oficial
+      return 'https://datosrcu.github.io/satisfaccion/' + file;
+    }
+
+    function getBaseEduUrl(file = 'encuesta-educacion.html') {
+      return getBaseUrl(file);
     }
 
     function renderPadronEduTable(filter = '') {
