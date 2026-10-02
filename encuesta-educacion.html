@@ -748,7 +748,7 @@
             <!-- Turno -->
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label" for="select-cascada-turno" style="font-size:12.5px; font-weight:700;">1b. Turno al que asiste *</label>
-              <select id="select-cascada-turno" class="form-select" style="font-size:13px;" required>
+              <select id="select-cascada-turno" class="form-select" style="font-size:13px;">
                 <option value="">Selecciona el turno...</option>
               </select>
             </div>
@@ -756,7 +756,7 @@
             <!-- Sala -->
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label" for="select-cascada-sala" style="font-size:12.5px; font-weight:700;">1c. Sala / Espacio *</label>
-              <select id="select-cascada-sala" class="form-select" style="font-size:13px;" required disabled>
+              <select id="select-cascada-sala" class="form-select" style="font-size:13px;" disabled>
                 <option value="">Primero selecciona el turno...</option>
               </select>
             </div>
@@ -764,7 +764,7 @@
             <!-- Docente -->
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label" for="select-cascada-docente" style="font-size:12.5px; font-weight:700;">1d. Docente a cargo *</label>
-              <select id="select-cascada-docente" class="form-select" style="font-size:13px;" required disabled>
+              <select id="select-cascada-docente" class="form-select" style="font-size:13px;" disabled>
                 <option value="">Primero selecciona la sala...</option>
               </select>
             </div>
@@ -1977,7 +1977,16 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Validar que todos los campos requeridos estén completos
+        // Validar que la institución esté seleccionada
+        const selectInst = document.getElementById('select-institucion');
+        const instId = (selectInst && selectInst.value) || (institucionSeleccionada ? institucionSeleccionada.id : '');
+        if (!instId) {
+          alert("Por favor selecciona la institución educativa.");
+          if (selectInst) selectInst.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Validar que todos los campos de calificación requeridos estén completos
         const requiredInputs = form.querySelectorAll('input[type="hidden"][required]');
         for (let input of requiredInputs) {
           if (!input.value) {
@@ -1987,8 +1996,19 @@
           }
         }
 
+        const formData = new FormData(form);
+        const turnoVal = formData.get('turno_asignado') || document.getElementById('select-cascada-turno')?.value || '';
+        const salaVal = formData.get('sala_espacio') || document.getElementById('select-cascada-sala')?.value || '';
+        const docenteVal = formData.get('docente_nombre') || document.getElementById('select-cascada-docente')?.value || '';
+        const auxiliarVal = formData.get('auxiliar_nombre') || document.getElementById('select-cascada-auxiliar')?.value || 'No aplica / Sin auxiliar';
+
+        if (!turnoVal || !salaVal || !docenteVal) {
+          alert("Por favor completa la selección de Turno, Sala y Docente.");
+          return;
+        }
+
         const submissionId = 'EDU-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        const slotToken = `${formData.get('institucion_id') || ''}_${formData.get('turno_asignado') || ''}_${formData.get('sala_espacio') || ''}_${formData.get('docente_nombre') || ''}`;
+        const slotToken = `${instId}_${turnoVal}_${salaVal}_${docenteVal}`;
 
         const payload = {
           tipo_encuesta: "educacion",
@@ -1996,54 +2016,54 @@
           id_respuesta: submissionId,
           slot_token: slotToken,
           fecha_hora: new Date().toISOString(),
-          institucion_id: formData.get('institucion_id'),
+          institucion_id: instId,
           institucion_nombre: institucionSeleccionada ? institucionSeleccionada.nombre : "",
           tipo_institucion: institucionSeleccionada ? institucionSeleccionada.tipo : "",
           barrio: institucionSeleccionada ? institucionSeleccionada.barrio : "",
-          turno: formData.get('turno_asignado') || "",
-          sala: formData.get('sala_espacio') || "",
-          tiempo_asistencia: formData.get('tiempo_asistencia'),
+          turno: turnoVal,
+          sala: salaVal,
+          tiempo_asistencia: formData.get('tiempo_asistencia') || "",
           
           // Bloque 2: Atención y Organización
-          atencion_inscripcion_nota: formData.get('atencion_inscripcion_nota'),
-          horarios_organizacion_nota: formData.get('horarios_organizacion_nota'),
-          ingreso_egreso_nota: formData.get('ingreso_egreso_nota'),
-          normas_claras_nota: formData.get('normas_claras_nota'),
-          respuesta_institucional_nota: formData.get('respuesta_institucional_nota'),
+          atencion_inscripcion_nota: formData.get('atencion_inscripcion_nota') || "",
+          horarios_organizacion_nota: formData.get('horarios_organizacion_nota') || "",
+          ingreso_egreso_nota: formData.get('ingreso_egreso_nota') || "",
+          normas_claras_nota: formData.get('normas_claras_nota') || "",
+          respuesta_institucional_nota: formData.get('respuesta_institucional_nota') || "",
 
           // Bloque 3: Infraestructura y Limpieza
-          infraestructura_instalaciones_nota: formData.get('infraestructura_instalaciones_nota'),
-          seguridad_espacio_nota: formData.get('seguridad_espacio_nota'),
-          materiales_recursos_nota: formData.get('materiales_recursos_nota'),
-          limpieza_espacio_nota: formData.get('limpieza_espacio_nota'),
+          infraestructura_instalaciones_nota: formData.get('infraestructura_instalaciones_nota') || "",
+          seguridad_espacio_nota: formData.get('seguridad_espacio_nota') || "",
+          materiales_recursos_nota: formData.get('materiales_recursos_nota') || "",
+          limpieza_espacio_nota: formData.get('limpieza_espacio_nota') || "",
 
           // Bloque 4: Docentes
-          docente_nombre: formData.get('docente_nombre') || "",
-          docente_info_actividades_nota: formData.get('docente_info_actividades_nota'),
-          docente_canales_adecuados_nota: formData.get('docente_canales_adecuados_nota'),
-          docente_info_clara_nota: formData.get('docente_info_clara_nota'),
-          docente_espacios_escucha_nota: formData.get('docente_espacios_escucha_nota'),
-          docente_comunicacion_fluida_nota: formData.get('docente_comunicacion_fluida_nota'),
-          docente_sentirse_escuchado_nota: formData.get('docente_sentirse_escuchado_nota'),
-          docente_vinculo_nino_nota: formData.get('docente_vinculo_nino_nota'),
-          docente_contencion_nota: formData.get('docente_contencion_nota'),
-          docente_conoce_particularidades_nota: formData.get('docente_conoce_particularidades_nota'),
-          docente_tranquilidad_confianza_nota: formData.get('docente_tranquilidad_confianza_nota'),
-          docente_trato_afectuoso_nota: formData.get('docente_trato_afectuoso_nota'),
-          docente_atencion_necesidades_nota: formData.get('docente_atencion_necesidades_nota'),
-          docente_ambiente_seguro_nota: formData.get('docente_ambiente_seguro_nota'),
-          docente_propuestas_adecuadas_nota: formData.get('docente_propuestas_adecuadas_nota'),
-          docente_experiencias_juego_nota: formData.get('docente_experiencias_juego_nota'),
-          docente_variedad_propuestas_nota: formData.get('docente_variedad_propuestas_nota'),
+          docente_nombre: docenteVal,
+          docente_info_actividades_nota: formData.get('docente_info_actividades_nota') || "",
+          docente_canales_adecuados_nota: formData.get('docente_canales_adecuados_nota') || "",
+          docente_info_clara_nota: formData.get('docente_info_clara_nota') || "",
+          docente_espacios_escucha_nota: formData.get('docente_espacios_escucha_nota') || "",
+          docente_comunicacion_fluida_nota: formData.get('docente_comunicacion_fluida_nota') || "",
+          docente_sentirse_escuchado_nota: formData.get('docente_sentirse_escuchado_nota') || "",
+          docente_vinculo_nino_nota: formData.get('docente_vinculo_nino_nota') || "",
+          docente_contencion_nota: formData.get('docente_contencion_nota') || "",
+          docente_conoce_particularidades_nota: formData.get('docente_conoce_particularidades_nota') || "",
+          docente_tranquilidad_confianza_nota: formData.get('docente_tranquilidad_confianza_nota') || "",
+          docente_trato_afectuoso_nota: formData.get('docente_trato_afectuoso_nota') || "",
+          docente_atencion_necesidades_nota: formData.get('docente_atencion_necesidades_nota') || "",
+          docente_ambiente_seguro_nota: formData.get('docente_ambiente_seguro_nota') || "",
+          docente_propuestas_adecuadas_nota: formData.get('docente_propuestas_adecuadas_nota') || "",
+          docente_experiencias_juego_nota: formData.get('docente_experiencias_juego_nota') || "",
+          docente_variedad_propuestas_nota: formData.get('docente_variedad_propuestas_nota') || "",
 
           // Bloque 5: Auxiliares
-          auxiliar_nombre: formData.get('auxiliar_nombre') || "No aplica / Sin auxiliar",
-          auxiliar_desempeno_nota: formData.get('auxiliar_desempeno_nota'),
-          auxiliar_higiene_orden_nota: formData.get('auxiliar_higiene_orden_nota'),
-          auxiliar_contencion_nota: formData.get('auxiliar_contencion_nota'),
+          auxiliar_nombre: auxiliarVal,
+          auxiliar_desempeno_nota: formData.get('auxiliar_desempeno_nota') || "",
+          auxiliar_higiene_orden_nota: formData.get('auxiliar_higiene_orden_nota') || "",
+          auxiliar_contencion_nota: formData.get('auxiliar_contencion_nota') || "",
 
           // Bloque 6: NPS
-          nps_puntaje: formData.get('nps_puntaje'),
+          nps_puntaje: formData.get('nps_puntaje') || "",
 
           // Bloque 7: Comentario abierto
           comentario_mejora: formData.get('comentario_mejora') || "",
