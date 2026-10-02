@@ -493,6 +493,14 @@
       margin: 16px 0;
     }
 
+    #qrcode-target-salud canvas,
+    #qrcode-target-salud img {
+      width: 170px !important;
+      height: 170px !important;
+      margin: 0 auto;
+      display: block;
+    }
+
     /* MODAL DE IMPRESIÓN QR */
     .modal-overlay {
       position: fixed;
@@ -540,7 +548,29 @@
       color: var(--ink-soft);
     }
 
+    /* ==========================================================================
+       CONFIGURACIÓN EXACTA DE IMPRESIÓN A4 (21 cm x 29.7 cm con márgenes de 2.54 cm)
+       ========================================================================== */
+    @page {
+      size: 21cm 29.7cm; /* Hoja A4 oficial (21 cm de ancho x 29.7 cm de alto) */
+      margin: 2.54cm;     /* Márgenes de 2.54 cm en los 4 lados (superior, abajo, izquierdo, derecho) */
+    }
+
     @media print {
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+      }
+
+      html, body {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       body * {
         visibility: hidden !important;
       }
@@ -554,13 +584,165 @@
         position: fixed !important;
         left: 0 !important;
         top: 0 !important;
-        width: 100vw !important;
-        min-height: 100vh !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
         margin: 0 !important;
-        padding: 25mm 20mm !important;
-        border: none !important;
+        padding: 0.8cm 1cm !important;
+        border: 2.5px solid #009de0 !important;
+        border-radius: 18px !important;
         background: #ffffff !important;
         box-shadow: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: center !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        z-index: 99999 !important;
+      }
+
+      .print-active .poster-print-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-top: 4px !important;
+      }
+
+      .print-active .poster-print-logo {
+        height: 54px !important;
+        width: auto !important;
+        margin: 0 auto 10px !important;
+        display: block !important;
+      }
+
+      .print-active .poster-print-subse {
+        font-size: 15px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.8px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .print-active .poster-print-divider {
+        display: block !important;
+        width: 80px !important;
+        height: 3px !important;
+        background: #009de0 !important;
+        border-radius: 2px !important;
+        margin: 0 auto !important;
+      }
+
+      .print-active .poster-print-main {
+        width: 100% !important;
+        margin: 8px 0 !important;
+      }
+
+      .print-active .poster-print-title {
+        font-size: 27px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        line-height: 1.25 !important;
+        margin: 0 0 6px !important;
+      }
+
+      .print-active .poster-print-nombre {
+        font-size: 26px !important;
+        font-weight: 900 !important;
+        color: #009de0 !important;
+        margin: 4px 0 !important;
+      }
+
+      .print-active .poster-print-barrio {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+        margin-bottom: 6px !important;
+      }
+
+      .print-active .poster-print-esp {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: #0284c7 !important;
+        background: #e0f2fe !important;
+        border: 1.5px solid #009de0 !important;
+        border-radius: 999px !important;
+        padding: 6px 18px !important;
+        display: inline-block !important;
+        margin-top: 6px !important;
+      }
+
+      .print-active .poster-print-qr-wrap {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 8px 0 !important;
+        width: 100% !important;
+      }
+
+      .print-active #qrcode-target-salud canvas,
+      .print-active #qrcode-target-salud img,
+      .print-active #modal-poster-qr-img {
+        width: 270px !important;
+        height: 270px !important;
+        max-width: 270px !important;
+        max-height: 270px !important;
+        border-radius: 18px !important;
+        padding: 12px !important;
+        background: #ffffff !important;
+        border: 2px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        display: block !important;
+        margin: 0 auto !important;
+      }
+
+      .print-active .poster-print-footer {
+        width: 100% !important;
+        margin-bottom: 4px !important;
+      }
+
+      .print-active .poster-print-cta {
+        font-size: 20px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        margin: 8px 0 3px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+      }
+
+      .print-active .poster-print-cta .material-symbols-outlined {
+        font-size: 24px !important;
+        color: #009de0 !important;
+      }
+
+      .print-active .poster-print-anon {
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        margin: 2px 0 0 !important;
+      }
+
+      .print-active .poster-print-footer-legal {
+        display: block !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: #94a3b8 !important;
+        letter-spacing: 0.6px !important;
+        text-transform: uppercase !important;
+        margin-top: 10px !important;
+      }
+
+      .print-active .poster-hide-in-print {
+        display: none !important;
       }
     }
   </style>
@@ -769,25 +951,31 @@
 
             <!-- VISTA PREVIA CARTEL -->
             <div id="printable-poster">
-              <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:36px; width:auto; margin:0 auto 10px; display:block;">
-              <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
-
-              <div style="margin:12px 0;">
-                <h3 style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
-                <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
-                <div id="poster-salud-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
-                <div id="poster-salud-esp-text" style="display:none; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-top:4px;"></div>
+              <div class="poster-print-header">
+                <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:36px; width:auto; margin:0 auto 10px; display:block;">
+                <div class="poster-print-subse" style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
+                <div class="poster-print-divider" style="display:none;"></div>
               </div>
 
-              <div style="display:flex; justify-content:center; margin:14px 0;">
+              <div class="poster-print-main" style="margin:12px 0;">
+                <h3 class="poster-print-title" style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
+                <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
+                <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
+                <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-top:4px;"></div>
+              </div>
+
+              <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
                 <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px;"></div>
               </div>
 
-              <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;">
-                <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
-                Escaneá con la cámara de tu celular
-              </p>
-              <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+              <div class="poster-print-footer">
+                <p class="poster-print-cta" style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;">
+                  <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+                  Escaneá con la cámara de tu celular
+                </p>
+                <p class="poster-print-anon" style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+                <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+              </div>
             </div>
 
             <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
@@ -1034,26 +1222,32 @@
 
       <!-- CARTEL IMPRIMIBLE A4 -->
       <div id="modal-printable-poster" style="background:#fff; border:2px dashed var(--line); border-radius:var(--radius); padding:28px 24px; text-align:center; margin:10px 0;">
-        <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:38px; width:auto; margin:0 auto 10px; display:block;">
-        <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
-
-        <div style="margin:12px 0;">
-          <h3 style="font-size:19px; font-weight:900; margin:0 0 2px; color:var(--ink);">Tu opinión nos ayuda a mejorar</h3>
-          <div id="modal-poster-salud-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
-          <div id="modal-poster-salud-barrio" style="font-size:12.5px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi · Río Cuarto</div>
-          <div id="modal-poster-salud-esp" style="display:none; font-size:13px; font-weight:700; color:var(--ink); margin-top:4px;"></div>
+        <div class="poster-print-header">
+          <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:38px; width:auto; margin:0 auto 10px; display:block;">
+          <div class="poster-print-subse" style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
+          <div class="poster-print-divider" style="display:none;"></div>
         </div>
 
-        <div style="display:flex; justify-content:center; margin:14px 0;">
+        <div class="poster-print-main" style="margin:12px 0;">
+          <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 2px; color:var(--ink);">Tu opinión nos ayuda a mejorar</h3>
+          <div id="modal-poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
+          <div id="modal-poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi · Río Cuarto</div>
+          <div id="modal-poster-salud-esp" class="poster-print-esp" style="display:none; font-size:13px; font-weight:700; color:var(--ink); margin-top:4px;"></div>
+        </div>
+
+        <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
           <img id="modal-poster-qr-img" src="" alt="Código QR Oficial" style="width:200px; height:200px; border-radius:12px; border:1px solid var(--line); padding:6px; background:#fff; display:block; box-shadow:0 2px 10px rgba(0,0,0,.06);">
         </div>
 
-        <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:var(--ink);">
-          <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
-          Escaneá con la cámara de tu celular
-        </p>
-        <p style="font-size:11.5px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
-        <div style="font-size:10px; color:var(--ink-soft); margin-top:10px; opacity:.7;">Proveedor Oficial: QR Server HD (1000x1000 px)</div>
+        <div class="poster-print-footer">
+          <p class="poster-print-cta" style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:var(--ink);">
+            <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+            Escaneá con la cámara de tu celular
+          </p>
+          <p class="poster-print-anon" style="font-size:11.5px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+          <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+          <div class="poster-hide-in-print" style="font-size:10px; color:var(--ink-soft); margin-top:10px; opacity:.7;">Proveedor Oficial: QR Server HD (1000x1000 px)</div>
+        </div>
       </div>
 
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
@@ -1173,8 +1367,8 @@
 
       qrcodeSalud = new QRCode(qrContainer, {
         text: finalUrl,
-        width: 170,
-        height: 170,
+        width: 320,
+        height: 320,
         colorDark: "#14171A",
         colorLight: "#FFFFFF",
         correctLevel: QRCode.CorrectLevel.H
@@ -1228,6 +1422,23 @@
         setTimeout(() => poster.classList.remove('print-active'), 1000);
       }
     }
+
+    // Asegurar compatibilidad directa con Ctrl+P del navegador
+    window.addEventListener('beforeprint', () => {
+      const modal = document.getElementById('modal-qr-salud');
+      const hasActive = document.querySelector('.print-active');
+      if (!hasActive) {
+        if (modal && modal.classList.contains('active')) {
+          document.getElementById('modal-printable-poster')?.classList.add('print-active');
+        } else {
+          document.getElementById('printable-poster')?.classList.add('print-active');
+        }
+      }
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
+    });
 
     let saludTableModo = 'servicios'; // 'servicios' (228) o 'generales' (24)
 
