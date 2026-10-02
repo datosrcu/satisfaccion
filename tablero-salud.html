@@ -3305,7 +3305,8 @@
     async function fetchLiveData() {
       if (!SCRIPT_URL) return;
       try {
-        const res = await fetch(SCRIPT_URL);
+        const fetchUrl = SCRIPT_URL + (SCRIPT_URL.includes('?') ? '&' : '?') + 'action=get_health';
+        const res = await fetch(fetchUrl);
         const data = await res.json();
         let rowsArr = Array.isArray(data) ? data : (data.rows || data.data || []);
         if (Array.isArray(rowsArr) && rowsArr.length > 0) {
@@ -3330,23 +3331,31 @@
             return s;
           }
 
-          RAW = rowsArr.map(r => ({
-            fecha_hora: r.fecha_hora ? r.fecha_hora : parseFecha(r.fecha),
-            centro_id: r.centro_id || 'MATERNIDAD_KOWALK',
-            centro_nombre: r.centro_nombre || 'Maternidad Hortensia Gardey de Kowalk',
-            barrio: r.barrio || 'Centro',
-            sector: r.sector || 'C (Centro)',
-            llegada: r.llegada || 'Con turno previo',
-            recepcion_nota: r.recepcion_nota !== undefined ? Number(r.recepcion_nota) : toScale(r.recepcion),
-            espera_nota: r.espera_nota !== undefined ? Number(r.espera_nota) : toScale(r.espera),
-            infraestructura_nota: r.infraestructura_nota !== undefined ? Number(r.infraestructura_nota) : toScale(r.infra),
-            especialidad: r.especialidad || '',
-            profesional: r.profesional || '',
-            medico_nota: r.medico_nota !== undefined ? Number(r.medico_nota) : toScale(r.medico),
-            enfermeria_nota: r.enfermeria_nota !== undefined ? Number(r.enfermeria_nota) : toScale(r.enfermeria),
-            nps_puntaje: Number(r.nps_puntaje !== undefined ? r.nps_puntaje : r.nps) || 0,
-            sugerencias: (r.sugerencias || '').trim()
-          }));
+          const centrosCatalogo = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+          const catalogoMap = {};
+          centrosCatalogo.forEach(c => { catalogoMap[c.id] = c; });
+
+          RAW = rowsArr.map(r => {
+            const cat = catalogoMap[r.centro_id] || centrosCatalogo.find(c => c.nombre === r.centro_nombre) || {};
+            return {
+              fecha_hora: r.fecha_hora ? r.fecha_hora : parseFecha(r.fecha),
+              centro_id: r.centro_id || cat.id || 'MATERNIDAD_KOWALK',
+              centro_nombre: r.centro_nombre || cat.nombre || 'Maternidad Hortensia Gardey de Kowalk',
+              barrio: r.barrio || cat.barrio || 'Centro',
+              sector: r.sector || cat.sector || 'C (Centro)',
+              tipo_centro: r.tipo_centro || cat.tipo || 'Centro de Salud',
+              llegada: r.llegada || 'Con turno previo',
+              recepcion_nota: r.recepcion_nota !== undefined ? Number(r.recepcion_nota) : toScale(r.recepcion),
+              espera_nota: r.espera_nota !== undefined ? Number(r.espera_nota) : toScale(r.espera),
+              infraestructura_nota: r.infraestructura_nota !== undefined ? Number(r.infraestructura_nota) : toScale(r.infra),
+              especialidad: r.especialidad || '',
+              profesional: r.profesional || '',
+              medico_nota: r.medico_nota !== undefined ? Number(r.medico_nota) : toScale(r.medico),
+              enfermeria_nota: r.enfermeria_nota !== undefined ? Number(r.enfermeria_nota) : toScale(r.enfermeria),
+              nps_puntaje: Number(r.nps_puntaje !== undefined ? r.nps_puntaje : r.nps) || 0,
+              sugerencias: (r.sugerencias || '').trim()
+            };
+          });
 
           initFilterOptions();
           renderDashboard();
