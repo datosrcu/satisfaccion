@@ -891,8 +891,8 @@
           <div style="display:flex; align-items:center; gap:8px;">
             <label style="font-size:12px; font-weight:700; color:var(--ink-soft);">Servidor de Enlaces:</label>
             <select id="select-base-server" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--ink); outline:none;">
+              <option value="auto" selected>Detectar automáticamente (Local / Servidor actual)</option>
               <option value="https://datosrcu.github.io/satisfaccion/">GitHub Pages (Oficial): datosrcu.github.io/satisfaccion</option>
-              <option value="auto">Detectar automáticamente (Local / Red)</option>
             </select>
           </div>
         </div>
@@ -1137,8 +1137,8 @@ ${genUrl}
 
     function getBaseEduUrl(file = 'encuesta-educacion.html') {
       const selectServer = document.getElementById('select-base-server');
-      const val = selectServer ? selectServer.value : 'https://datosrcu.github.io/satisfaccion/';
-      if (val === 'auto') {
+      const val = selectServer ? selectServer.value : 'auto';
+      if (val === 'auto' || !val) {
         return new URL(file, window.location.href).toString();
       }
       const cleanBase = val.endsWith('/') ? val : val + '/';
