@@ -493,6 +493,42 @@
       margin: 16px 0;
     }
 
+    /* MODAL DE IMPRESIÓN QR */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(20, 23, 26, .7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .25s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: var(--shadow-lift);
+      border: 1px solid var(--line);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
     /* FOOTER */
     footer.site-footer {
       border-top: 1px solid var(--line);
@@ -754,12 +790,15 @@
               <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
             </div>
 
-            <div style="display:flex; gap:10px; margin-top:14px;">
-              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1;">
+            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:130px;">
                 <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir Cartel
               </button>
-              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1;">
-                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link General
+              <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
+                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand);">qr_code_2</span> Descargar QR HD
+              </a>
+              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
               </button>
             </div>
           </div>
@@ -888,6 +927,15 @@
             <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
             <input type="text" id="filter-padron-salud" placeholder="Buscar por centro, barrio, especialidad o tipo de efector..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
           </div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <button type="button" id="btn-toggle-salud-modo" class="btn-pill btn-outline" style="padding:8px 14px; font-size:12px; font-weight:700; border-radius:8px; height:auto; width:auto; display:inline-flex; align-items:center; gap:6px; background:#fff;">
+              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand);">layers</span>
+              <span id="label-toggle-salud-modo">Ver 24 Carteles Generales por Centro</span>
+            </button>
+            <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d); font-size:11.5px; font-weight:700; padding:6px 12px;">
+              <span class="material-symbols-outlined" style="font-size:15px;">verified</span> Proveedor: QR Server API (1000px HD)
+            </span>
+          </div>
         </div>
 
         <div style="max-height:480px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
@@ -897,9 +945,9 @@
                 <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
                 <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Centro de Salud & Barrio</th>
                 <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Tipo</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Servicio</th>
-                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Profesional por Defecto</th>
-                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Consultorio</th>
+                <th style="padding:10px 12px; text-align:center; background:var(--bg-alt); position:sticky; top:0; z-index:2; width:80px;">Código QR</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas & Impresión</th>
               </tr>
             </thead>
             <tbody id="tbody-padron-salud">
@@ -971,6 +1019,53 @@
       Infraestructura del Observatorio Social · Gabinete Social + LMetB
     </div>
   </footer>
+
+  <!-- MODAL DE CARTEL QR OFICIAL A4 LISTO PARA IMPRIMIR -->
+  <div id="modal-qr-salud" class="modal-overlay">
+    <div class="modal-box" style="max-width:540px; text-align:center;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px;">
+        <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d); font-weight:800; font-size:12px;">
+          <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartel QR Oficial Listo para Imprimir
+        </span>
+        <button type="button" onclick="closeModalQrSalud()" style="background:transparent; border:none; color:var(--ink-soft); cursor:pointer; font-size:20px; display:inline-flex; align-items:center;" title="Cerrar ventana">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- CARTEL IMPRIMIBLE A4 -->
+      <div id="modal-printable-poster" style="background:#fff; border:2px dashed var(--line); border-radius:var(--radius); padding:28px 24px; text-align:center; margin:10px 0;">
+        <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:38px; width:auto; margin:0 auto 10px; display:block;">
+        <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
+
+        <div style="margin:12px 0;">
+          <h3 style="font-size:19px; font-weight:900; margin:0 0 2px; color:var(--ink);">Tu opinión nos ayuda a mejorar</h3>
+          <div id="modal-poster-salud-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
+          <div id="modal-poster-salud-barrio" style="font-size:12.5px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi · Río Cuarto</div>
+          <div id="modal-poster-salud-esp" style="display:none; font-size:13px; font-weight:700; color:var(--ink); margin-top:4px;"></div>
+        </div>
+
+        <div style="display:flex; justify-content:center; margin:14px 0;">
+          <img id="modal-poster-qr-img" src="" alt="Código QR Oficial" style="width:200px; height:200px; border-radius:12px; border:1px solid var(--line); padding:6px; background:#fff; display:block; box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        </div>
+
+        <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:var(--ink);">
+          <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+          Escaneá con la cámara de tu celular
+        </p>
+        <p style="font-size:11.5px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+        <div style="font-size:10px; color:var(--ink-soft); margin-top:10px; opacity:.7;">Proveedor Oficial: QR Server HD (1000x1000 px)</div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button type="button" onclick="printModalPoster()" class="btn-pill btn-salud" style="flex:1; min-width:160px;">
+          <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir Cartel A4
+        </button>
+        <a id="modal-poster-download-btn" href="#" target="_blank" download="QR_Salud.png" class="btn-pill btn-outline" style="flex:1; min-width:140px; text-decoration:none;">
+          <span class="material-symbols-outlined" style="font-size:16px;">download</span> Descargar QR HD
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- SCRIPT -->
   <script>
@@ -1063,11 +1158,21 @@
         targetUrl.searchParams.set('especialidad', espVal);
       }
 
+      const finalUrl = targetUrl.toString();
+
+      // Proveedor de Código QR Oficial (QR Server API - HD 1000x1000)
+      const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(finalUrl)}`;
+      const dlBtn = document.getElementById('btn-download-qr-salud-hd');
+      if (dlBtn) {
+        dlBtn.href = qrHdUrl;
+        dlBtn.download = `QR_${opt.value}${espVal ? '_' + encodeURIComponent(espVal) : ''}.png`;
+      }
+
       const qrContainer = document.getElementById('qrcode-target-salud');
       qrContainer.innerHTML = '';
 
       qrcodeSalud = new QRCode(qrContainer, {
-        text: targetUrl.toString(),
+        text: finalUrl,
         width: 170,
         height: 170,
         colorDark: "#14171A",
@@ -1078,32 +1183,106 @@
 
     function printSaludPoster() {
       document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
-      document.getElementById('printable-poster').classList.add('print-active');
-      window.print();
+      const poster = document.getElementById('printable-poster');
+      if (poster) {
+        poster.classList.add('print-active');
+        window.print();
+        setTimeout(() => poster.classList.remove('print-active'), 1000);
+      }
     }
+
+    function openModalQrSalud(centroNombre, barrio, especialidad, link, qrUrl) {
+      document.getElementById('modal-poster-salud-nombre').textContent = centroNombre;
+      document.getElementById('modal-poster-salud-barrio').textContent = `B° ${barrio} · Río Cuarto`;
+      const espElem = document.getElementById('modal-poster-salud-esp');
+      if (especialidad && especialidad !== 'Atención General de Sala' && !especialidad.includes('General de Sala')) {
+        espElem.textContent = `Consultorio: ${especialidad}`;
+        espElem.style.display = 'block';
+      } else {
+        espElem.textContent = 'Cartel General de Sala de Espera';
+        espElem.style.display = 'block';
+      }
+
+      document.getElementById('modal-poster-qr-img').src = qrUrl;
+      const dlBtn = document.getElementById('modal-poster-download-btn');
+      if (dlBtn) {
+        dlBtn.href = qrUrl;
+        dlBtn.download = `QR_${centroNombre.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+      }
+
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModalQrSalud() {
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function printModalPoster() {
+      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
+      const poster = document.getElementById('modal-printable-poster');
+      if (poster) {
+        poster.classList.add('print-active');
+        window.print();
+        setTimeout(() => poster.classList.remove('print-active'), 1000);
+      }
+    }
+
+    let saludTableModo = 'servicios'; // 'servicios' (228) o 'generales' (24)
 
     function renderPadronSaludTable(filter = '') {
       const tbody = document.getElementById('tbody-padron-salud');
       const countEl = document.getElementById('padron-salud-count');
       if (!tbody) return;
 
+      const btnToggleModo = document.getElementById('btn-toggle-salud-modo');
+      const labelToggleModo = document.getElementById('label-toggle-salud-modo');
+      if (btnToggleModo && !btnToggleModo.dataset.initialized) {
+        btnToggleModo.dataset.initialized = 'true';
+        btnToggleModo.addEventListener('click', () => {
+          saludTableModo = (saludTableModo === 'servicios') ? 'generales' : 'servicios';
+          if (labelToggleModo) {
+            labelToggleModo.textContent = (saludTableModo === 'servicios')
+              ? 'Ver 24 Carteles Generales por Centro'
+              : 'Ver Todos los 228 Servicios de Consultorio';
+          }
+          renderPadronSaludTable(document.getElementById('filter-padron-salud')?.value || '');
+        });
+      }
+
       const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
       
       const allServices = [];
       let idx = 1;
-      centros.forEach(c => {
-        (c.especialidades || []).forEach(e => {
+
+      if (saludTableModo === 'generales') {
+        centros.forEach(c => {
           allServices.push({
             num: idx++,
             centroId: c.id,
             centroNombre: c.nombre,
             tipo: c.tipo,
             barrio: c.barrio,
-            especialidad: e.nombre,
-            profesional: "No conozco el nombre del profesional"
+            especialidad: "Cartel General de Sala de Espera",
+            isGeneral: true
           });
         });
-      });
+      } else {
+        centros.forEach(c => {
+          (c.especialidades || []).forEach(e => {
+            allServices.push({
+              num: idx++,
+              centroId: c.id,
+              centroNombre: c.nombre,
+              tipo: c.tipo,
+              barrio: c.barrio,
+              especialidad: e.nombre,
+              isGeneral: false
+            });
+          });
+        });
+      }
 
       const query = (filter || '').trim().toLowerCase();
       const filtered = allServices.filter(s => {
@@ -1121,10 +1300,10 @@
         tbody.innerHTML = `
           <tr>
             <td colspan="6" style="padding:24px; text-align:center; color:var(--ink-soft);">
-              No se encontraron servicios de salud que coincidan con "<b>${filter}</b>".
+              No se encontraron efectores o servicios que coincidan con "<b>${filter}</b>".
             </td>
           </tr>`;
-        if (countEl) countEl.innerHTML = `Mostrando 0 de ${allServices.length} servicios oficiales de salud`;
+        if (countEl) countEl.innerHTML = `Mostrando 0 de ${allServices.length} carteles oficiales`;
         return;
       }
 
@@ -1135,9 +1314,14 @@
         const baseUrl = getBaseUrl('encuesta-salud.html');
         const targetUrl = new URL(baseUrl);
         targetUrl.searchParams.set('centro', item.centroId);
-        targetUrl.searchParams.set('especialidad', item.especialidad);
-        targetUrl.searchParams.set('profesional', item.profesional);
+        if (!item.isGeneral && item.especialidad) {
+          targetUrl.searchParams.set('especialidad', item.especialidad);
+        }
         const link = targetUrl.toString();
+
+        // Proveedor de código QR único de alta resolución (QR Server API 1000x1000px HD)
+        const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(link)}`;
+        const qrThumbUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=2&data=${encodeURIComponent(link)}`;
 
         tr.innerHTML = `
           <td style="padding:10px 12px; font-weight:800; color:var(--brand-d); font-family:monospace; font-size:12px;">
@@ -1153,26 +1337,46 @@
             </span>
           </td>
           <td style="padding:10px 12px; font-weight:600; color:var(--ink);">
-            ${item.especialidad}
+            ${item.isGeneral 
+              ? `<span style="display:inline-flex; align-items:center; gap:4px; font-weight:700; color:var(--brand-d); background:var(--brand-bg); padding:3px 8px; border-radius:6px;"><span class="material-symbols-outlined" style="font-size:14px;">storefront</span> General de Sala</span>` 
+              : item.especialidad}
           </td>
-          <td style="padding:10px 12px; color:var(--ink-soft); font-size:11.5px;">
-            <span style="display:inline-flex; align-items:center; gap:4px; background:var(--bg-alt); border:1px solid var(--line); padding:2px 8px; border-radius:6px;">
-              <span class="material-symbols-outlined" style="font-size:14px; color:var(--brand);">person</span>
-              ${item.profesional}
-            </span>
+          <td style="padding:6px 12px; text-align:center;">
+            <div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
+              <img src="${qrThumbUrl}" width="38" height="38" alt="QR" style="border-radius:6px; border:1px solid var(--line); background:#fff; cursor:pointer; vertical-align:middle; box-shadow:0 1px 4px rgba(0,0,0,.08);" title="Clic para abrir e imprimir Cartel A4" class="btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdUrl}">
+              <span style="font-size:9px; font-weight:800; color:var(--brand-d); text-transform:uppercase;">QR HD</span>
+            </div>
           </td>
           <td style="padding:10px 12px; text-align:right;">
             <div style="display:inline-flex; gap:6px; align-items:center; justify-content:flex-end; flex-wrap:nowrap;">
-              <button type="button" class="btn-table-action btn-copy-link-salud-table" data-url="${link}" title="Copiar enlace prefijado" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
-                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">content_copy</span> Copiar Link
+              <button type="button" class="btn-table-action btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdUrl}" title="Imprimir Cartel A4 Oficial para este consultorio" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--brand); border-radius:6px; background:var(--brand-bg); color:var(--brand-d); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">print</span> Imprimir QR A4
               </button>
-              <a href="${link}" target="_blank" title="Abrir formulario prefijado" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--brand-d); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+              <a href="${qrHdUrl}" target="_blank" download="QR_${item.centroId}.png" title="Descargar imagen QR en alta resolución (1000x1000px HD)" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">qr_code_2</span>
+              </a>
+              <button type="button" class="btn-table-action btn-copy-link-salud-table" data-url="${link}" title="Copiar enlace prefijado" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">content_copy</span>
+              </button>
+              <a href="${link}" target="_blank" title="Abrir y probar encuesta" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--brand-d); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
                 <span class="material-symbols-outlined" style="font-size:14px; margin:0;">open_in_new</span>
               </a>
             </div>
           </td>
         `;
         tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('.btn-qr-action').forEach(btn => {
+        btn.onclick = () => {
+          openModalQrSalud(
+            btn.dataset.centro,
+            btn.dataset.barrio,
+            btn.dataset.esp,
+            btn.dataset.link,
+            btn.dataset.qr
+          );
+        };
       });
 
       tbody.querySelectorAll('.btn-copy-link-salud-table').forEach(btn => {
@@ -1184,7 +1388,8 @@
       });
 
       if (countEl) {
-        countEl.innerHTML = `Mostrando <b>${filtered.length}</b> de <b>${allServices.length}</b> servicios oficiales de salud municipal`;
+        const modoText = (saludTableModo === 'generales') ? 'carteles generales por efector' : 'servicios oficiales de salud municipal';
+        countEl.innerHTML = `Mostrando <b>${filtered.length}</b> de <b>${allServices.length}</b> ${modoText}`;
       }
     }
 
