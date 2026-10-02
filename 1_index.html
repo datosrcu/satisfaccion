@@ -990,16 +990,6 @@
             </p>
 
             <div style="margin-bottom:12px;">
-              <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; align-items:center;">
-                <span style="font-size:11px; font-weight:800; color:var(--brand-d); margin-right:2px;">Accesos Rápidos:</span>
-                <button type="button" class="btn-quick-salud" data-id="MATERNIDAD_KOWALK" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--brand); background:#fff; color:var(--brand-d); cursor:pointer;">🏥 Maternidad Kowalk</button>
-                <button type="button" class="btn-quick-salud" data-id="S24_ALBERDI" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;">🚨 S24 Alberdi</button>
-                <button type="button" class="btn-quick-salud" data-id="CAPS_01" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;">🩺 CAPS 1</button>
-                <button type="button" class="btn-quick-salud" data-id="CAPS_02" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;">🩺 CAPS 2</button>
-                <button type="button" class="btn-quick-salud" data-id="POSTA_ONCATIVO" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;">📍 Posta Oncativo</button>
-                <button type="button" class="btn-quick-salud" data-id="CS_CABRERA" style="padding:4px 9px; font-size:11px; font-weight:700; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;">🏢 Centro de Salud (CS)</button>
-              </div>
-
               <div style="display:grid; grid-template-columns: 1fr; gap:10px;">
                 <div class="tool-field">
                   <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
@@ -1382,6 +1372,45 @@
       }
     });
 
+    function getQrDataUrl(text, size = 500) {
+      if (!text) return '';
+      const holder = document.createElement('div');
+      holder.style.position = 'absolute';
+      holder.style.left = '-9999px';
+      holder.style.top = '-9999px';
+      holder.style.visibility = 'hidden';
+      document.body.appendChild(holder);
+
+      try {
+        new QRCode(holder, {
+          text: text,
+          width: size,
+          height: size,
+          colorDark: "#14171A",
+          colorLight: "#FFFFFF",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        const canvas = holder.querySelector('canvas');
+        if (canvas) {
+          const dataUrl = canvas.toDataURL('image/png');
+          holder.remove();
+          return dataUrl;
+        }
+        const img = holder.querySelector('img');
+        if (img && img.src) {
+          const src = img.src;
+          holder.remove();
+          return src;
+        }
+      } catch (e) {
+        console.error('Error al generar QR en memoria:', e);
+      }
+
+      holder.remove();
+      return '';
+    }
+
     function initSaludQr() {
       const selectSalud = document.getElementById('qr-select-salud');
       const selectEsp = document.getElementById('qr-select-salud-esp');
@@ -1389,7 +1418,7 @@
 
       selectSalud.innerHTML = '';
 
-      // Agrupación lógica de efectores oficiales
+      // Agrupación de efectores oficiales por tipología institucional
       const grupos = [
         { label: "Maternidad Municipal", filter: c => c.tipo.includes('Maternidad') },
         { label: "Centros de Salud 24 Horas (S24)", filter: c => c.id.startsWith('S24') },
@@ -1415,36 +1444,8 @@
         }
       });
 
-      // Accesos rápidos por botones superiores
-      const quickBtns = document.querySelectorAll('.btn-quick-salud');
-      quickBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const targetId = btn.dataset.id;
-          if (targetId && selectSalud) {
-            selectSalud.value = targetId;
-            updateQuickButtonsActive(targetId);
-            onSaludCentroChange();
-          }
-        });
-      });
-
-      function updateQuickButtonsActive(activeId) {
-        quickBtns.forEach(b => {
-          if (b.dataset.id === activeId) {
-            b.style.borderColor = 'var(--brand)';
-            b.style.color = 'var(--brand-d)';
-            b.style.background = 'var(--brand-bg)';
-          } else {
-            b.style.borderColor = 'var(--line)';
-            b.style.color = 'var(--ink)';
-            b.style.background = '#fff';
-          }
-        });
-      }
-
       function onSaludCentroChange() {
         const centroId = selectSalud.value;
-        updateQuickButtonsActive(centroId);
         const centro = centros.find(c => c.id === centroId);
         selectEsp.innerHTML = '<option value="">Todas las especialidades (Cartel General de Sala)</option>';
         if (centro && centro.especialidades) {
@@ -1479,10 +1480,10 @@
     function updateSaludPoster() {
       const selectSalud = document.getElementById('qr-select-salud');
       const selectEsp = document.getElementById('qr-select-salud-esp');
-      const opt = selectSalud.selectedOptions[0];
+      const opt = selectSalud?.selectedOptions[0];
       if (!opt) return;
 
-      const espVal = selectEsp.value;
+      const espVal = selectEsp?.value || '';
 
       document.getElementById('poster-salud-nombre').textContent = opt.dataset.nombre;
       let bText = (opt.dataset.barrio || '').trim();
@@ -1510,17 +1511,9 @@
 
       const finalUrl = targetUrl.toString();
 
-      // Proveedor de Código QR Oficial (QR Server API - HD 1000x1000)
-      const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(finalUrl)}`;
-      const dlBtn = document.getElementById('btn-download-qr-salud-hd');
-      if (dlBtn) {
-        dlBtn.href = qrHdUrl;
-        dlBtn.download = `QR_${opt.value}${espVal ? '_' + encodeURIComponent(espVal) : ''}.png`;
-      }
-
+      // 1. Renderizar en la tarjeta de previsualización
       const qrContainer = document.getElementById('qrcode-target-salud');
       qrContainer.innerHTML = '';
-
       qrcodeSalud = new QRCode(qrContainer, {
         text: finalUrl,
         width: 320,
@@ -1529,6 +1522,19 @@
         colorLight: "#FFFFFF",
         correctLevel: QRCode.CorrectLevel.H
       });
+
+      // 2. Generar Data URL de alta definición en memoria (PNG base64 garantizado sin peticiones de red)
+      const qrDataUrl = getQrDataUrl(finalUrl, 500);
+
+      // 3. Pre-cargar el cartel de impresión A4 oficial
+      populatePrintPoster(opt.dataset.nombre, opt.dataset.barrio, espVal, qrDataUrl);
+
+      // 4. Configurar botón de descarga
+      const dlBtn = document.getElementById('btn-download-qr-salud-hd');
+      if (dlBtn) {
+        dlBtn.href = qrDataUrl;
+        dlBtn.download = `QR_${opt.value}${espVal ? '_' + encodeURIComponent(espVal) : ''}.png`;
+      }
     }
 
     function populatePrintPoster(nombre, barrio, especialidad, qrUrl) {
@@ -1577,16 +1583,24 @@
 
       const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
       targetUrl.searchParams.set('centro', opt.value);
-      if (espVal) {
-        targetUrl.searchParams.set('especialidad', espVal);
-      }
-      const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(targetUrl.toString())}`;
+      if (espVal) targetUrl.searchParams.set('especialidad', espVal);
+      const finalUrl = targetUrl.toString();
 
-      populatePrintPoster(nombre, barrio, espVal, qrHdUrl);
-      window.print();
+      // Generación instantánea en memoria
+      const qrDataUrl = getQrDataUrl(finalUrl, 500);
+      populatePrintPoster(nombre, barrio, espVal, qrDataUrl);
+
+      const qrImg = document.getElementById('print-single-qr');
+      if (qrImg && !qrImg.complete) {
+        qrImg.onload = () => window.print();
+      } else {
+        setTimeout(() => {
+          window.print();
+        }, 80);
+      }
     }
 
-    function openModalQrSalud(centroNombre, barrio, especialidad, link, qrUrl) {
+    function openModalQrSalud(centroNombre, barrio, especialidad, link, qrDataUrl) {
       document.getElementById('modal-poster-salud-nombre').textContent = centroNombre;
       document.getElementById('modal-poster-salud-barrio').textContent = `B° ${barrio} · Río Cuarto`;
       const espElem = document.getElementById('modal-poster-salud-esp');
@@ -1598,10 +1612,13 @@
         espElem.style.display = 'block';
       }
 
-      document.getElementById('modal-poster-qr-img').src = qrUrl;
+      // Asegurar que el QR sea Data URL en memoria
+      const effectiveQrUrl = qrDataUrl || getQrDataUrl(link, 500);
+
+      document.getElementById('modal-poster-qr-img').src = effectiveQrUrl;
       const dlBtn = document.getElementById('modal-poster-download-btn');
       if (dlBtn) {
-        dlBtn.href = qrUrl;
+        dlBtn.href = effectiveQrUrl;
         dlBtn.download = `QR_${centroNombre.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
       }
 
@@ -1625,7 +1642,15 @@
       const qrUrl = document.getElementById('modal-poster-qr-img')?.src || '';
 
       populatePrintPoster(nombre, barrio, espText, qrUrl);
-      window.print();
+
+      const qrImg = document.getElementById('print-single-qr');
+      if (qrImg && !qrImg.complete) {
+        qrImg.onload = () => window.print();
+      } else {
+        setTimeout(() => {
+          window.print();
+        }, 80);
+      }
     }
 
     function printAll24SaludPosters() {
@@ -1644,7 +1669,7 @@
         const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
         targetUrl.searchParams.set('centro', c.id);
         const finalUrl = targetUrl.toString();
-        const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(finalUrl)}`;
+        const qrDataUrl = getQrDataUrl(finalUrl, 500);
 
         let bText = (c.barrio || '').trim();
         if (!bText.toLowerCase().startsWith('b°') && !bText.toLowerCase().startsWith('bº')) {
@@ -1668,7 +1693,7 @@
           </div>
 
           <div class="poster-print-qr-wrap">
-            <img class="print-batch-qr" src="${qrHdUrl}" alt="Código QR Oficial - ${c.nombre}">
+            <img class="print-batch-qr" src="${qrDataUrl}" alt="Código QR Oficial - ${c.nombre}">
           </div>
 
           <div class="poster-print-footer">
@@ -1687,7 +1712,7 @@
 
       setTimeout(() => {
         window.print();
-      }, 350);
+      }, 250);
     }
 
     // Asegurar compatibilidad directa con Ctrl+P del navegador
@@ -1716,8 +1741,8 @@
           const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
           targetUrl.searchParams.set('centro', opt.value);
           if (espVal) targetUrl.searchParams.set('especialidad', espVal);
-          const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(targetUrl.toString())}`;
-          populatePrintPoster(nombre, barrio, espVal, qrHdUrl);
+          const qrDataUrl = getQrDataUrl(targetUrl.toString(), 500);
+          populatePrintPoster(nombre, barrio, espVal, qrDataUrl);
         }
       }
     });
@@ -1754,7 +1779,7 @@
       let idx = 1;
 
       if (saludTableModo === 'generales') {
-        // Ordenamiento amigable: Maternidad Kowalk, S24s, CAPS 1 al 16, Postas, CS Central
+        // Orden institucional: Maternidad Kowalk, S24s, CAPS 1 al 16, Postas, CS Central
         const sortedCentros = [...centros].sort((a, b) => {
           const priority = (c) => {
             if (c.tipo.includes('Maternidad')) return 1;
@@ -1831,9 +1856,9 @@
         }
         const link = targetUrl.toString();
 
-        // Proveedor de código QR único de alta resolución (QR Server API 1000x1000px HD)
-        const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(link)}`;
-        const qrThumbUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=2&data=${encodeURIComponent(link)}`;
+        // Generar QR en base64 local en memoria para miniatura e impresión inmediata
+        const qrThumbDataUrl = getQrDataUrl(link, 120);
+        const qrHdDataUrl = getQrDataUrl(link, 500);
 
         tr.innerHTML = `
           <td style="padding:10px 12px; font-weight:800; color:var(--brand-d); font-family:monospace; font-size:12px;">
@@ -1855,16 +1880,16 @@
           </td>
           <td style="padding:6px 12px; text-align:center;">
             <div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
-              <img src="${qrThumbUrl}" width="38" height="38" alt="QR" style="border-radius:6px; border:1px solid var(--line); background:#fff; cursor:pointer; vertical-align:middle; box-shadow:0 1px 4px rgba(0,0,0,.08);" title="Clic para abrir e imprimir Cartel A4" class="btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdUrl}">
+              <img src="${qrThumbDataUrl}" width="38" height="38" alt="QR" style="border-radius:6px; border:1px solid var(--line); background:#fff; cursor:pointer; vertical-align:middle; box-shadow:0 1px 4px rgba(0,0,0,.08);" title="Clic para abrir e imprimir Cartel A4" class="btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdDataUrl}">
               <span style="font-size:9px; font-weight:800; color:var(--brand-d); text-transform:uppercase;">QR PROPIO</span>
             </div>
           </td>
           <td style="padding:10px 12px; text-align:right;">
             <div style="display:inline-flex; gap:6px; align-items:center; justify-content:flex-end; flex-wrap:nowrap;">
-              <button type="button" class="btn-table-action btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdUrl}" title="Imprimir Cartel A4 Oficial para este efector" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--brand); border-radius:6px; background:var(--brand-bg); color:var(--brand-d); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+              <button type="button" class="btn-table-action btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdDataUrl}" title="Imprimir Cartel A4 Oficial para este efector" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--brand); border-radius:6px; background:var(--brand-bg); color:var(--brand-d); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
                 <span class="material-symbols-outlined" style="font-size:14px; margin:0;">print</span> Imprimir Cartel A4
               </button>
-              <a href="${qrHdUrl}" target="_blank" download="QR_${item.centroId}.png" title="Descargar imagen QR en alta resolución (1000x1000px HD)" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+              <a href="${qrHdDataUrl}" download="QR_${item.centroId}.png" title="Descargar imagen QR en alta resolución" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
                 <span class="material-symbols-outlined" style="font-size:14px; margin:0;">qr_code_2</span>
               </a>
               <button type="button" class="btn-table-action btn-copy-link-salud-table" data-url="${link}" data-nombre="${item.centroNombre}" title="Copiar enlace prefijado" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; font-family:inherit;">
