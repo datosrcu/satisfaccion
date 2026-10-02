@@ -1658,12 +1658,40 @@
 
     function handleUrlParameters() {
       const urlParams = new URLSearchParams(window.location.search);
+      const slotParam = urlParams.get('id') || urlParams.get('slot') || urlParams.get('uid') || urlParams.get('code');
       const centroParam = urlParams.get('centro') || urlParams.get('c') || urlParams.get('inst');
       const turnoParam = urlParams.get('turno') || urlParams.get('t');
       const salaParam = urlParams.get('sala') || urlParams.get('s');
       const docenteParam = urlParams.get('docente') || urlParams.get('doc');
       const auxiliarParam = urlParams.get('auxiliar') || urlParams.get('aux');
 
+      // 1. Resolución prioritaria por ID Único / Slot Canónico
+      if (slotParam && window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) {
+        const edu = window.CATALOGO_MUNICIPAL.educacion.instituciones || [];
+        for (let inst of edu) {
+          if (inst.distribucion) {
+            const foundSlot = inst.distribucion.find(d => 
+              (d.id_slot && d.id_slot.toLowerCase() === slotParam.toLowerCase()) || 
+              (d.slot_code && d.slot_code.toLowerCase() === slotParam.toLowerCase()) ||
+              (d.slot_num && String(d.slot_num) === slotParam)
+            );
+            if (foundSlot) {
+              const select = document.getElementById('select-institucion');
+              if (select) select.value = inst.id;
+              onInstitucionChange(inst.id, true, {
+                turno: foundSlot.turno,
+                sala: foundSlot.sala,
+                docente: foundSlot.docente,
+                auxiliar: foundSlot.auxiliar,
+                id_slot: foundSlot.id_slot
+              });
+              return;
+            }
+          }
+        }
+      }
+
+      // 2. Resolución por parámetros explícitos
       if (centroParam) {
         const select = document.getElementById('select-institucion');
         for (let i = 0; i < select.options.length; i++) {
@@ -1824,7 +1852,7 @@
       document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('centro') || urlParams.get('c')) {
+      if (urlParams.get('id') || urlParams.get('slot') || urlParams.get('uid') || urlParams.get('code') || urlParams.get('centro') || urlParams.get('c') || urlParams.get('inst')) {
         handleUrlParameters();
       } else {
         onInstitucionChange("");

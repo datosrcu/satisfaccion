@@ -841,6 +841,55 @@
       </div>
     </section>
 
+    <!-- SECCIÓN DIRECTORIO MAESTRO DE LOS 62 ENLACES ÚNICOS DE EDUCACIÓN -->
+    <section class="tool-section" style="margin-top:36px;">
+      <div class="sec-head">
+        <h2>
+          <span class="material-symbols-outlined" style="color:var(--c-educacion-d); font-size:26px;">dataset</span>
+          Directorio Maestro de los 62 Enlaces Únicos (Red de Educación)
+        </h2>
+        <p>Padrón oficial inmutable de Jardines Maternales y Salas Cuna. Cada sala cuenta con su enlace canónico prefijado para evitar cualquier error de carga por parte de las familias.</p>
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
+            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
+            <input type="text" id="filter-padron-edu" placeholder="Buscar por jardín, sala, turno, docente o auxiliar..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:12px; font-weight:700; color:var(--ink-soft);">Servidor de Enlaces:</label>
+            <select id="select-base-server" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--ink); outline:none;">
+              <option value="https://datosrcu.github.io/satisfaccion/">GitHub Pages (Oficial): datosrcu.github.io/satisfaccion</option>
+              <option value="auto">Detectar automáticamente (Local / Red)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+          <table id="table-padron-edu" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+            <thead>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em;">
+                <th style="padding:10px 12px; width:40px;">#</th>
+                <th style="padding:10px 12px;">Institución & Barrio</th>
+                <th style="padding:10px 12px;">Turno</th>
+                <th style="padding:10px 12px;">Sala</th>
+                <th style="padding:10px 12px;">Docente Asignada</th>
+                <th style="padding:10px 12px;">Auxiliar Asignada</th>
+                <th style="padding:10px 12px; text-align:right;">Acciones Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-padron-edu">
+              <!-- Renderizado dinámico de los 62 slots -->
+            </tbody>
+          </table>
+        </div>
+        <div id="padron-edu-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
+          Cargando padrón oficial...
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -998,6 +1047,185 @@
           alert('¡Enlace único de la sala copiado al portapapeles!');
         });
       }
+
+      // Conectar buscador del Padrón y Selector de Servidor Base
+      const filterInput = document.getElementById('filter-padron-edu');
+      if (filterInput) {
+        filterInput.addEventListener('input', (e) => {
+          renderPadronEduTable(e.target.value);
+        });
+      }
+
+      const selectServer = document.getElementById('select-base-server');
+      if (selectServer) {
+        selectServer.addEventListener('change', () => {
+          updateEduOutputs();
+          renderPadronEduTable(filterInput ? filterInput.value : '');
+        });
+      }
+
+      // Render inicial del padrón de 62 enlaces únicos
+      renderPadronEduTable();
+    }
+
+    function getBaseEduUrl(file = 'encuesta-educacion.html') {
+      const selectServer = document.getElementById('select-base-server');
+      const val = selectServer ? selectServer.value : 'https://datosrcu.github.io/satisfaccion/';
+      if (val === 'auto') {
+        return new URL(file, window.location.href).toString();
+      }
+      const cleanBase = val.endsWith('/') ? val : val + '/';
+      return cleanBase + file;
+    }
+
+    function renderPadronEduTable(filter = '') {
+      const tbody = document.getElementById('tbody-padron-edu');
+      const countEl = document.getElementById('padron-edu-count');
+      if (!tbody) return;
+
+      const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
+      
+      const allSlots = [];
+      insts.forEach(inst => {
+        if (inst.distribucion && inst.distribucion.length > 0) {
+          inst.distribucion.forEach(d => {
+            allSlots.push({
+              instId: inst.id,
+              instNombre: inst.nombre,
+              barrio: inst.barrio,
+              sector: inst.sector,
+              turno: d.turno,
+              sala: d.sala,
+              docente: d.docente,
+              auxiliar: d.auxiliar || '',
+              id_slot: d.id_slot,
+              slot_code: d.slot_code,
+              slot_num: d.slot_num
+            });
+          });
+        }
+      });
+
+      const query = (filter || '').trim().toLowerCase();
+      const filtered = allSlots.filter(s => {
+        if (!query) return true;
+        return s.instNombre.toLowerCase().includes(query) ||
+               s.barrio.toLowerCase().includes(query) ||
+               s.sala.toLowerCase().includes(query) ||
+               s.turno.toLowerCase().includes(query) ||
+               s.docente.toLowerCase().includes(query) ||
+               s.auxiliar.toLowerCase().includes(query) ||
+               (s.slot_code && s.slot_code.toLowerCase().includes(query)) ||
+               (s.id_slot && s.id_slot.toLowerCase().includes(query));
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="padding:24px; text-align:center; color:var(--ink-soft);">
+              No se encontraron salas o docentes que coincidan con "<b>${filter}</b>".
+            </td>
+          </tr>`;
+        if (countEl) countEl.innerHTML = `Mostrando 0 de ${allSlots.length} enlaces oficiales`;
+        return;
+      }
+
+      filtered.forEach(slot => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--line)';
+
+        const link = `${getBaseEduUrl('encuesta-educacion.html')}?id=${slot.id_slot}`;
+        const wspText = buildSlotWspText(slot, link);
+
+        tr.innerHTML = `
+          <td style="padding:10px 12px; font-weight:800; color:var(--c-educacion-d); font-family:monospace; font-size:12px;">
+            ${slot.slot_code || ('EDU_' + slot.slot_num)}
+          </td>
+          <td style="padding:10px 12px;">
+            <div style="font-weight:700; color:var(--ink);">${slot.instNombre}</div>
+            <div style="font-size:11px; color:var(--ink-soft);">B° ${slot.barrio}</div>
+          </td>
+          <td style="padding:10px 12px;">
+            <span style="display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:700; background: ${slot.turno === 'Mañana' ? '#e0f2fe; color:#0369a1;' : '#fef3c7; color:#b45309;'}">
+              ${slot.turno}
+            </span>
+          </td>
+          <td style="padding:10px 12px; font-weight:600;">
+            ${slot.sala}
+          </td>
+          <td style="padding:10px 12px; font-weight:600; color:var(--ink);">
+            ${slot.docente}
+          </td>
+          <td style="padding:10px 12px; color:${slot.auxiliar ? 'var(--ink)' : 'var(--ink-soft)'};">
+            ${slot.auxiliar || '<span style="opacity:.4;">-</span>'}
+          </td>
+          <td style="padding:10px 12px; text-align:right;">
+            <div style="display:inline-flex; gap:6px; align-items:center; justify-content:flex-end; flex-wrap:nowrap;">
+              <button type="button" class="btn-table-action btn-copy-link" data-url="${link}" title="Copiar enlace canónico inmutable" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">content_copy</span> Copiar Link
+              </button>
+              <button type="button" class="btn-table-action btn-copy-wsp-slot" data-wsp="${encodeURIComponent(wspText)}" title="Copiar mensaje preparado para WhatsApp" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid #25D366; border-radius:6px; background:#ecfdf5; color:#065f46; cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0; color:#25D366;">chat</span> WhatsApp
+              </button>
+              <a href="${link}" target="_blank" rel="noopener" title="Abrir y probar encuesta prefijada" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--brand-d); text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">open_in_new</span> Probar
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      if (countEl) {
+        countEl.innerHTML = `Mostrando <b>${filtered.length}</b> de <b>${allSlots.length}</b> salas y enlaces únicos prefijados.`;
+      }
+
+      // Eventos botones de tabla
+      tbody.querySelectorAll('.btn-copy-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const u = btn.dataset.url;
+          navigator.clipboard.writeText(u).then(() => {
+            const orig = btn.innerHTML;
+            btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin:0; color:var(--c-educacion-d);">check</span> ¡Copiado!`;
+            btn.style.borderColor = 'var(--c-educacion)';
+            setTimeout(() => {
+              btn.innerHTML = orig;
+              btn.style.borderColor = 'var(--line)';
+            }, 1800);
+          });
+        });
+      });
+
+      tbody.querySelectorAll('.btn-copy-wsp-slot').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = decodeURIComponent(btn.dataset.wsp);
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.innerHTML;
+            btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; margin:0; color:#065f46;">check</span> ¡Texto Copiado!`;
+            setTimeout(() => {
+              btn.innerHTML = orig;
+            }, 1800);
+          });
+        });
+      });
+    }
+
+    function buildSlotWspText(slot, link) {
+      const details = [`Sala: ${slot.sala}`, `Turno: ${slot.turno}`, `Docente: ${slot.docente}`];
+      if (slot.auxiliar) details.push(`Auxiliar: ${slot.auxiliar}`);
+
+      return `👋 *Estimadas familias de ${slot.instNombre} (${details.join(' · ')}):*
+
+Desde la Secretaría de Educación y la Dirección de Estadística de la Municipalidad de Río Cuarto los invitamos a participar de una breve *encuesta de satisfacción anónima* (demora 2 minutos) sobre el cuidado, la organización institucional, la propuesta pedagógica y el acompañamiento de nuestros chicos.
+
+Su opinión es fundamental para seguir mejorando día a día.
+
+👉 *Completar encuesta precompletada aquí:*
+${link}
+
+¡Muchas gracias por acompañarnos en el crecimiento y aprendizaje de sus hijos! 💙`;
     }
 
     function onEduInstChange() {
@@ -1104,11 +1332,7 @@
       const insts = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.educacion) ? window.CATALOGO_MUNICIPAL.educacion.instituciones : [];
       const inst = insts.find(i => i.id === selectEdu.value) || insts[0];
 
-      const targetUrl = new URL('encuesta-educacion.html', window.location.href);
-      if (selectEdu.value) targetUrl.searchParams.set('centro', selectEdu.value);
-      if (selectTurno.value) targetUrl.searchParams.set('turno', selectTurno.value);
-      if (selectSala.value) targetUrl.searchParams.set('sala', selectSala.value);
-      if (selectDocente.value) targetUrl.searchParams.set('docente', selectDocente.value);
+      const baseUrl = getBaseEduUrl('encuesta-educacion.html');
 
       if (inst && inst.distribucion) {
         const match = inst.distribucion.find(d => 
@@ -1116,10 +1340,17 @@
           d.sala === selectSala.value && 
           d.docente === selectDocente.value
         );
-        if (match && match.auxiliar) {
-          targetUrl.searchParams.set('auxiliar', match.auxiliar);
+        if (match && match.id_slot) {
+          return `${baseUrl}?id=${encodeURIComponent(match.id_slot)}`;
         }
       }
+
+      // Fallback con query params explícitos si no coincidiera
+      const targetUrl = new URL(baseUrl);
+      if (selectEdu.value) targetUrl.searchParams.set('centro', selectEdu.value);
+      if (selectTurno.value) targetUrl.searchParams.set('turno', selectTurno.value);
+      if (selectSala.value) targetUrl.searchParams.set('sala', selectSala.value);
+      if (selectDocente.value) targetUrl.searchParams.set('docente', selectDocente.value);
 
       return targetUrl.toString();
     }

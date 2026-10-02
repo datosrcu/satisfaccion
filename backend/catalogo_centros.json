@@ -1876,13 +1876,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "María del Carmen Spizzirri",
-            "auxiliar": "Georgina Longhi"
+            "auxiliar": "Georgina Longhi",
+            "id_slot": "EDU_01_JM_AGEC_M_multiple_spizzirri_longhi",
+            "slot_num": 1,
+            "slot_code": "EDU_01"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "María Del Carmen Carbonel",
-            "auxiliar": ""
+            "auxiliar": "",
+            "id_slot": "EDU_02_JM_AGEC_T_multiple_carbonel",
+            "slot_num": 2,
+            "slot_code": "EDU_02"
           }
         ],
         "estructura": [
@@ -1937,19 +1943,28 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Sandra Crespi",
-            "auxiliar": "Analía Sergent"
+            "auxiliar": "Analía Sergent",
+            "id_slot": "EDU_03_JM_SEMILLITAS_M_multiple_crespi_sergent",
+            "slot_num": 3,
+            "slot_code": "EDU_03"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Sandra Crespi",
-            "auxiliar": "Evelyn Sosa"
+            "auxiliar": "Evelyn Sosa",
+            "id_slot": "EDU_04_JM_SEMILLITAS_M_multiple_crespi_sosa",
+            "slot_num": 4,
+            "slot_code": "EDU_04"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Sandra Crespi",
-            "auxiliar": "Analía Sergent"
+            "auxiliar": "Analía Sergent",
+            "id_slot": "EDU_05_JM_SEMILLITAS_T_multiple_crespi_sergent",
+            "slot_num": 5,
+            "slot_code": "EDU_05"
           }
         ],
         "estructura": [
@@ -2006,7 +2021,10 @@
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Enma Contreras",
-            "auxiliar": "Soledad Agüero"
+            "auxiliar": "Soledad Agüero",
+            "id_slot": "EDU_06_JM_NUEVA_ARGENTINA_T_multiple_contreras_aguero",
+            "slot_num": 6,
+            "slot_code": "EDU_06"
           }
         ],
         "estructura": [
@@ -2054,7 +2072,10 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "María Gabriela Rossarolli",
-            "auxiliar": "Julieta Díaz"
+            "auxiliar": "Julieta Díaz",
+            "id_slot": "EDU_07_JM_PUEBLITO_MAGICO_M_multiple_rossarolli_diaz",
+            "slot_num": 7,
+            "slot_code": "EDU_07"
           }
         ],
         "estructura": [
@@ -2110,55 +2131,82 @@
             "turno": "Mañana",
             "sala": "2 años",
             "docente": "Ángeles Campos",
-            "auxiliar": "Carolina Villarreal"
+            "auxiliar": "Carolina Villarreal",
+            "id_slot": "EDU_08_SC_ARCO_IRIS_M_2_anos_campos_villarreal",
+            "slot_num": 8,
+            "slot_code": "EDU_08"
           },
           {
             "turno": "Mañana",
             "sala": "2 años",
             "docente": "Rosa Carrizo",
-            "auxiliar": "Carolina Villarreal"
+            "auxiliar": "Carolina Villarreal",
+            "id_slot": "EDU_09_SC_ARCO_IRIS_M_2_anos_carrizo_villarreal",
+            "slot_num": 9,
+            "slot_code": "EDU_09"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Ángeles Campos",
-            "auxiliar": "Daniela Rodriguez"
+            "auxiliar": "Daniela Rodriguez",
+            "id_slot": "EDU_10_SC_ARCO_IRIS_M_3_anos_campos_rodriguez",
+            "slot_num": 10,
+            "slot_code": "EDU_10"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Rosa Carrizo",
-            "auxiliar": "Carolina Villarreal"
+            "auxiliar": "Carolina Villarreal",
+            "id_slot": "EDU_11_SC_ARCO_IRIS_M_3_anos_carrizo_villarreal",
+            "slot_num": 11,
+            "slot_code": "EDU_11"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Nadia Elizabeth Piussi",
-            "auxiliar": "Daniela Rodriguez"
+            "auxiliar": "Daniela Rodriguez",
+            "id_slot": "EDU_12_SC_ARCO_IRIS_M_3_anos_piussi_rodriguez",
+            "slot_num": 12,
+            "slot_code": "EDU_12"
           },
           {
             "turno": "Mañana",
             "sala": "Lactarios",
             "docente": "María Florencia Schiavi",
-            "auxiliar": "Daniela Rodriguez"
+            "auxiliar": "Daniela Rodriguez",
+            "id_slot": "EDU_13_SC_ARCO_IRIS_M_lactarios_schiavi_rodriguez",
+            "slot_num": 13,
+            "slot_code": "EDU_13"
           },
           {
             "turno": "Tarde",
             "sala": "Lactarios",
             "docente": "Analía Barrera",
-            "auxiliar": "Karen Álvarez"
+            "auxiliar": "Karen Álvarez",
+            "id_slot": "EDU_14_SC_ARCO_IRIS_T_lactarios_barrera_alvarez",
+            "slot_num": 14,
+            "slot_code": "EDU_14"
           },
           {
             "turno": "Tarde",
             "sala": "3 años",
             "docente": "Valeria Cooreman",
-            "auxiliar": "Daniela Rodriguez"
+            "auxiliar": "Daniela Rodriguez",
+            "id_slot": "EDU_15_SC_ARCO_IRIS_T_3_anos_cooreman_rodriguez",
+            "slot_num": 15,
+            "slot_code": "EDU_15"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
             "docente": "Rosa Carrizo",
-            "auxiliar": "Carolina Villarreal"
+            "auxiliar": "Carolina Villarreal",
+            "id_slot": "EDU_16_SC_ARCO_IRIS_T_2_anos_carrizo_villarreal",
+            "slot_num": 16,
+            "slot_code": "EDU_16"
           }
         ],
         "estructura": [
@@ -2257,25 +2305,37 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Verónica Rucci",
-            "auxiliar": "Camila Chávez"
+            "auxiliar": "Camila Chávez",
+            "id_slot": "EDU_17_JM_NUBECITAS_M_multiple_rucci_chavez",
+            "slot_num": 17,
+            "slot_code": "EDU_17"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Analía Barrera",
-            "auxiliar": "Yesica Petruzzi"
+            "auxiliar": "Yesica Petruzzi",
+            "id_slot": "EDU_18_JM_NUBECITAS_M_multiple_barrera_petruzzi",
+            "slot_num": 18,
+            "slot_code": "EDU_18"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Carina Fischer",
-            "auxiliar": "Camila Chávez"
+            "auxiliar": "Camila Chávez",
+            "id_slot": "EDU_19_JM_NUBECITAS_T_multiple_fischer_chavez",
+            "slot_num": 19,
+            "slot_code": "EDU_19"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Carla Depetris",
-            "auxiliar": "Yesica Petruzzi"
+            "auxiliar": "Yesica Petruzzi",
+            "id_slot": "EDU_20_JM_NUBECITAS_T_multiple_depetris_petruzzi",
+            "slot_num": 20,
+            "slot_code": "EDU_20"
           }
         ],
         "estructura": [
@@ -2336,13 +2396,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Carina Baldoncini",
-            "auxiliar": "Iohanna Busso"
+            "auxiliar": "Iohanna Busso",
+            "id_slot": "EDU_21_JM_MARIA_I_CASTRESSANA_M_multiple_baldoncini_busso",
+            "slot_num": 21,
+            "slot_code": "EDU_21"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Carina Baldoncini",
-            "auxiliar": "Iohanna Busso"
+            "auxiliar": "Iohanna Busso",
+            "id_slot": "EDU_22_JM_MARIA_I_CASTRESSANA_T_multiple_baldoncini_busso",
+            "slot_num": 22,
+            "slot_code": "EDU_22"
           }
         ],
         "estructura": [
@@ -2399,13 +2465,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Vanina Vargas",
-            "auxiliar": "Nadia Sosa"
+            "auxiliar": "Nadia Sosa",
+            "id_slot": "EDU_23_JM_EL_PARAISO_ENCANTADO_M_multiple_vargas_sosa",
+            "slot_num": 23,
+            "slot_code": "EDU_23"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Julieta Robledo",
-            "auxiliar": "Laura Aguirre"
+            "auxiliar": "Laura Aguirre",
+            "id_slot": "EDU_24_JM_EL_PARAISO_ENCANTADO_T_multiple_robledo_aguirre",
+            "slot_num": 24,
+            "slot_code": "EDU_24"
           }
         ],
         "estructura": [
@@ -2464,25 +2536,37 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Marianela Romagnoli",
-            "auxiliar": "Gabriela Méndez"
+            "auxiliar": "Gabriela Méndez",
+            "id_slot": "EDU_25_SC_PIMPOLLITOS_M_multiple_romagnoli_mendez",
+            "slot_num": 25,
+            "slot_code": "EDU_25"
           },
           {
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Marianela Romagnoli",
-            "auxiliar": "Belén Torres"
+            "auxiliar": "Belén Torres",
+            "id_slot": "EDU_26_SC_PIMPOLLITOS_M_multiple_romagnoli_torres",
+            "slot_num": 26,
+            "slot_code": "EDU_26"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Marta Romero",
-            "auxiliar": "Gabriela Méndez"
+            "auxiliar": "Gabriela Méndez",
+            "id_slot": "EDU_27_SC_PIMPOLLITOS_T_multiple_romero_mendez",
+            "slot_num": 27,
+            "slot_code": "EDU_27"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Cora Barra",
-            "auxiliar": "Gabriela Méndez"
+            "auxiliar": "Gabriela Méndez",
+            "id_slot": "EDU_28_SC_PIMPOLLITOS_T_multiple_barra_mendez",
+            "slot_num": 28,
+            "slot_code": "EDU_28"
           }
         ],
         "estructura": [
@@ -2545,19 +2629,28 @@
             "turno": "Mañana",
             "sala": "1 y 2 años",
             "docente": "Julieta Macarena Requelme",
-            "auxiliar": "Johana Avendaño"
+            "auxiliar": "Johana Avendaño",
+            "id_slot": "EDU_29_SC_EL_PATO_RENATO_M_1_y_2_anos_requelme_avendano",
+            "slot_num": 29,
+            "slot_code": "EDU_29"
           },
           {
             "turno": "Mañana",
             "sala": "2 y 3 años",
             "docente": "Marta Romero",
-            "auxiliar": "Mayra Vargas"
+            "auxiliar": "Mayra Vargas",
+            "id_slot": "EDU_30_SC_EL_PATO_RENATO_M_2_y_3_anos_romero_vargas",
+            "slot_num": 30,
+            "slot_code": "EDU_30"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Lucía Díaz",
-            "auxiliar": "Ana Arrieta"
+            "auxiliar": "Ana Arrieta",
+            "id_slot": "EDU_31_SC_EL_PATO_RENATO_T_multiple_diaz_arrieta",
+            "slot_num": 31,
+            "slot_code": "EDU_31"
           }
         ],
         "estructura": [
@@ -2633,13 +2726,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Juan Ignacio Quinteros",
-            "auxiliar": "Celina Palacios"
+            "auxiliar": "Celina Palacios",
+            "id_slot": "EDU_32_JM_LUNA_DE_PAPEL_M_multiple_quinteros_palacios",
+            "slot_num": 32,
+            "slot_code": "EDU_32"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Marianela Romagnoli",
-            "auxiliar": "Celina Palacios"
+            "auxiliar": "Celina Palacios",
+            "id_slot": "EDU_33_JM_LUNA_DE_PAPEL_T_multiple_romagnoli_palacios",
+            "slot_num": 33,
+            "slot_code": "EDU_33"
           }
         ],
         "estructura": [
@@ -2696,13 +2795,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Noelia Brarda",
-            "auxiliar": "Paola Sarandon"
+            "auxiliar": "Paola Sarandon",
+            "id_slot": "EDU_34_JM_EL_DESPERTAR_DE_LOS_BAJITOS_M_multiple_brarda_sarandon",
+            "slot_num": 34,
+            "slot_code": "EDU_34"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Lucía Coria",
-            "auxiliar": "Sandra Cuitiño"
+            "auxiliar": "Sandra Cuitiño",
+            "id_slot": "EDU_35_JM_EL_DESPERTAR_DE_LOS_BAJITOS_T_multiple_coria_cuitino",
+            "slot_num": 35,
+            "slot_code": "EDU_35"
           }
         ],
         "estructura": [
@@ -2762,19 +2867,28 @@
             "turno": "Mañana",
             "sala": "2 años",
             "docente": "Marina Berte",
-            "auxiliar": "Florencia Tissera"
+            "auxiliar": "Florencia Tissera",
+            "id_slot": "EDU_36_JM_MUNDO_FELIZ_M_2_anos_berte_tissera",
+            "slot_num": 36,
+            "slot_code": "EDU_36"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Mónica Mercado",
-            "auxiliar": "Erica Cordi"
+            "auxiliar": "Erica Cordi",
+            "id_slot": "EDU_37_JM_MUNDO_FELIZ_M_3_anos_mercado_cordi",
+            "slot_num": 37,
+            "slot_code": "EDU_37"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Marina Berte",
-            "auxiliar": "Romina Soria"
+            "auxiliar": "Romina Soria",
+            "id_slot": "EDU_38_JM_MUNDO_FELIZ_T_multiple_berte_soria",
+            "slot_num": 38,
+            "slot_code": "EDU_38"
           }
         ],
         "estructura": [
@@ -2853,25 +2967,37 @@
             "turno": "Mañana",
             "sala": "1 y 2 años",
             "docente": "Selva Savorgnano",
-            "auxiliar": "Maricel Juarez"
+            "auxiliar": "Maricel Juarez",
+            "id_slot": "EDU_39_JM_EL_ELEFANTE_TROMPITA_M_1_y_2_anos_savorgnano_juarez",
+            "slot_num": 39,
+            "slot_code": "EDU_39"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Carla Moreno",
-            "auxiliar": "Analía Ávila"
+            "auxiliar": "Analía Ávila",
+            "id_slot": "EDU_40_JM_EL_ELEFANTE_TROMPITA_M_3_anos_moreno_avila",
+            "slot_num": 40,
+            "slot_code": "EDU_40"
           },
           {
             "turno": "Tarde",
             "sala": "1 y 2 años",
             "docente": "Selva Savorgnano",
-            "auxiliar": "Analía Ávila"
+            "auxiliar": "Analía Ávila",
+            "id_slot": "EDU_41_JM_EL_ELEFANTE_TROMPITA_T_1_y_2_anos_savorgnano_avila",
+            "slot_num": 41,
+            "slot_code": "EDU_41"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Emilia Domínguez",
-            "auxiliar": "Paola Lequin"
+            "auxiliar": "Paola Lequin",
+            "id_slot": "EDU_42_JM_EL_ELEFANTE_TROMPITA_T_multiple_dominguez_lequin",
+            "slot_num": 42,
+            "slot_code": "EDU_42"
           }
         ],
         "estructura": [
@@ -2954,13 +3080,19 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Lucía Díaz",
-            "auxiliar": "Tania Altamirano"
+            "auxiliar": "Tania Altamirano",
+            "id_slot": "EDU_43_JM_CORAZON_DE_TIZA_M_multiple_diaz_altamirano",
+            "slot_num": 43,
+            "slot_code": "EDU_43"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Julieta Rufino",
-            "auxiliar": "Tania Altamirano"
+            "auxiliar": "Tania Altamirano",
+            "id_slot": "EDU_44_JM_CORAZON_DE_TIZA_T_multiple_rufino_altamirano",
+            "slot_num": 44,
+            "slot_code": "EDU_44"
           }
         ],
         "estructura": [
@@ -3015,7 +3147,10 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "María Cecilia Báez",
-            "auxiliar": "Claudia Palandri"
+            "auxiliar": "Claudia Palandri",
+            "id_slot": "EDU_45_JM_DUENDECITOS_M_multiple_baez_palandri",
+            "slot_num": 45,
+            "slot_code": "EDU_45"
           }
         ],
         "estructura": [
@@ -3063,7 +3198,10 @@
             "turno": "Mañana",
             "sala": "Lactarios",
             "docente": "Débora Ullan",
-            "auxiliar": ""
+            "auxiliar": "",
+            "id_slot": "EDU_46_SC_SANTA_CLARA_M_lactarios_ullan",
+            "slot_num": 46,
+            "slot_code": "EDU_46"
           }
         ],
         "estructura": [
@@ -3108,7 +3246,10 @@
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Marina Fossati",
-            "auxiliar": "Verónica Bravo"
+            "auxiliar": "Verónica Bravo",
+            "id_slot": "EDU_47_JM_SAN_ANTONIO_DE_PADUA_T_multiple_fossati_bravo",
+            "slot_num": 47,
+            "slot_code": "EDU_47"
           }
         ],
         "estructura": [
@@ -3158,19 +3299,28 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Sandra Blanco",
-            "auxiliar": "Gabriela Ochello"
+            "auxiliar": "Gabriela Ochello",
+            "id_slot": "EDU_48_JM_ESTRELLITAS_DEL_SUR_M_multiple_blanco_ochello",
+            "slot_num": 48,
+            "slot_code": "EDU_48"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Sandra Blanco",
-            "auxiliar": "Gabriela Ochello"
+            "auxiliar": "Gabriela Ochello",
+            "id_slot": "EDU_49_JM_ESTRELLITAS_DEL_SUR_T_multiple_blanco_ochello",
+            "slot_num": 49,
+            "slot_code": "EDU_49"
           },
           {
             "turno": "Tarde",
             "sala": "Múltiple",
             "docente": "Carla Moreno",
-            "auxiliar": "Gabriela Ochello"
+            "auxiliar": "Gabriela Ochello",
+            "id_slot": "EDU_50_JM_ESTRELLITAS_DEL_SUR_T_multiple_moreno_ochello",
+            "slot_num": 50,
+            "slot_code": "EDU_50"
           }
         ],
         "estructura": [
@@ -3226,7 +3376,10 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Julieta Robledo",
-            "auxiliar": "Luciana Villarreal"
+            "auxiliar": "Luciana Villarreal",
+            "id_slot": "EDU_51_JM_LAS_ARDILLITAS_TRAVIESAS_M_multiple_robledo_villarreal",
+            "slot_num": 51,
+            "slot_code": "EDU_51"
           }
         ],
         "estructura": [
@@ -3274,7 +3427,10 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Carla Depetris",
-            "auxiliar": "Rosana Carranza"
+            "auxiliar": "Rosana Carranza",
+            "id_slot": "EDU_52_JM_LA_RANITA_TRAVIESA_M_multiple_depetris_carranza",
+            "slot_num": 52,
+            "slot_code": "EDU_52"
           }
         ],
         "estructura": [
@@ -3330,43 +3486,64 @@
             "turno": "Mañana",
             "sala": "2 años",
             "docente": "Ayelén Bassani",
-            "auxiliar": "Paola Lequin"
+            "auxiliar": "Paola Lequin",
+            "id_slot": "EDU_53_SC_EL_PAYASO_PINTON_M_2_anos_bassani_lequin",
+            "slot_num": 53,
+            "slot_code": "EDU_53"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Jesica Ferreyra",
-            "auxiliar": "Sandra Mónaco"
+            "auxiliar": "Sandra Mónaco",
+            "id_slot": "EDU_54_SC_EL_PAYASO_PINTON_M_3_anos_ferreyra_monaco",
+            "slot_num": 54,
+            "slot_code": "EDU_54"
           },
           {
             "turno": "Mañana",
             "sala": "3 años",
             "docente": "Jesica Ferreyra",
-            "auxiliar": "Belén Torres"
+            "auxiliar": "Belén Torres",
+            "id_slot": "EDU_55_SC_EL_PAYASO_PINTON_M_3_anos_ferreyra_torres",
+            "slot_num": 55,
+            "slot_code": "EDU_55"
           },
           {
             "turno": "Mañana",
             "sala": "Lactarios",
             "docente": "Yanel Herrera",
-            "auxiliar": "Ana Arrieta"
+            "auxiliar": "Ana Arrieta",
+            "id_slot": "EDU_56_SC_EL_PAYASO_PINTON_M_lactarios_herrera_arrieta",
+            "slot_num": 56,
+            "slot_code": "EDU_56"
           },
           {
             "turno": "Tarde",
             "sala": "Lactarios",
             "docente": "Romina Gisela Estabre",
-            "auxiliar": "Sandra Mónaco"
+            "auxiliar": "Sandra Mónaco",
+            "id_slot": "EDU_57_SC_EL_PAYASO_PINTON_T_lactarios_estabre_monaco",
+            "slot_num": 57,
+            "slot_code": "EDU_57"
           },
           {
             "turno": "Tarde",
             "sala": "3 años",
             "docente": "Nora Ledesma",
-            "auxiliar": "Verónica Aguirre"
+            "auxiliar": "Verónica Aguirre",
+            "id_slot": "EDU_58_SC_EL_PAYASO_PINTON_T_3_anos_ledesma_aguirre",
+            "slot_num": 58,
+            "slot_code": "EDU_58"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
             "docente": "María Florencia Schiavi",
-            "auxiliar": "Evelyn Sosa"
+            "auxiliar": "Evelyn Sosa",
+            "id_slot": "EDU_59_SC_EL_PAYASO_PINTON_T_2_anos_schiavi_sosa",
+            "slot_num": 59,
+            "slot_code": "EDU_59"
           }
         ],
         "estructura": [
@@ -3465,7 +3642,10 @@
             "turno": "Mañana",
             "sala": "Múltiple",
             "docente": "Cristina Sola",
-            "auxiliar": "Sandra Cuitiño"
+            "auxiliar": "Sandra Cuitiño",
+            "id_slot": "EDU_60_SC_LA_TORTUGA_UGA_M_multiple_sola_cuitino",
+            "slot_num": 60,
+            "slot_code": "EDU_60"
           }
         ],
         "estructura": [
@@ -3515,13 +3695,19 @@
             "turno": "Tarde",
             "sala": "1 año",
             "docente": "Brunella Siracussa",
-            "auxiliar": "Iohanna Vargas"
+            "auxiliar": "Iohanna Vargas",
+            "id_slot": "EDU_61_JM_FUNDACION_DIGNAMENTE_T_1_ano_siracussa_vargas",
+            "slot_num": 61,
+            "slot_code": "EDU_61"
           },
           {
             "turno": "Tarde",
             "sala": "2 años",
             "docente": "Ayelén Bassani",
-            "auxiliar": "Rosana Benítez"
+            "auxiliar": "Rosana Benítez",
+            "id_slot": "EDU_62_JM_FUNDACION_DIGNAMENTE_T_2_anos_bassani_benitez",
+            "slot_num": 62,
+            "slot_code": "EDU_62"
           }
         ],
         "estructura": [
