@@ -548,8 +548,24 @@
       color: var(--ink-soft);
     }
 
+    #print-poster-container {
+      display: none;
+    }
+
+    #qrcode-target-salud canvas {
+      display: none !important;
+    }
+
+    #qrcode-target-salud img {
+      width: 170px !important;
+      height: 170px !important;
+      margin: 0 auto !important;
+      display: block !important;
+    }
+
     /* ==========================================================================
        CONFIGURACIÓN EXACTA DE IMPRESIÓN A4 (21 cm x 29.7 cm con márgenes de 2.54 cm)
+       GARANTIZA EXACTAMENTE 1 ÚNICA PÁGINA Y 1 ÚNICO CÓDIGO QR CENTRADO
        ========================================================================== */
     @page {
       size: 21cm 29.7cm; /* Hoja A4 oficial (21 cm de ancho x 29.7 cm de alto) */
@@ -569,60 +585,53 @@
         background: #ffffff !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        overflow: hidden !important;
       }
 
-      body * {
-        visibility: hidden !important;
+      /* Ocultar ABSOLUTAMENTE todo el sitio web para evitar páginas múltiples */
+      body > * {
+        display: none !important;
       }
 
-      .print-active,
-      .print-active * {
-        visibility: visible !important;
-      }
-
-      .print-active {
-        position: fixed !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
-        margin: 0 !important;
-        padding: 0.8cm 1cm !important;
-        border: 2.5px solid #009de0 !important;
-        border-radius: 18px !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
+      /* Mostrar EXCLUSIVAMENTE el contenedor de cartel A4 (1 sola página) */
+      body > #print-poster-container {
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
         align-items: center !important;
         text-align: center !important;
-        overflow: hidden !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 1cm 1.2cm !important;
+        border: 2.5px solid #009de0 !important;
+        border-radius: 20px !important;
+        background: #ffffff !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+        page-break-before: avoid !important;
         page-break-after: avoid !important;
+        break-before: avoid !important;
         break-after: avoid !important;
-        z-index: 99999 !important;
       }
 
-      .print-active .poster-print-header {
+      #print-poster-container .poster-print-header {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         width: 100% !important;
-        margin-top: 4px !important;
       }
 
-      .print-active .poster-print-logo {
-        height: 54px !important;
+      #print-poster-container .poster-print-logo {
+        height: 56px !important;
         width: auto !important;
         margin: 0 auto 10px !important;
         display: block !important;
       }
 
-      .print-active .poster-print-subse {
+      #print-poster-container .poster-print-subse {
         font-size: 15px !important;
         font-weight: 900 !important;
         color: #0b1a2c !important;
@@ -631,43 +640,43 @@
         margin-bottom: 10px !important;
       }
 
-      .print-active .poster-print-divider {
+      #print-poster-container .poster-print-divider {
         display: block !important;
-        width: 80px !important;
+        width: 90px !important;
         height: 3px !important;
         background: #009de0 !important;
         border-radius: 2px !important;
         margin: 0 auto !important;
       }
 
-      .print-active .poster-print-main {
+      #print-poster-container .poster-print-main {
         width: 100% !important;
         margin: 8px 0 !important;
       }
 
-      .print-active .poster-print-title {
-        font-size: 27px !important;
+      #print-poster-container .poster-print-title {
+        font-size: 28px !important;
         font-weight: 900 !important;
         color: #0b1a2c !important;
         line-height: 1.25 !important;
         margin: 0 0 6px !important;
       }
 
-      .print-active .poster-print-nombre {
-        font-size: 26px !important;
+      #print-poster-container .poster-print-nombre {
+        font-size: 27px !important;
         font-weight: 900 !important;
         color: #009de0 !important;
         margin: 4px 0 !important;
       }
 
-      .print-active .poster-print-barrio {
+      #print-poster-container .poster-print-barrio {
         font-size: 16px !important;
         font-weight: 600 !important;
         color: #475569 !important;
         margin-bottom: 6px !important;
       }
 
-      .print-active .poster-print-esp {
+      #print-poster-container .poster-print-esp {
         font-size: 16px !important;
         font-weight: 800 !important;
         color: #0284c7 !important;
@@ -679,7 +688,11 @@
         margin-top: 6px !important;
       }
 
-      .print-active .poster-print-qr-wrap {
+      #print-poster-container .poster-print-esp:empty {
+        display: none !important;
+      }
+
+      #print-poster-container .poster-print-qr-wrap {
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -687,15 +700,13 @@
         width: 100% !important;
       }
 
-      .print-active #qrcode-target-salud canvas,
-      .print-active #qrcode-target-salud img,
-      .print-active #modal-poster-qr-img {
-        width: 270px !important;
-        height: 270px !important;
-        max-width: 270px !important;
-        max-height: 270px !important;
-        border-radius: 18px !important;
-        padding: 12px !important;
+      #print-poster-container #print-single-qr {
+        width: 250px !important;
+        height: 250px !important;
+        max-width: 250px !important;
+        max-height: 250px !important;
+        border-radius: 16px !important;
+        padding: 10px !important;
         background: #ffffff !important;
         border: 2px solid #cbd5e1 !important;
         box-shadow: none !important;
@@ -703,35 +714,34 @@
         margin: 0 auto !important;
       }
 
-      .print-active .poster-print-footer {
+      #print-poster-container .poster-print-footer {
         width: 100% !important;
-        margin-bottom: 4px !important;
       }
 
-      .print-active .poster-print-cta {
+      #print-poster-container .poster-print-cta {
         font-size: 20px !important;
         font-weight: 900 !important;
         color: #0b1a2c !important;
-        margin: 8px 0 3px !important;
+        margin: 6px 0 2px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 8px !important;
       }
 
-      .print-active .poster-print-cta .material-symbols-outlined {
+      #print-poster-container .poster-print-cta .material-symbols-outlined {
         font-size: 24px !important;
         color: #009de0 !important;
       }
 
-      .print-active .poster-print-anon {
+      #print-poster-container .poster-print-anon {
         font-size: 14.5px !important;
         font-weight: 700 !important;
         color: #475569 !important;
         margin: 2px 0 0 !important;
       }
 
-      .print-active .poster-print-footer-legal {
+      #print-poster-container .poster-print-footer-legal {
         display: block !important;
         font-size: 11px !important;
         font-weight: 700 !important;
@@ -739,10 +749,6 @@
         letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
         margin-top: 10px !important;
-      }
-
-      .print-active .poster-hide-in-print {
-        display: none !important;
       }
     }
   </style>
@@ -1261,6 +1267,35 @@
     </div>
   </div>
 
+  <!-- CONTENEDOR EXCLUSIVO PARA IMPRESIÓN A4 OFICIAL (1 SOLA PÁGINA, 1 SOLO QR) -->
+  <div id="print-poster-container" aria-hidden="true">
+    <div class="poster-print-header">
+      <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+      <div class="poster-print-subse">Subsecretaría de Salud · Dirección de Estadística</div>
+      <div class="poster-print-divider"></div>
+    </div>
+
+    <div class="poster-print-main">
+      <h2 class="poster-print-title">Tu opinión nos ayuda a mejorar</h2>
+      <div id="print-poster-nombre" class="poster-print-nombre">Centro de Salud (CS)</div>
+      <div id="print-poster-barrio" class="poster-print-barrio">B° Centro · Río Cuarto</div>
+      <div id="print-poster-esp" class="poster-print-esp" style="display:none;"></div>
+    </div>
+
+    <div class="poster-print-qr-wrap">
+      <img id="print-single-qr" src="" alt="Código QR Oficial de Satisfacción">
+    </div>
+
+    <div class="poster-print-footer">
+      <p class="poster-print-cta">
+        <span class="material-symbols-outlined">qr_code_scanner</span>
+        Escaneá con la cámara de tu celular
+      </p>
+      <p class="poster-print-anon">Encuesta 100% anónima · 1 minuto</p>
+      <div class="poster-print-footer-legal">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+    </div>
+  </div>
+
   <!-- SCRIPT -->
   <script>
     let qrcodeSalud = null;
@@ -1375,14 +1410,58 @@
       });
     }
 
-    function printSaludPoster() {
-      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
-      const poster = document.getElementById('printable-poster');
-      if (poster) {
-        poster.classList.add('print-active');
-        window.print();
-        setTimeout(() => poster.classList.remove('print-active'), 1000);
+    function populatePrintPoster(nombre, barrio, especialidad, qrUrl) {
+      const nombreEl = document.getElementById('print-poster-nombre');
+      const barrioEl = document.getElementById('print-poster-barrio');
+      const espEl = document.getElementById('print-poster-esp');
+      const qrEl = document.getElementById('print-single-qr');
+
+      if (nombreEl) nombreEl.textContent = nombre || 'Centro de Salud';
+      if (barrioEl) {
+        let bText = (barrio || '').trim();
+        if (bText.startsWith('B°') || bText.startsWith('Bº')) {
+          barrioEl.textContent = `${bText} · Río Cuarto`;
+        } else if (bText) {
+          barrioEl.textContent = `B° ${bText} · Río Cuarto`;
+        } else {
+          barrioEl.textContent = 'Río Cuarto';
+        }
       }
+
+      if (espEl) {
+        if (especialidad && !especialidad.toLowerCase().includes('general de sala') && especialidad !== 'Atención General de Sala') {
+          espEl.textContent = `Consultorio: ${especialidad}`;
+          espEl.style.display = 'inline-block';
+        } else {
+          espEl.textContent = '';
+          espEl.style.display = 'none';
+        }
+      }
+
+      if (qrEl && qrUrl) {
+        qrEl.src = qrUrl;
+      }
+    }
+
+    function printSaludPoster() {
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const opt = selectSalud?.selectedOptions[0];
+      if (!opt) return;
+
+      const nombre = opt.dataset.nombre || opt.textContent;
+      const barrio = opt.dataset.barrio || '';
+      const espVal = selectEsp?.value || '';
+
+      const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+      targetUrl.searchParams.set('centro', opt.value);
+      if (espVal) {
+        targetUrl.searchParams.set('especialidad', espVal);
+      }
+      const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(targetUrl.toString())}`;
+
+      populatePrintPoster(nombre, barrio, espVal, qrHdUrl);
+      window.print();
     }
 
     function openModalQrSalud(centroNombre, barrio, especialidad, link, qrUrl) {
@@ -1414,30 +1493,45 @@
     }
 
     function printModalPoster() {
-      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
-      const poster = document.getElementById('modal-printable-poster');
-      if (poster) {
-        poster.classList.add('print-active');
-        window.print();
-        setTimeout(() => poster.classList.remove('print-active'), 1000);
-      }
+      const nombre = document.getElementById('modal-poster-salud-nombre')?.textContent || '';
+      const barrio = document.getElementById('modal-poster-salud-barrio')?.textContent || '';
+      const espEl = document.getElementById('modal-poster-salud-esp');
+      const espText = (espEl && espEl.style.display !== 'none' && !espEl.textContent.includes('General de Sala'))
+        ? espEl.textContent.replace('Consultorio:', '').trim()
+        : '';
+      const qrUrl = document.getElementById('modal-poster-qr-img')?.src || '';
+
+      populatePrintPoster(nombre, barrio, espText, qrUrl);
+      window.print();
     }
 
     // Asegurar compatibilidad directa con Ctrl+P del navegador
     window.addEventListener('beforeprint', () => {
       const modal = document.getElementById('modal-qr-salud');
-      const hasActive = document.querySelector('.print-active');
-      if (!hasActive) {
-        if (modal && modal.classList.contains('active')) {
-          document.getElementById('modal-printable-poster')?.classList.add('print-active');
-        } else {
-          document.getElementById('printable-poster')?.classList.add('print-active');
+      if (modal && modal.classList.contains('active')) {
+        const nombre = document.getElementById('modal-poster-salud-nombre')?.textContent || '';
+        const barrio = document.getElementById('modal-poster-salud-barrio')?.textContent || '';
+        const espEl = document.getElementById('modal-poster-salud-esp');
+        const espText = (espEl && espEl.style.display !== 'none' && !espEl.textContent.includes('General de Sala'))
+          ? espEl.textContent.replace('Consultorio:', '').trim()
+          : '';
+        const qrUrl = document.getElementById('modal-poster-qr-img')?.src || '';
+        populatePrintPoster(nombre, barrio, espText, qrUrl);
+      } else {
+        const selectSalud = document.getElementById('qr-select-salud');
+        const selectEsp = document.getElementById('qr-select-salud-esp');
+        const opt = selectSalud?.selectedOptions[0];
+        if (opt) {
+          const nombre = opt.dataset.nombre || opt.textContent;
+          const barrio = opt.dataset.barrio || '';
+          const espVal = selectEsp?.value || '';
+          const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+          targetUrl.searchParams.set('centro', opt.value);
+          if (espVal) targetUrl.searchParams.set('especialidad', espVal);
+          const qrHdUrl = `https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&margin=8&data=${encodeURIComponent(targetUrl.toString())}`;
+          populatePrintPoster(nombre, barrio, espVal, qrHdUrl);
         }
       }
-    });
-
-    window.addEventListener('afterprint', () => {
-      document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
     });
 
     let saludTableModo = 'servicios'; // 'servicios' (228) o 'generales' (24)
