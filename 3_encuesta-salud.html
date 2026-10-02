@@ -598,7 +598,7 @@
           1. Lugar y Modalidad de Consulta
         </div>
 
-        <!-- TARJETA FIJADA CUANDO SE LEE DESDE QR -->
+        <!-- TARJETA FIJADA CUANDO SE LEE DESDE QR (CENTRO) -->
         <div id="centro-locked-card" class="institution-lock-card hidden">
           <div class="lock-icon">
             <span class="material-symbols-outlined">local_hospital</span>
@@ -609,6 +609,10 @@
             <span class="lock-sub" id="lock-centro-sub">Dirección</span>
           </div>
         </div>
+
+        <input type="hidden" name="centro_id_prefijado" id="input-centro-id-prefijado">
+        <input type="hidden" name="especialidad_prefijada" id="input-especialidad-prefijada">
+        <input type="hidden" name="profesional_prefijado" id="input-profesional-prefijado">
 
         <div class="form-group" id="group-centro-select">
           <label class="form-label" for="select-centro">Centro de Salud / CAPS / Posta *</label>
@@ -639,14 +643,38 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <!-- TARJETA FIJADA CUANDO LA ESPECIALIDAD VIENE PREFIJADA -->
+        <div id="especialidad-locked-card" class="institution-lock-card hidden" style="background:var(--bg-alt); border-color:var(--line); margin-bottom:14px;">
+          <div class="lock-icon" style="background:#fff; color:var(--brand);">
+            <span class="material-symbols-outlined">medical_services</span>
+          </div>
+          <div class="lock-info">
+            <span class="lock-tag" style="color:var(--brand-d);">Especialidad o Servicio Prefijado</span>
+            <strong id="lock-especialidad-nombre">Especialidad</strong>
+            <span class="lock-sub"><span class="material-symbols-outlined" style="font-size:14px;">lock</span>Servicio prefijado e inmutable</span>
+          </div>
+        </div>
+
+        <div class="form-group" id="group-especialidad-select">
           <label class="form-label" for="select-especialidad">Especialidad o Servicio Consultado *</label>
           <select id="select-especialidad" name="especialidad" class="form-select" required disabled>
             <option value="">Primero selecciona el centro arriba...</option>
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- TARJETA FIJADA CUANDO EL PROFESIONAL VIENE PREFIJADO -->
+        <div id="profesional-locked-card" class="institution-lock-card hidden" style="background:var(--bg-alt); border-color:var(--line); margin-bottom:14px;">
+          <div class="lock-icon" style="background:#fff; color:var(--brand);">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div class="lock-info">
+            <span class="lock-tag" style="color:var(--brand-d);">Profesional / Médico Prefijado</span>
+            <strong id="lock-profesional-nombre">Profesional</strong>
+            <span class="lock-sub"><span class="material-symbols-outlined" style="font-size:14px;">lock</span>Profesional prefijado e inmutable</span>
+          </div>
+        </div>
+
+        <div class="form-group" id="group-profesional-select">
           <label class="form-label" for="select-profesional">Profesional / Médico que te atendió</label>
           <select id="select-profesional" name="profesional" class="form-select" disabled>
             <option value="">Selecciona especialidad primero...</option>
@@ -907,7 +935,7 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="wrap">
-      <b>Dirección de Estadística · Secretaría de Salud</b><br>
+      <b>Dirección de Estadística · Subsecretaría de Salud</b><br>
       Municipalidad de Río Cuarto · Gobierno de la Ciudad
     </div>
   </footer>
@@ -1028,26 +1056,36 @@
       }
 
       const espData = centroSeleccionado.especialidades.find(e => e.nombre === espNombre);
-      selectProf.innerHTML = '<option value="">Selecciona profesional (o no recuerda)...</option>';
+      selectProf.innerHTML = '<option value="">Selecciona profesional (o indica si no lo recuerdas)...</option>';
+
+      // Opción requerida explícita
+      const optNoConozco = document.createElement('option');
+      optNoConozco.value = "No conozco el nombre del profesional";
+      optNoConozco.textContent = "No conozco el nombre del profesional";
+      selectProf.appendChild(optNoConozco);
+
+      // Opción Profesional de Turno
+      const optTurno = document.createElement('option');
+      optTurno.value = "Profesional de Turno";
+      optTurno.textContent = "Profesional de Turno";
+      selectProf.appendChild(optTurno);
 
       if (espData && espData.profesionales) {
         espData.profesionales.forEach(prof => {
-          const opt = document.createElement('option');
-          opt.value = prof;
-          opt.textContent = prof;
-          selectProf.appendChild(opt);
+          if (prof !== "Profesional de Turno" && prof !== "No conozco el nombre del profesional") {
+            const opt = document.createElement('option');
+            opt.value = prof;
+            opt.textContent = prof;
+            selectProf.appendChild(opt);
+          }
         });
       }
-      const optGenerica = document.createElement('option');
-      optGenerica.value = "Profesional de Turno / No recuerda";
-      optGenerica.textContent = "No recuerdo el nombre / Otro";
-      selectProf.appendChild(optGenerica);
 
       selectProf.disabled = false;
 
       selectProf.onchange = () => {
         const val = selectProf.value;
-        if (!val || val.includes('recuerda')) {
+        if (!val || val.includes('recuerda') || val.includes('No conozco') || val.includes('Turno')) {
           if (previewCard) previewCard.classList.add('hidden');
           return;
         }
@@ -1105,38 +1143,84 @@
       const espParam = urlParams.get('especialidad') || urlParams.get('esp') || urlParams.get('e');
       const profParam = urlParams.get('profesional') || urlParams.get('prof') || urlParams.get('p');
 
-      if (centroParam) {
-        const select = document.getElementById('select-centro');
-        for (let i = 0; i < select.options.length; i++) {
-          const opt = select.options[i];
-          if (opt.value && (opt.value.toUpperCase() === centroParam.toUpperCase() || opt.value.toUpperCase().includes(centroParam.toUpperCase()) || centroParam.toUpperCase().includes(opt.value.toUpperCase()))) {
-            select.selectedIndex = i;
-            onCentroChange(opt.value, true);
+      if (!centroParam) return;
+
+      const select = document.getElementById('select-centro');
+      let foundCentro = false;
+      for (let i = 0; i < select.options.length; i++) {
+        const opt = select.options[i];
+        if (opt.value && (opt.value.toUpperCase() === centroParam.toUpperCase() || opt.value.toUpperCase().includes(centroParam.toUpperCase()) || centroParam.toUpperCase().includes(opt.value.toUpperCase()))) {
+          select.selectedIndex = i;
+          onCentroChange(opt.value, true);
+          foundCentro = true;
+          break;
+        }
+      }
+
+      if (!foundCentro) return;
+
+      const inputCentroHidden = document.getElementById('input-centro-id-prefijado');
+      if (inputCentroHidden) inputCentroHidden.value = select.value;
+
+      // Manejo de Especialidad Prefijada
+      if (espParam) {
+        const selectEsp = document.getElementById('select-especialidad');
+        let foundEsp = false;
+        for (let j = 0; j < selectEsp.options.length; j++) {
+          const optEsp = selectEsp.options[j];
+          if (optEsp.value && (optEsp.value.toLowerCase() === espParam.toLowerCase() || optEsp.value.toLowerCase().includes(espParam.toLowerCase()) || espParam.toLowerCase().includes(optEsp.value.toLowerCase()))) {
+            selectEsp.selectedIndex = j;
+            onEspecialidadChange(optEsp.value);
+            foundEsp = true;
             break;
           }
         }
+        if (!foundEsp) {
+          selectEsp.appendChild(new Option(espParam, espParam, true, true));
+          onEspecialidadChange(espParam);
+        }
 
-        if (espParam) {
-          const selectEsp = document.getElementById('select-especialidad');
-          for (let j = 0; j < selectEsp.options.length; j++) {
-            const optEsp = selectEsp.options[j];
-            if (optEsp.value && (optEsp.value.toLowerCase() === espParam.toLowerCase() || optEsp.value.toLowerCase().includes(espParam.toLowerCase()) || espParam.toLowerCase().includes(optEsp.value.toLowerCase()))) {
-              selectEsp.selectedIndex = j;
-              onEspecialidadChange(optEsp.value);
+        // Bloquear visualmente en UI
+        const lockEspCard = document.getElementById('especialidad-locked-card');
+        const lockEspNombre = document.getElementById('lock-especialidad-nombre');
+        const groupEspSelect = document.getElementById('group-especialidad-select');
+        const inputEspHidden = document.getElementById('input-especialidad-prefijada');
+
+        if (inputEspHidden) inputEspHidden.value = espParam;
+        if (lockEspCard && lockEspNombre && groupEspSelect) {
+          lockEspNombre.textContent = espParam;
+          lockEspCard.classList.remove('hidden');
+          groupEspSelect.classList.add('hidden');
+        }
+
+        // Manejo de Profesional Prefijado
+        if (profParam) {
+          const selectProf = document.getElementById('select-profesional');
+          let foundProf = false;
+          for (let k = 0; k < selectProf.options.length; k++) {
+            const optProf = selectProf.options[k];
+            if (optProf.value && (optProf.value.toLowerCase() === profParam.toLowerCase() || optProf.value.toLowerCase().includes(profParam.toLowerCase()) || profParam.toLowerCase().includes(optProf.value.toLowerCase()))) {
+              selectProf.selectedIndex = k;
+              foundProf = true;
               break;
             }
           }
+          if (!foundProf) {
+            selectProf.appendChild(new Option(profParam, profParam, true, true));
+            selectProf.value = profParam;
+          }
 
-          if (profParam) {
-            const selectProf = document.getElementById('select-profesional');
-            for (let k = 0; k < selectProf.options.length; k++) {
-              const optProf = selectProf.options[k];
-              if (optProf.value && (optProf.value.toLowerCase() === profParam.toLowerCase() || optProf.value.toLowerCase().includes(profParam.toLowerCase()) || profParam.toLowerCase().includes(optProf.value.toLowerCase()))) {
-                selectProf.selectedIndex = k;
-                selectProf.dispatchEvent(new Event('change'));
-                break;
-              }
-            }
+          // Bloquear visualmente en UI
+          const lockProfCard = document.getElementById('profesional-locked-card');
+          const lockProfNombre = document.getElementById('lock-profesional-nombre');
+          const groupProfSelect = document.getElementById('group-profesional-select');
+          const inputProfHidden = document.getElementById('input-profesional-prefijado');
+
+          if (inputProfHidden) inputProfHidden.value = profParam;
+          if (lockProfCard && lockProfNombre && groupProfSelect) {
+            lockProfNombre.textContent = profParam;
+            lockProfCard.classList.remove('hidden');
+            groupProfSelect.classList.add('hidden');
           }
         }
       }
@@ -1149,6 +1233,25 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // Validar Centro
+        const centroIdVal = document.getElementById('select-centro')?.value || document.getElementById('input-centro-id-prefijado')?.value || (centroSeleccionado ? centroSeleccionado.id : '');
+        if (!centroIdVal) {
+          alert("Por favor selecciona el centro de salud donde fuiste atendido/a.");
+          document.getElementById('select-centro')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Validar Especialidad
+        const espVal = document.getElementById('select-especialidad')?.value || document.getElementById('input-especialidad-prefijada')?.value || '';
+        if (!espVal) {
+          alert("Por favor indica la especialidad o servicio consultado.");
+          document.getElementById('select-especialidad')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Profesional
+        const profVal = document.getElementById('select-profesional')?.value || document.getElementById('input-profesional-prefijado')?.value || 'No conozco el nombre del profesional';
+
         const requiredInputs = form.querySelectorAll('input[type="hidden"][required]');
         for (let input of requiredInputs) {
           if (!input.value) {
@@ -1159,21 +1262,24 @@
         }
 
         const formData = new FormData(form);
+        const submissionId = 'SAL-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
         const payload = {
           tipo_encuesta: "salud",
-          centro_id: formData.get('centro_id'),
+          id: submissionId,
+          centro_id: centroIdVal,
           centro_nombre: centroSeleccionado ? centroSeleccionado.nombre : "",
           tipo_centro: centroSeleccionado ? centroSeleccionado.tipo : "",
           barrio: centroSeleccionado ? centroSeleccionado.barrio : "",
-          llegada: formData.get('llegada'),
-          especialidad: formData.get('especialidad'),
-          profesional: formData.get('profesional') || "No especificado",
-          recepcion_nota: formData.get('recepcion_nota'),
-          espera_nota: formData.get('espera_nota'),
-          infraestructura_nota: formData.get('infraestructura_nota'),
+          llegada: formData.get('llegada') || "",
+          especialidad: espVal,
+          profesional: profVal,
+          recepcion_nota: formData.get('recepcion_nota') || "",
+          espera_nota: formData.get('espera_nota') || "",
+          infraestructura_nota: formData.get('infraestructura_nota') || "",
           enfermeria_nota: formData.get('enfermeria_nota') || "No aplica",
           medico_nota: formData.get('medico_nota') || "No aplica",
-          nps_puntaje: formData.get('nps_puntaje'),
+          nps_puntaje: formData.get('nps_puntaje') !== null && formData.get('nps_puntaje') !== undefined ? formData.get('nps_puntaje') : "",
           sugerencias: formData.get('sugerencias') || "",
           dispositivo: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
         };
@@ -1232,6 +1338,16 @@
       if (urlParams.get('centro') || urlParams.get('c')) {
         handleUrlParameters();
       } else {
+        const lockEspCard = document.getElementById('especialidad-locked-card');
+        const groupEspSelect = document.getElementById('group-especialidad-select');
+        if (lockEspCard) lockEspCard.classList.add('hidden');
+        if (groupEspSelect) groupEspSelect.classList.remove('hidden');
+
+        const lockProfCard = document.getElementById('profesional-locked-card');
+        const groupProfSelect = document.getElementById('group-profesional-select');
+        if (lockProfCard) lockProfCard.classList.add('hidden');
+        if (groupProfSelect) groupProfSelect.classList.remove('hidden');
+
         onCentroChange("");
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -704,68 +704,141 @@
 
       <div class="tool-grid">
 
-        <!-- CANAL 1: SALUD (CARTELERÍA QR) -->
-        <div class="tool-box" id="modulo-salud-qr">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
-            <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d);">
-              <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Red de Salud · Cartelería QR
-            </span>
-            <span style="font-size:11px; font-weight:700; color:var(--ink-soft); background:var(--bg-alt); padding:3px 8px; border-radius:6px; border:1px solid var(--line);">
-              Padrón Oficial 2026
-            </span>
-          </div>
-          <p style="font-size:13px; color:var(--ink-soft); margin:0 0 16px;">
-            Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada centro o posta sanitaria.
-          </p>
-
-          <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:14px;">
-            <div class="tool-field">
-              <label>1. Centro de Salud / CAPS / Posta *</label>
-              <select id="qr-select-salud"></select>
+        <!-- CANAL 1: SALUD (CARTELERÍA QR Y DIFUSIÓN PREFIJADA) -->
+        <div class="tool-box" id="modulo-salud-qr" style="display:flex; flex-direction:column; gap:20px;">
+          
+          <!-- OPCIÓN 1: CARTELERÍA QR OFICIAL A4 (PARA SALAS DE ESPERA) -->
+          <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:16px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
+                <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Opción 1 · Cartelería QR A4 Oficial (Salas de Espera)
+              </span>
+              <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px;">
+                Padrón Oficial 2026
+              </span>
             </div>
-            <div class="tool-field">
-              <label>2. Especialidad / Consultorio (Opcional)</label>
-              <select id="qr-select-salud-esp">
-                <option value="">Todas las especialidades (Cartel General de Sala)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- VISTA PREVIA CARTEL -->
-          <div id="printable-poster">
-            <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:36px; width:auto; margin:0 auto 10px; display:block;">
-            <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Secretaría de Salud · Dirección de Estadística</div>
-
-            <div style="margin:12px 0;">
-              <h3 style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
-              <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1
-              </div>
-              <div id="poster-salud-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
-              <div id="poster-salud-esp-badge" style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; background:var(--tint-sky); color:var(--brand-d); padding:3px 10px; border-radius:999px;">
-                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">medical_services</span>
-                <span id="poster-salud-esp-text">Atención General de Sala</span>
-              </div>
-            </div>
-
-            <div style="display:flex; justify-content:center; margin:14px 0;">
-              <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px;"></div>
-            </div>
-
-            <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;">
-              <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
-              Escaneá con la cámara de tu celular
+            <p style="font-size:12.5px; color:var(--ink); margin:0 0 12px; line-height:1.4;">
+              Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
             </p>
-            <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+
+            <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:12px;">
+              <div class="tool-field">
+                <label>1. Centro de Salud / CAPS / Posta *</label>
+                <select id="qr-select-salud"></select>
+              </div>
+              <div class="tool-field">
+                <label>2. Especialidad / Consultorio (Opcional)</label>
+                <select id="qr-select-salud-esp">
+                  <option value="">Todas las especialidades (Cartel General de Sala)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- VISTA PREVIA CARTEL -->
+            <div id="printable-poster">
+              <img src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:36px; width:auto; margin:0 auto 10px; display:block;">
+              <div style="font-size:13px; font-weight:900; margin-bottom:8px; color:var(--ink);">Subsecretaría de Salud · Dirección de Estadística</div>
+
+              <div style="margin:12px 0;">
+                <h3 style="font-size:18px; font-weight:900; margin:0 0 2px;">Tu opinión nos ayuda a mejorar</h3>
+                <div id="poster-salud-nombre" style="font-size:15px; font-weight:800; color:var(--brand);">Dispensario N° 1
+                </div>
+                <div id="poster-salud-barrio" style="font-size:12px; color:var(--ink-soft); margin-bottom:6px;">B° Alberdi</div>
+                <div id="poster-salud-esp-text" style="display:none; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-top:4px;"></div>
+              </div>
+
+              <div style="display:flex; justify-content:center; margin:14px 0;">
+                <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px;"></div>
+              </div>
+
+              <p style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+                Escaneá con la cámara de tu celular
+              </p>
+              <p style="font-size:11px; color:var(--ink-soft); margin:0;">Encuesta 100% anónima · 1 minuto</p>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:14px;">
+              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1;">
+                <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir Cartel
+              </button>
+              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link General
+              </button>
+            </div>
           </div>
 
-          <div style="display:flex; gap:10px; margin-top:14px;">
-            <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1;">
-              <span class="material-symbols-outlined" style="font-size:16px;">print</span> Imprimir Cartel
-            </button>
-            <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="flex:1;">
-              <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
-            </button>
+          <!-- OPCIÓN 2: GENERADOR ESPECÍFICO PREFIJADO POR SERVICIO Y PROFESIONAL -->
+          <div style="border-top:1px solid var(--line); padding-top:16px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge-chip" style="background:var(--bg-alt); color:var(--ink-soft); border:1px solid var(--line); font-weight:800;">
+                <span class="material-symbols-outlined" style="font-size:16px;">tune</span> Opción 2 · Generador Específico Prefijado por Servicio
+              </span>
+              <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:rgba(0,157,224,.1); padding:3px 8px; border-radius:6px;">
+                Bloqueo Inmutable
+              </span>
+            </div>
+            <p style="font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;">
+              Genera enlaces personalizados prefijados con la especialidad y el profesional (incluyendo «No conozco el nombre del profesional») listos para WhatsApp o carteleras específicas.
+            </p>
+
+            <div style="display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:14px;">
+              <div class="tool-field">
+                <label>1. Centro de Salud / CAPS / Posta *</label>
+                <select id="select-salud-pref-centro"></select>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div class="tool-field">
+                  <label>2. Especialidad / Servicio *</label>
+                  <select id="select-salud-pref-esp"></select>
+                </div>
+                <div class="tool-field">
+                  <label>3. Profesional / Médico *</label>
+                  <select id="select-salud-pref-prof"></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ENLACE ÚNICO GENERADO -->
+            <div style="margin-top:12px;">
+              <label style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; gap:5px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">lock</span>
+                Enlace Específico de Consulta (Prefijado e Inmutable):
+              </label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="input-link-salud-url" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+                <button type="button" id="btn-copy-link-salud-field" class="btn-pill btn-outline" style="padding:0 14px; font-size:12.5px; height:auto; min-width:auto;">
+                  <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Link
+                </button>
+                <a id="btn-open-salud-field" href="encuesta-salud.html" target="_blank" class="btn-pill btn-outline" style="background:#fff; padding:0 12px; font-size:12px; height:auto; min-width:auto; text-decoration:none; display:inline-flex; align-items:center;">
+                  <span class="material-symbols-outlined" style="font-size:15px; margin:0 3px 0 0;">open_in_new</span> Abrir
+                </a>
+              </div>
+            </div>
+
+            <!-- MENSAJE WHATSAPP -->
+            <div style="margin-top:12px;">
+              <div style="font-size:12px; font-weight:700; color:var(--brand-d); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
+                <span style="display:flex; align-items:center; gap:5px;">
+                  <span class="material-symbols-outlined" style="font-size:16px;">chat</span>
+                  Mensaje WhatsApp Específico para este Servicio:
+                </span>
+              </div>
+              <div id="whatsapp-preview-salud-box"
+                style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:14px; font-size:12px; line-height:1.45; white-space:pre-line;">
+              </div>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+              <button type="button" id="btn-copy-wsp-salud" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copiar Mensaje
+              </button>
+              <button type="button" id="btn-open-wsp-salud" class="btn-pill btn-outline" style="flex:1; min-width:140px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">chat</span> Abrir WhatsApp
+              </button>
+            </div>
           </div>
+
         </div>
 
         <!-- CANAL 2: EDUCACIÓN (OPCIONES DE DIFUSIÓN) -->
@@ -869,6 +942,44 @@
 
         </div>
 
+    <!-- SECCIÓN DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL -->
+    <section class="tool-section" style="margin-top:36px;">
+      <div class="sec-head">
+        <h2>
+          <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
+          Directorio Maestro de Efectores y Servicios (Red de Salud Municipal)
+        </h2>
+        <p>Padrón oficial de efectores de salud y servicios. Cada servicio cuenta con su enlace canónico prefijado para facilitar la difusión digital y evitar errores de carga.</p>
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:280px; position:relative;">
+            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
+            <input type="text" id="filter-padron-salud" placeholder="Buscar por centro, barrio, especialidad o tipo de efector..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
+          </div>
+        </div>
+
+        <div style="overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+          <table id="table-padron-salud" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+            <thead>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em;">
+                <th style="padding:10px 12px; width:40px;">#</th>
+                <th style="padding:10px 12px;">Centro de Salud & Barrio</th>
+                <th style="padding:10px 12px;">Tipo</th>
+                <th style="padding:10px 12px;">Especialidad / Servicio</th>
+                <th style="padding:10px 12px;">Profesional por Defecto</th>
+                <th style="padding:10px 12px; text-align:right;">Acciones Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-padron-salud">
+              <!-- Renderizado dinámico de los servicios de salud -->
+            </tbody>
+          </table>
+        </div>
+        <div id="padron-salud-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
+          Cargando servicios oficiales de salud...
+        </div>
       </div>
     </section>
 
@@ -937,7 +1048,16 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initSaludQr();
+      initSaludPrefijado();
       initEducacionEnvio();
+      renderPadronSaludTable();
+
+      const filterSaludInput = document.getElementById('filter-padron-salud');
+      if (filterSaludInput) {
+        filterSaludInput.addEventListener('input', (e) => {
+          renderPadronSaludTable(e.target.value);
+        });
+      }
     });
 
     function initSaludQr() {
@@ -997,7 +1117,16 @@
 
       document.getElementById('poster-salud-nombre').textContent = opt.dataset.nombre;
       document.getElementById('poster-salud-barrio').textContent = `B° ${opt.dataset.barrio} · Río Cuarto`;
-      document.getElementById('poster-salud-esp-text').textContent = espVal ? `Consultorio: ${espVal}` : 'Atención General de Sala';
+      const espElem = document.getElementById('poster-salud-esp-text');
+      if (espElem) {
+        if (espVal) {
+          espElem.textContent = `Consultorio: ${espVal}`;
+          espElem.style.display = 'block';
+        } else {
+          espElem.textContent = '';
+          espElem.style.display = 'none';
+        }
+      }
 
       const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
       targetUrl.searchParams.set('centro', opt.value);
@@ -1022,6 +1151,248 @@
       document.querySelectorAll('.print-active').forEach(e => e.classList.remove('print-active'));
       document.getElementById('printable-poster').classList.add('print-active');
       window.print();
+    }
+
+    function initSaludPrefijado() {
+      const selectCentro = document.getElementById('select-salud-pref-centro');
+      const selectEsp = document.getElementById('select-salud-pref-esp');
+      const selectProf = document.getElementById('select-salud-pref-prof');
+      const inputUrl = document.getElementById('input-link-salud-url');
+      const btnCopy = document.getElementById('btn-copy-link-salud-field');
+      const btnOpen = document.getElementById('btn-open-salud-field');
+      const wspBox = document.getElementById('whatsapp-preview-salud-box');
+      const btnCopyWsp = document.getElementById('btn-copy-wsp-salud');
+      const btnOpenWsp = document.getElementById('btn-open-wsp-salud');
+
+      if (!selectCentro) return;
+
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+
+      selectCentro.innerHTML = '';
+      centros.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `${c.nombre} (${c.barrio})`;
+        selectCentro.appendChild(opt);
+      });
+
+      function onCentroChange() {
+        const centroId = selectCentro.value;
+        const centro = centros.find(c => c.id === centroId);
+        selectEsp.innerHTML = '';
+
+        if (centro && centro.especialidades && centro.especialidades.length > 0) {
+          centro.especialidades.forEach(e => {
+            const opt = document.createElement('option');
+            opt.value = e.nombre;
+            opt.textContent = e.nombre;
+            selectEsp.appendChild(opt);
+          });
+        } else {
+          selectEsp.innerHTML = '<option value="Atención General">Atención General</option>';
+        }
+
+        onEspChange();
+      }
+
+      function onEspChange() {
+        const centroId = selectCentro.value;
+        const centro = centros.find(c => c.id === centroId);
+        const espVal = selectEsp.value;
+        selectProf.innerHTML = '';
+
+        // Opción explícita requerida: «No conozco el nombre del profesional»
+        const optNoConozco = document.createElement('option');
+        optNoConozco.value = "No conozco el nombre del profesional";
+        optNoConozco.textContent = "No conozco el nombre del profesional";
+        selectProf.appendChild(optNoConozco);
+
+        // Opción Profesional de Turno
+        const optTurno = document.createElement('option');
+        optTurno.value = "Profesional de Turno";
+        optTurno.textContent = "Profesional de Turno";
+        selectProf.appendChild(optTurno);
+
+        if (centro && centro.especialidades) {
+          const espObj = centro.especialidades.find(e => e.nombre === espVal);
+          if (espObj && espObj.profesionales) {
+            espObj.profesionales.forEach(p => {
+              if (p !== "Profesional de Turno" && p !== "No conozco el nombre del profesional") {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                selectProf.appendChild(opt);
+              }
+            });
+          }
+        }
+
+        updateOutputs();
+      }
+
+      function updateOutputs() {
+        const centroId = selectCentro.value;
+        const centro = centros.find(c => c.id === centroId);
+        const espVal = selectEsp.value;
+        const profVal = selectProf.value;
+
+        if (!centro) return;
+
+        const baseUrl = getBaseUrl('encuesta-salud.html');
+        const targetUrl = new URL(baseUrl);
+        targetUrl.searchParams.set('centro', centro.id);
+        targetUrl.searchParams.set('especialidad', espVal);
+        targetUrl.searchParams.set('profesional', profVal);
+
+        const finalUrl = targetUrl.toString();
+        if (inputUrl) inputUrl.value = finalUrl;
+        if (btnOpen) btnOpen.href = finalUrl;
+
+        const wspMsg = `¡Hola! 👋 Desde la Subsecretaría de Salud y la Dirección de Estadística de la Municipalidad de Río Cuarto te invitamos a dejarnos tu opinión sobre la atención médica recibida:
+
+🏥 *Centro:* ${centro.nombre} (B° ${centro.barrio})
+🩺 *Servicio:* ${espVal}
+👨‍⚕️ *Profesional:* ${profVal}
+
+Tu opinión es 100% anónima y toma menos de 1 minuto para ayudarnos a seguir mejorando la atención pública en la ciudad:
+${finalUrl}`;
+
+        if (wspBox) wspBox.textContent = wspMsg;
+
+        if (btnCopy) {
+          btnCopy.onclick = () => {
+            navigator.clipboard.writeText(finalUrl);
+            alert('¡Enlace prefijado de salud copiado al portapapeles!');
+          };
+        }
+
+        if (btnCopyWsp) {
+          btnCopyWsp.onclick = () => {
+            navigator.clipboard.writeText(wspMsg);
+            alert('¡Mensaje de WhatsApp de salud copiado al portapapeles!');
+          };
+        }
+
+        if (btnOpenWsp) {
+          btnOpenWsp.onclick = () => {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(wspMsg)}`, '_blank');
+          };
+        }
+      }
+
+      window.updateSaludPrefOutputs = updateOutputs;
+
+      selectCentro.addEventListener('change', onCentroChange);
+      selectEsp.addEventListener('change', onEspChange);
+      selectProf.addEventListener('change', updateOutputs);
+
+      onCentroChange();
+    }
+
+    function renderPadronSaludTable(filter = '') {
+      const tbody = document.getElementById('tbody-padron-salud');
+      const countEl = document.getElementById('padron-salud-count');
+      if (!tbody) return;
+
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+      
+      const allServices = [];
+      let idx = 1;
+      centros.forEach(c => {
+        (c.especialidades || []).forEach(e => {
+          allServices.push({
+            num: idx++,
+            centroId: c.id,
+            centroNombre: c.nombre,
+            tipo: c.tipo,
+            barrio: c.barrio,
+            especialidad: e.nombre,
+            profesional: "No conozco el nombre del profesional"
+          });
+        });
+      });
+
+      const query = (filter || '').trim().toLowerCase();
+      const filtered = allServices.filter(s => {
+        if (!query) return true;
+        return s.centroNombre.toLowerCase().includes(query) ||
+               s.barrio.toLowerCase().includes(query) ||
+               s.tipo.toLowerCase().includes(query) ||
+               s.especialidad.toLowerCase().includes(query) ||
+               s.centroId.toLowerCase().includes(query);
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="padding:24px; text-align:center; color:var(--ink-soft);">
+              No se encontraron servicios de salud que coincidan con "<b>${filter}</b>".
+            </td>
+          </tr>`;
+        if (countEl) countEl.innerHTML = `Mostrando 0 de ${allServices.length} servicios oficiales de salud`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--line)';
+
+        const baseUrl = getBaseUrl('encuesta-salud.html');
+        const targetUrl = new URL(baseUrl);
+        targetUrl.searchParams.set('centro', item.centroId);
+        targetUrl.searchParams.set('especialidad', item.especialidad);
+        targetUrl.searchParams.set('profesional', item.profesional);
+        const link = targetUrl.toString();
+
+        tr.innerHTML = `
+          <td style="padding:10px 12px; font-weight:800; color:var(--brand-d); font-family:monospace; font-size:12px;">
+            SAL_${String(item.num).padStart(3, '0')}
+          </td>
+          <td style="padding:10px 12px;">
+            <div style="font-weight:700; color:var(--ink);">${item.centroNombre}</div>
+            <div style="font-size:11px; color:var(--ink-soft);">B° ${item.barrio}</div>
+          </td>
+          <td style="padding:10px 12px;">
+            <span style="display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:700; background:var(--tint-sky); color:var(--brand-d);">
+              ${item.tipo}
+            </span>
+          </td>
+          <td style="padding:10px 12px; font-weight:600; color:var(--ink);">
+            ${item.especialidad}
+          </td>
+          <td style="padding:10px 12px; color:var(--ink-soft); font-size:11.5px;">
+            <span style="display:inline-flex; align-items:center; gap:4px; background:var(--bg-alt); border:1px solid var(--line); padding:2px 8px; border-radius:6px;">
+              <span class="material-symbols-outlined" style="font-size:14px; color:var(--brand);">person</span>
+              ${item.profesional}
+            </span>
+          </td>
+          <td style="padding:10px 12px; text-align:right;">
+            <div style="display:inline-flex; gap:6px; align-items:center; justify-content:flex-end; flex-wrap:nowrap;">
+              <button type="button" class="btn-table-action btn-copy-link-salud-table" data-url="${link}" title="Copiar enlace prefijado" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">content_copy</span> Copiar Link
+              </button>
+              <a href="${link}" target="_blank" title="Abrir formulario prefijado" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--brand-d); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">open_in_new</span>
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('.btn-copy-link-salud-table').forEach(btn => {
+        btn.onclick = () => {
+          const url = btn.dataset.url;
+          navigator.clipboard.writeText(url);
+          alert('¡Enlace prefijado del servicio copiado al portapapeles!');
+        };
+      });
+
+      if (countEl) {
+        countEl.innerHTML = `Mostrando <b>${filtered.length}</b> de <b>${allServices.length}</b> servicios oficiales de salud municipal`;
+      }
     }
 
     function initEducacionEnvio() {
@@ -1126,6 +1497,9 @@ ${genUrl}
       const selectServer = document.getElementById('select-base-server');
       if (selectServer) {
         selectServer.addEventListener('change', () => {
+          updateSaludPoster();
+          if (window.updateSaludPrefOutputs) window.updateSaludPrefOutputs();
+          renderPadronSaludTable(document.getElementById('filter-padron-salud')?.value || '');
           updateEduOutputs();
           renderPadronEduTable(filterInput ? filterInput.value : '');
         });
