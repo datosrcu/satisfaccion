@@ -2859,6 +2859,7 @@ window.CATALOGO_MUNICIPAL = {
           "Tarde"
         ],
         "docentes": [
+          "María Berte",
           "Marina Berte",
           "Mónica Mercado"
         ],
@@ -2866,7 +2867,7 @@ window.CATALOGO_MUNICIPAL = {
           {
             "turno": "Mañana",
             "sala": "2 años",
-            "docente": "Marina Berte",
+            "docente": "María Berte",
             "auxiliar": "Florencia Tissera",
             "id_slot": "EDU_36_JM_MUNDO_FELIZ_M_2_anos_berte_tissera",
             "slot_num": 36,

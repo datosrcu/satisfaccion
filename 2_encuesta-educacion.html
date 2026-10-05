@@ -1988,11 +1988,13 @@
       }
 
       if (distribFiltrada.length > 0) {
-        distribFiltrada.forEach(d => {
-          selectDocenteBloque1.appendChild(new Option(d.docente, d.docente));
+        const docentesUnicos = [...new Set(distribFiltrada.map(d => d.docente ? d.docente.trim() : "").filter(Boolean))];
+        docentesUnicos.forEach(doc => {
+          selectDocenteBloque1.appendChild(new Option(doc, doc));
         });
       } else if (institucionSeleccionada.docentes) {
-        institucionSeleccionada.docentes.forEach(doc => {
+        const docentesUnicos = [...new Set(institucionSeleccionada.docentes.map(doc => doc ? doc.trim() : "").filter(Boolean))];
+        docentesUnicos.forEach(doc => {
           selectDocenteBloque1.appendChild(new Option(doc, doc));
         });
       }
@@ -2037,14 +2039,17 @@
         return;
       }
 
-      let auxVal = "";
+      // Identificar todos los auxiliares asignados específicamente a este turno, sala y docente
+      const auxiliaresAsignados = [];
       if (docVal !== "No conozco el nombre de la docente" && institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
-        const match = institucionSeleccionada.distribucion.find(d => 
-          d.turno === turnoVal && d.sala === salaVal && d.docente === docVal
-        );
-        if (match && match.auxiliar) {
-          auxVal = match.auxiliar;
-        }
+        institucionSeleccionada.distribucion
+          .filter(d => d.turno === turnoVal && d.sala === salaVal && d.docente === docVal)
+          .forEach(d => {
+            const aux = d.auxiliar ? d.auxiliar.trim() : "";
+            if (aux && !auxiliaresAsignados.includes(aux)) {
+              auxiliaresAsignados.push(aux);
+            }
+          });
       }
 
       // Preservar la elección previa si el usuario ya había seleccionado activamente una opción válida
@@ -2054,18 +2059,28 @@
 
       const auxiliaresAgregados = new Set();
 
-      // Si hay un auxiliar asignado específicamente a este docente, agregarlo primero
-      if (auxVal) {
-        selectAuxiliarBloque1.appendChild(new Option(auxVal, auxVal));
-        auxiliaresAgregados.add(auxVal);
-      }
+      // Agregar primero el/los auxiliar/es asignados específicamente a esta sala, turno y docente
+      auxiliaresAsignados.forEach(aux => {
+        selectAuxiliarBloque1.appendChild(new Option(aux, aux));
+        auxiliaresAgregados.add(aux);
+      });
 
-      // Si la institución tiene otros auxiliares en su distribución, agregarlos como opciones
+      // Luego agregar los demás auxiliares de la institución (sin duplicar)
       if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
         institucionSeleccionada.distribucion.forEach(d => {
-          if (d.auxiliar && !auxiliaresAgregados.has(d.auxiliar)) {
-            selectAuxiliarBloque1.appendChild(new Option(d.auxiliar, d.auxiliar));
-            auxiliaresAgregados.add(d.auxiliar);
+          const aux = d.auxiliar ? d.auxiliar.trim() : "";
+          if (aux && !auxiliaresAgregados.has(aux)) {
+            selectAuxiliarBloque1.appendChild(new Option(aux, aux));
+            auxiliaresAgregados.add(aux);
+          }
+        });
+      }
+      if (institucionSeleccionada.auxiliares && institucionSeleccionada.auxiliares.length > 0) {
+        institucionSeleccionada.auxiliares.forEach(auxRaw => {
+          const aux = auxRaw ? auxRaw.trim() : "";
+          if (aux && !auxiliaresAgregados.has(aux)) {
+            selectAuxiliarBloque1.appendChild(new Option(aux, aux));
+            auxiliaresAgregados.add(aux);
           }
         });
       }
@@ -2075,7 +2090,7 @@
       selectAuxiliarBloque1.appendChild(new Option("Sin auxiliar asignada", "Sin auxiliar"));
       selectAuxiliarBloque1.disabled = false;
 
-      // No forzar la selección automática de auxVal: debe quedar como desplegable para elección del usuario
+      // No forzar la selección automática: debe quedar como desplegable para elección del usuario
       if (prevVal && (auxiliaresAgregados.has(prevVal) || prevVal === "No conozco el nombre de la auxiliar" || prevVal === "Sin auxiliar")) {
         selectAuxiliarBloque1.value = prevVal;
       } else {
@@ -2197,15 +2212,16 @@
         if (salaVal) filtradas = filtradas.filter(f => f.sala.toLowerCase().includes(salaVal.toLowerCase()) || salaVal.toLowerCase().includes(f.sala.toLowerCase()));
         if (filtradas.length === 0) filtradas = institucionSeleccionada.distribucion;
 
-        const uniqueDocs = [...new Set(filtradas.map(f => f.docente))].filter(Boolean);
+        const uniqueDocs = [...new Set(filtradas.map(f => f.docente ? f.docente.trim() : ""))].filter(Boolean);
         uniqueDocs.forEach(doc => {
-          const row = filtradas.find(f => f.docente === doc);
+          const row = filtradas.find(f => (f.docente ? f.docente.trim() : "") === doc);
           const label = row ? `${doc} (${row.sala} - Turno ${row.turno})` : doc;
           const opt = new Option(label, doc);
           selectDocente.appendChild(opt);
         });
       } else if (institucionSeleccionada.docentes && institucionSeleccionada.docentes.length > 0) {
-        institucionSeleccionada.docentes.forEach(doc => {
+        const uniqueDocs = [...new Set(institucionSeleccionada.docentes.map(d => d ? d.trim() : ""))].filter(Boolean);
+        uniqueDocs.forEach(doc => {
           selectDocente.appendChild(new Option(doc, doc));
         });
       } else {
@@ -2255,9 +2271,9 @@
         if (salaVal) filtradasAux = filtradasAux.filter(f => f.sala.toLowerCase().includes(salaVal.toLowerCase()) || salaVal.toLowerCase().includes(f.sala.toLowerCase()));
         if (filtradasAux.length === 0) filtradasAux = institucionSeleccionada.distribucion;
 
-        const uniqueAux = [...new Set(filtradasAux.map(f => f.auxiliar))].filter(Boolean);
+        const uniqueAux = [...new Set(filtradasAux.map(f => f.auxiliar ? f.auxiliar.trim() : ""))].filter(Boolean);
         uniqueAux.forEach(aux => {
-          const row = filtradasAux.find(f => f.auxiliar === aux);
+          const row = filtradasAux.find(f => (f.auxiliar ? f.auxiliar.trim() : "") === aux);
           const label = row && row.sala ? `${aux} (${row.sala} - Turno ${row.turno})` : aux;
           selectAuxiliar.appendChild(new Option(label, aux));
         });
