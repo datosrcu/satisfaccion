@@ -369,6 +369,29 @@
       box-shadow: 0 0 0 3px var(--brand-bg);
     }
 
+    .char-counter {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .form-textarea.has-error {
+      border-color: var(--c-alertas, #e11d48) !important;
+      background: #fff1f2 !important;
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, .15) !important;
+    }
+
+    .validation-hint {
+      color: var(--c-alertas, #e11d48);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     /* COMBOBOX BUSCADOR INSTITUCIONES */
     .combobox-wrapper {
       position: relative;
@@ -1537,18 +1560,33 @@
       </div>
 
       <!-- ========================================================= -->
-      <!-- BLOQUE 7: COMENTARIO ABIERTO -->
+      <!-- BLOQUE 7: COMENTARIOS Y SUGERENCIAS -->
       <!-- ========================================================= -->
-      <div class="form-section hidden" id="bloque-comentario-abierto">
+      <div class="form-section" id="bloque-comentario-abierto">
         <div class="sec-title">
           <span class="material-symbols-outlined" style="color:var(--c-violeta);">forum</span>
-          Bloque 7 — Comentario abierto
+          Bloque 7 — Comentarios y sugerencias
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="textarea-mejora">15. ¿Deseás contarnos brevemente qué podríamos mejorar? (Opcional)</label>
-          <textarea id="textarea-mejora" name="comentario_mejora" rows="3" class="form-textarea"
-            placeholder="Escribí tu comentario o sugerencia aquí (opcional)"></textarea>
+        <!-- 15.a Condicional a calificación NPS negativa (<= 6) y obligatoria -->
+        <div class="form-group hidden" id="group-pregunta-15a">
+          <label class="form-label" for="textarea-motivo-nps">15.a. ¿Cuál fue el motivo principal de tu puntaje? *</label>
+          <textarea id="textarea-motivo-nps" name="motivo_puntaje_nps" rows="3" class="form-textarea" maxlength="500"
+            placeholder="Escribí aquí el motivo principal de tu puntaje..."></textarea>
+          <div class="char-counter" id="counter-15a">0 / 500 caracteres</div>
+          <div class="validation-hint hidden" id="error-15a">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">chat_bubble</span>
+            Contanos un poquito más, nos ayuda a mejorar
+          </div>
+        </div>
+
+        <!-- 15.b Siempre visible y opcional -->
+        <div class="form-group" id="group-pregunta-15b">
+          <label class="form-label" for="textarea-comentario-extra">15.b. ¿Querés agregar algo más? Un comentario, una sugerencia o un reconocimiento.</label>
+          <p class="form-sub">Escribí tu comentario o sugerencia aquí (opcional).</p>
+          <textarea id="textarea-comentario-extra" name="comentario_adicional" rows="3" class="form-textarea" maxlength="800"
+            placeholder="Escribí tu comentario o sugerencia aquí (opcional)..."></textarea>
+          <div class="char-counter" id="counter-15b">0 / 800 caracteres</div>
         </div>
       </div>
 
@@ -1599,6 +1637,7 @@
       initChipSelectors();
       initRatingButtons();
       initNpsButtons();
+      initBloqueComentarios();
       handleUrlParameters();
       initFormSubmission();
     });
@@ -2385,8 +2424,9 @@
       const container = document.getElementById('nps-container');
       const hiddenNps = document.getElementById('input-nps');
       const buttons = container.querySelectorAll('.btn-nps');
-      const bloqueComentario = document.getElementById('bloque-comentario-abierto');
-      const textareaComentario = document.getElementById('textarea-mejora');
+      const group15a = document.getElementById('group-pregunta-15a');
+      const textarea15a = document.getElementById('textarea-motivo-nps');
+      const error15a = document.getElementById('error-15a');
 
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2395,23 +2435,55 @@
           const npsVal = parseInt(btn.getAttribute('data-nps'), 10);
           hiddenNps.value = btn.getAttribute('data-nps');
 
-          if (bloqueComentario) {
-            // El Bloque 7 (Comentario abierto) solo debe aparecer si la calificación NPS es negativa (detractor: <= 6)
+          if (group15a) {
+            // La pregunta 15.a solo debe aparecer si la calificación NPS es negativa (detractor: <= 6)
             if (!isNaN(npsVal) && npsVal <= 6) {
-              const wasHidden = bloqueComentario.classList.contains('hidden');
-              bloqueComentario.classList.remove('hidden');
+              const wasHidden = group15a.classList.contains('hidden');
+              group15a.classList.remove('hidden');
               if (wasHidden) {
                 setTimeout(() => {
-                  bloqueComentario.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                  group15a.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }, 50);
               }
             } else {
-              bloqueComentario.classList.add('hidden');
-              if (textareaComentario) textareaComentario.value = '';
+              group15a.classList.add('hidden');
+              if (textarea15a) {
+                textarea15a.value = '';
+                textarea15a.classList.remove('has-error');
+                const counter15a = document.getElementById('counter-15a');
+                if (counter15a) counter15a.textContent = '0 / 500 caracteres';
+              }
+              if (error15a) error15a.classList.add('hidden');
             }
           }
         });
       });
+    }
+
+    function initBloqueComentarios() {
+      const textarea15a = document.getElementById('textarea-motivo-nps');
+      const counter15a = document.getElementById('counter-15a');
+      const error15a = document.getElementById('error-15a');
+      const textarea15b = document.getElementById('textarea-comentario-extra');
+      const counter15b = document.getElementById('counter-15b');
+
+      if (textarea15a && counter15a) {
+        textarea15a.addEventListener('input', () => {
+          const len = textarea15a.value.length;
+          counter15a.textContent = `${len} / 500 caracteres`;
+          if (textarea15a.value.trim().length >= 10) {
+            if (error15a) error15a.classList.add('hidden');
+            textarea15a.classList.remove('has-error');
+          }
+        });
+      }
+
+      if (textarea15b && counter15b) {
+        textarea15b.addEventListener('input', () => {
+          const len = textarea15b.value.length;
+          counter15b.textContent = `${len} / 800 caracteres`;
+        });
+      }
     }
 
     function handleUrlParameters() {
@@ -2511,6 +2583,24 @@
           return;
         }
 
+        // Validación obligatoria de pregunta 15.a si el NPS es detractor (<= 6)
+        const group15a = document.getElementById('group-pregunta-15a');
+        const textarea15a = document.getElementById('textarea-motivo-nps');
+        const error15a = document.getElementById('error-15a');
+
+        if (group15a && !group15a.classList.contains('hidden')) {
+          const motivoVal = textarea15a ? textarea15a.value.trim() : '';
+          if (motivoVal.length < 10) {
+            if (error15a) error15a.classList.remove('hidden');
+            if (textarea15a) {
+              textarea15a.classList.add('has-error');
+              textarea15a.focus();
+              textarea15a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
+          }
+        }
+
         const submissionId = 'EDU-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
         const slotToken = `${instId}_${turnoVal}_${salaVal}_${docenteVal}`;
 
@@ -2569,8 +2659,10 @@
           // Bloque 6: NPS
           nps_puntaje: formData.get('nps_puntaje') || "",
 
-          // Bloque 7: Comentario abierto
-          comentario_mejora: formData.get('comentario_mejora') || "",
+          // Bloque 7: Comentarios y sugerencias (15.a y 15.b)
+          motivo_nps: formData.get('motivo_puntaje_nps') || "",
+          comentario_adicional: formData.get('comentario_adicional') || "",
+          comentario_mejora: [formData.get('motivo_puntaje_nps'), formData.get('comentario_adicional')].filter(Boolean).join(' | ') || "",
 
           dispositivo: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'
         };
@@ -2635,8 +2727,19 @@
       document.querySelectorAll('.chip-btn.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
-      const bloqueComentario = document.getElementById('bloque-comentario-abierto');
-      if (bloqueComentario) bloqueComentario.classList.add('hidden');
+      const group15a = document.getElementById('group-pregunta-15a');
+      if (group15a) group15a.classList.add('hidden');
+      const textarea15a = document.getElementById('textarea-motivo-nps');
+      if (textarea15a) {
+        textarea15a.value = '';
+        textarea15a.classList.remove('has-error');
+      }
+      const error15a = document.getElementById('error-15a');
+      if (error15a) error15a.classList.add('hidden');
+      const counter15a = document.getElementById('counter-15a');
+      if (counter15a) counter15a.textContent = '0 / 500 caracteres';
+      const counter15b = document.getElementById('counter-15b');
+      if (counter15b) counter15b.textContent = '0 / 800 caracteres';
       const inputBuscar = document.getElementById('input-buscar-institucion');
       if (inputBuscar) inputBuscar.value = "";
       const btnClear = document.getElementById('btn-clear-institucion');
