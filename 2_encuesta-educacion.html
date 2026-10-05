@@ -773,7 +773,7 @@
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label" for="select-cascada-auxiliar" style="font-size:12.5px; font-weight:700;">1e. Personal Auxiliar</label>
               <select id="select-cascada-auxiliar" class="form-select" style="font-size:13px;" disabled>
-                <option value="">Sin auxiliar asignada</option>
+                <option value="">Primero selecciona la/el docente...</option>
               </select>
             </div>
           </div>
@@ -1451,17 +1451,21 @@
         selectAuxiliarBloque1.addEventListener('change', () => {
           const val = selectAuxiliarBloque1.value;
           const selectAux4 = document.getElementById('select-auxiliar');
-          if (selectAux4 && val) {
-            let found = false;
-            for (let i = 0; i < selectAux4.options.length; i++) {
-              if (selectAux4.options[i].value === val) {
-                selectAux4.selectedIndex = i;
-                found = true;
-                break;
+          if (selectAux4) {
+            if (val) {
+              let found = false;
+              for (let i = 0; i < selectAux4.options.length; i++) {
+                if (selectAux4.options[i].value === val) {
+                  selectAux4.selectedIndex = i;
+                  found = true;
+                  break;
+                }
               }
-            }
-            if (!found) {
-              selectAux4.appendChild(new Option(val, val, true, true));
+              if (!found) {
+                selectAux4.appendChild(new Option(val, val, true, true));
+              }
+            } else {
+              selectAux4.selectedIndex = 0;
             }
           }
         });
@@ -1483,7 +1487,7 @@
       selectSala.innerHTML = '<option value="">Selecciona la sala...</option>';
       selectDocenteBloque1.innerHTML = '<option value="">Primero selecciona la sala...</option>';
       selectDocenteBloque1.disabled = true;
-      selectAuxiliarBloque1.innerHTML = '<option value="">Sin auxiliar asignada</option>';
+      selectAuxiliarBloque1.innerHTML = '<option value="">Primero selecciona la/el docente...</option>';
       selectAuxiliarBloque1.disabled = true;
 
       if (!turnoVal) {
@@ -1527,11 +1531,11 @@
       if (inputSala) inputSala.value = salaVal;
 
       selectDocenteBloque1.innerHTML = '<option value="">Selecciona la/el docente...</option>';
-      selectAuxiliarBloque1.innerHTML = '<option value="">Selecciona la/el auxiliar...</option>';
+      selectAuxiliarBloque1.innerHTML = '<option value="">Primero selecciona la/el docente...</option>';
+      selectAuxiliarBloque1.disabled = true;
 
       if (!salaVal) {
         selectDocenteBloque1.disabled = true;
-        selectAuxiliarBloque1.disabled = true;
         return;
       }
 
@@ -1587,8 +1591,14 @@
         }
       }
 
+      if (!docVal) {
+        selectAuxiliarBloque1.innerHTML = '<option value="">Primero selecciona la/el docente...</option>';
+        selectAuxiliarBloque1.disabled = true;
+        return;
+      }
+
       let auxVal = "";
-      if (docVal && docVal !== "No conozco el nombre de la docente" && institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+      if (docVal !== "No conozco el nombre de la docente" && institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
         const match = institucionSeleccionada.distribucion.find(d => 
           d.turno === turnoVal && d.sala === salaVal && d.docente === docVal
         );
@@ -1597,29 +1607,39 @@
         }
       }
 
+      // Preservar la elección previa si el usuario ya había seleccionado activamente una opción válida
+      const prevVal = selectAuxiliarBloque1.value;
+
       selectAuxiliarBloque1.innerHTML = '<option value="">Selecciona la/el auxiliar...</option>';
+
+      const auxiliaresAgregados = new Set();
+
+      // Si hay un auxiliar asignado específicamente a este docente, agregarlo primero
       if (auxVal) {
-        selectAuxiliarBloque1.appendChild(new Option(`Auxiliar: ${auxVal}`, auxVal));
+        selectAuxiliarBloque1.appendChild(new Option(auxVal, auxVal));
+        auxiliaresAgregados.add(auxVal);
       }
+
+      // Si la institución tiene otros auxiliares en su distribución, agregarlos como opciones
+      if (institucionSeleccionada.distribucion && institucionSeleccionada.distribucion.length > 0) {
+        institucionSeleccionada.distribucion.forEach(d => {
+          if (d.auxiliar && !auxiliaresAgregados.has(d.auxiliar)) {
+            selectAuxiliarBloque1.appendChild(new Option(d.auxiliar, d.auxiliar));
+            auxiliaresAgregados.add(d.auxiliar);
+          }
+        });
+      }
+
+      // Opciones para cuando no conoce al auxiliar o no hay auxiliar asignada
       selectAuxiliarBloque1.appendChild(new Option("No conozco el nombre de la auxiliar", "No conozco el nombre de la auxiliar"));
       selectAuxiliarBloque1.appendChild(new Option("Sin auxiliar asignada", "Sin auxiliar"));
       selectAuxiliarBloque1.disabled = false;
 
-      if (auxVal) {
-        selectAuxiliarBloque1.value = auxVal;
-        if (selectAuxiliar5) {
-          let found = false;
-          for (let i = 0; i < selectAuxiliar5.options.length; i++) {
-            if (selectAuxiliar5.options[i].value === auxVal) {
-              selectAuxiliar5.selectedIndex = i;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            selectAuxiliar5.appendChild(new Option(auxVal, auxVal, true, true));
-          }
-        }
+      // No forzar la selección automática de auxVal: debe quedar como desplegable para elección del usuario
+      if (prevVal && (auxiliaresAgregados.has(prevVal) || prevVal === "No conozco el nombre de la auxiliar" || prevVal === "Sin auxiliar")) {
+        selectAuxiliarBloque1.value = prevVal;
+      } else {
+        selectAuxiliarBloque1.value = "";
       }
     }
 
@@ -1831,7 +1851,7 @@
         if (groupAuxSelect) groupAuxSelect.classList.remove('hidden');
       }
 
-      // Sincronizar automáticamente sala, turno y auxiliar al seleccionar docente
+      // Sincronizar automáticamente sala y turno al seleccionar docente (sin forzar auxiliar)
       selectDocente.onchange = () => {
         const chosenDoc = selectDocente.value;
         if (!chosenDoc || !institucionSeleccionada || !institucionSeleccionada.distribucion) return;
@@ -1839,14 +1859,6 @@
         if (match) {
           if (match.turno && inputTurno) inputTurno.value = match.turno;
           if (match.sala && inputSala) inputSala.value = match.sala;
-          if (match.auxiliar && selectAuxiliar && (!selectAuxiliar.value || selectAuxiliar.selectedIndex === 0)) {
-            for (let i = 0; i < selectAuxiliar.options.length; i++) {
-              if (selectAuxiliar.options[i].value === match.auxiliar) {
-                selectAuxiliar.selectedIndex = i;
-                break;
-              }
-            }
-          }
         }
       };
 
