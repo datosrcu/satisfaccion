@@ -893,7 +893,7 @@
       </div>
 
       <!-- SECCIÓN 4: SUGERENCIAS -->
-      <div class="form-section">
+      <div class="form-section hidden" id="bloque-comentario-abierto">
         <div class="sec-title">
           <span class="material-symbols-outlined" style="color:var(--c-deporte);">edit_note</span>
           4. Comentarios y Sugerencias
@@ -1127,12 +1127,31 @@
       const container = document.getElementById('nps-container');
       const hiddenNps = document.getElementById('input-nps');
       const buttons = container.querySelectorAll('.btn-nps');
+      const bloqueComentario = document.getElementById('bloque-comentario-abierto');
+      const textareaComentario = document.getElementById('textarea-sugerencias');
 
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          const npsVal = parseInt(btn.getAttribute('data-nps'), 10);
           hiddenNps.value = btn.getAttribute('data-nps');
+
+          if (bloqueComentario) {
+            // El comentario abierto solo debe aparecer si la calificación NPS es negativa (detractor: <= 6)
+            if (!isNaN(npsVal) && npsVal <= 6) {
+              const wasHidden = bloqueComentario.classList.contains('hidden');
+              bloqueComentario.classList.remove('hidden');
+              if (wasHidden) {
+                setTimeout(() => {
+                  bloqueComentario.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+              }
+            } else {
+              bloqueComentario.classList.add('hidden');
+              if (textareaComentario) textareaComentario.value = '';
+            }
+          }
         });
       });
     }
@@ -1335,6 +1354,8 @@
       document.querySelectorAll('.btn-rate.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
+      const bloqueComentario = document.getElementById('bloque-comentario-abierto');
+      if (bloqueComentario) bloqueComentario.classList.add('hidden');
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('centro') || urlParams.get('c')) {
         handleUrlParameters();
