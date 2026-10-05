@@ -369,6 +369,181 @@
       box-shadow: 0 0 0 3px var(--brand-bg);
     }
 
+    /* COMBOBOX BUSCADOR INSTITUCIONES */
+    .combobox-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .combobox-input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .combobox-leading-icon {
+      position: absolute;
+      left: 12px;
+      color: var(--ink-soft);
+      font-size: 19px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .combobox-input {
+      width: 100%;
+      padding: 10px 64px 10px 38px !important;
+      background: var(--bg-alt) !important;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--ink);
+      height: 44px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+      cursor: text;
+      font-family: inherit;
+    }
+
+    .combobox-input:focus {
+      border-color: var(--brand);
+      background: #ffffff !important;
+      box-shadow: 0 0 0 3px var(--brand-bg);
+    }
+
+    .combobox-clear-btn {
+      position: absolute;
+      right: 34px;
+      background: none;
+      border: none;
+      color: var(--ink-soft);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: color .15s ease, background .15s ease;
+    }
+
+    .combobox-clear-btn:hover {
+      color: var(--c-alertas);
+      background: rgba(0, 0, 0, .05);
+    }
+
+    .combobox-trailing-arrow {
+      position: absolute;
+      right: 10px;
+      color: var(--ink-soft);
+      font-size: 24px;
+      pointer-events: none;
+      transition: transform .2s ease, color .2s ease;
+      z-index: 2;
+    }
+
+    .combobox-wrapper.is-open .combobox-trailing-arrow {
+      transform: rotate(180deg);
+      color: var(--brand);
+    }
+
+    .combobox-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lift);
+      max-height: 290px;
+      overflow-y: auto;
+      z-index: 1000;
+      padding: 4px 0;
+      animation: fadeInCombobox .15s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    @keyframes fadeInCombobox {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .combobox-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-bottom: 1px solid #f3f4f6;
+      transition: background .12s ease;
+    }
+
+    .combobox-item:last-child {
+      border-bottom: none;
+    }
+
+    .combobox-item:hover,
+    .combobox-item.is-focused {
+      background: var(--brand-bg);
+    }
+
+    .combobox-item.is-selected {
+      background: #e6f9f0;
+      border-left: 3.5px solid var(--brand);
+    }
+
+    .combobox-item-nombre {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .combobox-item-nombre mark {
+      background: rgba(0, 201, 107, 0.32);
+      color: inherit;
+      padding: 0 1px;
+      border-radius: 2px;
+      font-weight: 800;
+    }
+
+    .combobox-item-meta {
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .combobox-empty {
+      padding: 16px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .sr-only-select {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
     /* CHIP SELECTORS (RADIO SEGMENTADO) */
     .chip-group {
       display: flex;
@@ -730,10 +905,28 @@
 
         <!-- P1: ¿A qué Jardín Maternal Municipal / Sala Cuna asiste tu hijo/a? -->
         <div class="form-group" id="group-institucion-select">
-          <label class="form-label" for="select-institucion">1. ¿A qué Jardín Maternal Municipal / Sala Cuna asiste tu hijo/a? *</label>
-          <select id="select-institucion" name="institucion_id" class="form-select" required>
+          <label class="form-label" for="input-buscar-institucion">1. ¿A qué Jardín Maternal Municipal / Sala Cuna asiste tu hijo/a? *</label>
+
+          <div class="combobox-wrapper" id="combobox-institucion-wrapper">
+            <div class="combobox-input-container">
+              <span class="material-symbols-outlined combobox-leading-icon">search</span>
+              <input type="text" id="input-buscar-institucion" class="combobox-input"
+                placeholder="Escribí para buscar o abrí el listado alfabético..." autocomplete="off" spellcheck="false">
+              <button type="button" id="btn-clear-institucion" class="combobox-clear-btn hidden" aria-label="Limpiar selección">
+                <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+              </button>
+              <span class="material-symbols-outlined combobox-trailing-arrow" id="combobox-arrow">arrow_drop_down</span>
+            </div>
+
+            <!-- Desplegable ordenado alfabéticamente / filtrado interactivo -->
+            <div class="combobox-dropdown hidden" id="combobox-instituciones-list" role="listbox"></div>
+          </div>
+
+          <!-- Select nativo sincronizado para compatibilidad con FormData y validación -->
+          <select id="select-institucion" name="institucion_id" class="sr-only-select" tabindex="-1" aria-hidden="true">
             <option value="">Selecciona la institución a la que asiste tu hijo/a...</option>
           </select>
+
           <div id="institucion-info-badge" style="font-size:12px; color:var(--brand-d); font-weight:600; margin-top:6px;" class="hidden"></div>
         </div>
 
@@ -1414,22 +1607,269 @@
       const select = document.getElementById('select-institucion');
       select.innerHTML = '<option value="">Selecciona la institución a la que asiste tu hijo/a...</option>';
 
-      const tipos = [...new Set(catalogoEducacion.map(i => i.tipo))];
-      tipos.forEach(tipo => {
-        const optGroup = document.createElement('optgroup');
-        optGroup.label = tipo;
-        catalogoEducacion.filter(i => i.tipo === tipo).forEach(inst => {
-          const opt = document.createElement('option');
-          opt.value = inst.id;
-          opt.textContent = `${inst.nombre} (${inst.barrio})`;
-          optGroup.appendChild(opt);
-        });
-        select.appendChild(optGroup);
+      // Ordenar todas las instituciones alfabéticamente por nombre (A-Z)
+      const institucionesOrdenadas = [...catalogoEducacion].sort((a, b) => 
+        a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+      );
+
+      institucionesOrdenadas.forEach(inst => {
+        const opt = document.createElement('option');
+        opt.value = inst.id;
+        opt.textContent = `${inst.nombre} (${inst.barrio})`;
+        select.appendChild(opt);
       });
 
       select.addEventListener('change', (e) => {
         onInstitucionChange(e.target.value);
       });
+
+      // Inicializar el buscador interactivo (combobox)
+      initComboboxInstituciones(institucionesOrdenadas);
+    }
+
+    function initComboboxInstituciones(instituciones) {
+      const input = document.getElementById('input-buscar-institucion');
+      const list = document.getElementById('combobox-instituciones-list');
+      const wrapper = document.getElementById('combobox-institucion-wrapper');
+      const btnClear = document.getElementById('btn-clear-institucion');
+      const arrow = document.getElementById('combobox-arrow');
+      const select = document.getElementById('select-institucion');
+
+      if (!input || !list || !wrapper) return;
+
+      let currentFiltered = [...instituciones];
+      let focusedIndex = -1;
+
+      const normalize = str => (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+      function filterInstituciones(query) {
+        const q = normalize(query.trim());
+        if (!q) {
+          return [...instituciones];
+        }
+
+        const scored = [];
+        instituciones.forEach(inst => {
+          const nom = normalize(inst.nombre);
+          const bar = normalize(inst.barrio || '');
+          const dir = normalize(inst.direccion || '');
+          const tip = normalize(inst.tipo || '');
+
+          let score = Infinity;
+
+          if (nom.startsWith(q)) {
+            score = 10;
+          } else if (nom.split(/\s+/).some(w => w.startsWith(q))) {
+            score = 20;
+          } else if (nom.includes(q)) {
+            score = 30 + nom.indexOf(q);
+          } else if (bar.startsWith(q) || bar.split(/\s+/).some(w => w.startsWith(q))) {
+            score = 40;
+          } else if (bar.includes(q)) {
+            score = 50;
+          } else if (dir.includes(q) || tip.includes(q)) {
+            score = 60;
+          }
+
+          if (score < Infinity) {
+            scored.push({ inst, score });
+          }
+        });
+
+        // Ordenar por cercanía/relevancia al término buscado y luego alfabéticamente
+        scored.sort((a, b) => {
+          if (a.score !== b.score) return a.score - b.score;
+          return a.inst.nombre.localeCompare(b.inst.nombre, 'es', { sensitivity: 'base' });
+        });
+
+        return scored.map(s => s.inst);
+      }
+
+      function highlightText(text, query) {
+        if (!query || !query.trim()) return escapeHtml(text);
+        const qNorm = normalize(query.trim());
+        const tNorm = normalize(text);
+        const idx = tNorm.indexOf(qNorm);
+        if (idx === -1) return escapeHtml(text);
+        const matchLen = query.trim().length;
+        const before = escapeHtml(text.substring(0, idx));
+        const matched = escapeHtml(text.substring(idx, idx + matchLen));
+        const after = escapeHtml(text.substring(idx + matchLen));
+        return `${before}<mark>${matched}</mark>${after}`;
+      }
+
+      function escapeHtml(str) {
+        return (str || '').replace(/[&<>"']/g, m => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[m]));
+      }
+
+      function renderList(items, highlightQuery = '') {
+        list.innerHTML = '';
+        currentFiltered = items;
+        focusedIndex = items.length > 0 ? 0 : -1;
+
+        if (items.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'combobox-empty';
+          empty.innerHTML = `<span class="material-symbols-outlined" style="font-size:22px; display:block; margin:0 auto 6px; color:var(--ink-soft);">search_off</span>No se encontró ninguna institución que coincida con "<strong>${escapeHtml(highlightQuery)}</strong>".`;
+          list.appendChild(empty);
+          return;
+        }
+
+        const currentVal = select ? select.value : '';
+
+        items.forEach((inst, idx) => {
+          const item = document.createElement('div');
+          const isSelected = inst.id === currentVal;
+          item.className = 'combobox-item' + (isSelected ? ' is-selected' : '') + (idx === 0 ? ' is-focused' : '');
+          item.setAttribute('role', 'option');
+          item.setAttribute('data-id', inst.id);
+
+          const nomHtml = highlightText(inst.nombre, highlightQuery);
+
+          item.innerHTML = `
+            <div class="combobox-item-nombre">${nomHtml}</div>
+            <div class="combobox-item-meta">
+              <span class="material-symbols-outlined" style="font-size:13.5px; margin:0;">location_on</span>
+              <span>${inst.barrio ? `B° ${inst.barrio}` : inst.direccion || ''}</span>
+              <span style="opacity:.4;">·</span>
+              <span>${inst.tipo}</span>
+            </div>
+          `;
+
+          item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            selectOption(inst);
+          });
+
+          list.appendChild(item);
+        });
+      }
+
+      function openDropdown() {
+        wrapper.classList.add('is-open');
+        list.classList.remove('hidden');
+        renderList(filterInstituciones(input.value), input.value);
+      }
+
+      function closeDropdown() {
+        wrapper.classList.remove('is-open');
+        list.classList.add('hidden');
+      }
+
+      function selectOption(inst) {
+        input.value = inst.nombre;
+        if (select) {
+          select.value = inst.id;
+        }
+        if (btnClear) btnClear.classList.remove('hidden');
+        closeDropdown();
+        onInstitucionChange(inst.id);
+      }
+
+      // Eventos del input buscador
+      input.addEventListener('focus', () => {
+        openDropdown();
+      });
+
+      input.addEventListener('input', () => {
+        const val = input.value;
+        if (btnClear) {
+          if (val) btnClear.classList.remove('hidden');
+          else btnClear.classList.add('hidden');
+        }
+        if (!val.trim()) {
+          if (select) select.value = "";
+          onInstitucionChange("");
+        }
+        openDropdown();
+      });
+
+      input.addEventListener('keydown', (e) => {
+        const items = list.querySelectorAll('.combobox-item');
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (list.classList.contains('hidden')) {
+            openDropdown();
+            return;
+          }
+          if (items.length > 0) {
+            if (focusedIndex >= 0 && items[focusedIndex]) items[focusedIndex].classList.remove('is-focused');
+            focusedIndex = (focusedIndex + 1) % items.length;
+            if (items[focusedIndex]) {
+              items[focusedIndex].classList.add('is-focused');
+              items[focusedIndex].scrollIntoView({ block: 'nearest' });
+            }
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (items.length > 0) {
+            if (focusedIndex >= 0 && items[focusedIndex]) items[focusedIndex].classList.remove('is-focused');
+            focusedIndex = (focusedIndex - 1 + items.length) % items.length;
+            if (items[focusedIndex]) {
+              items[focusedIndex].classList.add('is-focused');
+              items[focusedIndex].scrollIntoView({ block: 'nearest' });
+            }
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (!list.classList.contains('hidden') && currentFiltered.length > 0) {
+            const targetIdx = focusedIndex >= 0 ? focusedIndex : 0;
+            if (currentFiltered[targetIdx]) {
+              selectOption(currentFiltered[targetIdx]);
+            }
+          }
+        } else if (e.key === 'Escape') {
+          closeDropdown();
+        }
+      });
+
+      if (btnClear) {
+        btnClear.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          input.value = "";
+          if (select) select.value = "";
+          btnClear.classList.add('hidden');
+          onInstitucionChange("");
+          input.focus();
+          openDropdown();
+        });
+      }
+
+      if (arrow) {
+        arrow.parentElement.addEventListener('click', (e) => {
+          if (e.target === btnClear || (btnClear && btnClear.contains(e.target))) return;
+          if (list.classList.contains('hidden')) {
+            input.focus();
+            openDropdown();
+          } else if (document.activeElement !== input) {
+            closeDropdown();
+          }
+        });
+      }
+
+      // Cerrar si hace click fuera del componente
+      document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+          closeDropdown();
+        }
+      });
+
+      // Sincronizar si el select nativo cambia por parámetros de URL o reset
+      if (select) {
+        select.addEventListener('change', () => {
+          const found = instituciones.find(i => i.id === select.value);
+          if (found) {
+            input.value = found.nombre;
+            if (btnClear) btnClear.classList.remove('hidden');
+          } else if (!select.value) {
+            input.value = "";
+            if (btnClear) btnClear.classList.add('hidden');
+          }
+        });
+      }
     }
 
     function initCascadaListeners() {
@@ -1668,9 +2108,20 @@
         if (groupSelect) groupSelect.classList.remove('hidden');
         if (inputTurno) inputTurno.value = "";
         if (inputSala) inputSala.value = "";
+        const inputBuscar = document.getElementById('input-buscar-institucion');
+        if (inputBuscar && !isDirectLink) inputBuscar.value = "";
+        const btnClear = document.getElementById('btn-clear-institucion');
+        if (btnClear) btnClear.classList.add('hidden');
         document.getElementById('intro-title').innerHTML = '<span class="material-symbols-outlined" style="color:var(--brand); font-size:22px;">family_restroom</span> Evaluación de Familias sobre el Cuidado y Educación';
         document.getElementById('intro-desc').innerHTML = 'Tu participación es fundamental para acompañar el crecimiento, cuidado, contención y estimulación de los más pequeños. Esta encuesta es <b>anónima</b> y toma menos de 2 minutos.';
         return;
+      }
+
+      const inputBuscar = document.getElementById('input-buscar-institucion');
+      if (inputBuscar && institucionSeleccionada) {
+        inputBuscar.value = institucionSeleccionada.nombre;
+        const btnClear = document.getElementById('btn-clear-institucion');
+        if (btnClear) btnClear.classList.remove('hidden');
       }
 
       const turnoVal = prefillData.turno || (inputTurno ? inputTurno.value : "");
@@ -2013,7 +2464,13 @@
         const instId = (selectInst && selectInst.value) || (institucionSeleccionada ? institucionSeleccionada.id : '');
         if (!instId) {
           alert("Por favor selecciona la institución educativa.");
-          if (selectInst) selectInst.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const inputBuscar = document.getElementById('input-buscar-institucion');
+          if (inputBuscar) {
+            inputBuscar.focus();
+            inputBuscar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else if (selectInst) {
+            selectInst.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
           return;
         }
 
@@ -2164,6 +2621,14 @@
       document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
       const bloqueComentario = document.getElementById('bloque-comentario-abierto');
       if (bloqueComentario) bloqueComentario.classList.add('hidden');
+      const inputBuscar = document.getElementById('input-buscar-institucion');
+      if (inputBuscar) inputBuscar.value = "";
+      const btnClear = document.getElementById('btn-clear-institucion');
+      if (btnClear) btnClear.classList.add('hidden');
+      const listDropdown = document.getElementById('combobox-instituciones-list');
+      if (listDropdown) listDropdown.classList.add('hidden');
+      const wrapperCombobox = document.getElementById('combobox-institucion-wrapper');
+      if (wrapperCombobox) wrapperCombobox.classList.remove('is-open');
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('id') || urlParams.get('slot') || urlParams.get('uid') || urlParams.get('code') || urlParams.get('centro') || urlParams.get('c') || urlParams.get('inst')) {
         handleUrlParameters();
