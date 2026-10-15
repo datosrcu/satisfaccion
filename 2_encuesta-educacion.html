@@ -1173,119 +1173,122 @@
           <input type="hidden" name="respuesta_institucional_nota" required>
         </div>
 
-        <!-- Subsección: Aporte mensual -->
-        <div class="subsec-title" style="margin-top:22px;">
-          <span class="material-symbols-outlined" style="font-size:16px;">payments</span>
-          Aporte mensual
-        </div>
-        <p class="subsec-desc">Percepción sobre el aporte mensual de la institución y pautas de comunicación.</p>
-
-        <!-- P7.1 -->
-        <div class="form-group" id="group-pregunta-7-1">
-          <label class="form-label">7.1. ¿Considerás que el monto actual del aporte mensual es adecuado? *</label>
-          <div class="rating-row rating-row-aporte" data-rating-group="aporte_monto_adecuado_nota">
-            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
-            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
-            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
-            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
-            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
-            <button type="button" data-val="NA" class="btn-rate opt-na opt-na-aporte"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">No corresponde (mi jardín no pide aporte)</span></button>
+        <!-- Wrapper Aporte Mensual (Condicional a que en P7 no se seleccione N/A) -->
+        <div id="wrapper-aporte-mensual" class="hidden">
+          <!-- Subsección: Aporte mensual -->
+          <div class="subsec-title" style="margin-top:22px;">
+            <span class="material-symbols-outlined" style="font-size:16px;">payments</span>
+            Aporte mensual
           </div>
-          <input type="hidden" name="aporte_monto_adecuado_nota" required>
-        </div>
+          <p class="subsec-desc">Percepción sobre el aporte mensual de la institución y pautas de comunicación.</p>
 
-        <!-- P7.2 Condicional a 7.1 diferente de NA -->
-        <div class="form-group bordered-item hidden" id="group-pregunta-7-2">
-          <label class="form-label">7.2. Ante una demora en el pago del aporte, ¿de qué modo se comunicaron con vos? (selección múltiple)</label>
-          <p class="form-sub">Podés marcar una o varias opciones según corresponda:</p>
-          <div class="checkbox-group" id="group-7-2-checkboxes">
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Mensajes o llamados al celular" class="check-canal-7-2">
-              <span>Mensajes o llamados al celular</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Visita o cuando retiro a mi hijo" class="check-canal-7-2">
-              <span>Visita o cuando retiro a mi hijo</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Aviso a través de otras personas" class="check-canal-7-2">
-              <span>Aviso a través de otras personas</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Otro modo" class="check-canal-7-2">
-              <span>Otro modo</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Nunca tuve demoras" class="check-exclusivo-7-2">
-              <span>Nunca tuve demoras</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Tuve demoras y no me reclamaron" class="check-exclusivo-7-2">
-              <span>Tuve demoras y no me reclamaron</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_modos" value="Prefiero no responder" class="check-exclusivo-7-2">
-              <span>Prefiero no responder</span>
-            </label>
+          <!-- P7.1 -->
+          <div class="form-group" id="group-pregunta-7-1">
+            <label class="form-label">7.1. ¿Considerás que el monto actual del aporte mensual es adecuado? *</label>
+            <div class="rating-row rating-row-aporte" data-rating-group="aporte_monto_adecuado_nota">
+              <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+              <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+              <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+              <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+              <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+              <button type="button" data-val="NA" class="btn-rate opt-na opt-na-aporte"><span class="material-symbols-outlined rate-face">do_not_disturb_on</span><span class="rate-label">No corresponde (mi jardín no pide aporte)</span></button>
+            </div>
+            <input type="hidden" name="aporte_monto_adecuado_nota" required>
           </div>
-        </div>
 
-        <!-- P7.3 Condicional a marcar alguna de las cuatro primeras de 7.2 -->
-        <div class="form-group bordered-item hidden" id="group-pregunta-7-3">
-          <label class="form-label">7.3. ¿Qué tan de acuerdo estás con esa forma de comunicación? *</label>
-          <div class="rating-row" data-rating-group="aporte_comunicacion_acuerdo_nota" style="grid-template-columns: repeat(5, 1fr);">
-            <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
-            <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
-            <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
-            <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
-            <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+          <!-- P7.2 Condicional a 7.1 diferente de NA -->
+          <div class="form-group bordered-item hidden" id="group-pregunta-7-2">
+            <label class="form-label">7.2. Ante una demora en el pago del aporte, ¿de qué modo se comunicaron con vos? (selección múltiple)</label>
+            <p class="form-sub">Podés marcar una o varias opciones según corresponda:</p>
+            <div class="checkbox-group" id="group-7-2-checkboxes">
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Mensajes o llamados al celular" class="check-canal-7-2">
+                <span>Mensajes o llamados al celular</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Visita o cuando retiro a mi hijo" class="check-canal-7-2">
+                <span>Visita o cuando retiro a mi hijo</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Aviso a través de otras personas" class="check-canal-7-2">
+                <span>Aviso a través de otras personas</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Otro modo" class="check-canal-7-2">
+                <span>Otro modo</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Nunca tuve demoras" class="check-exclusivo-7-2">
+                <span>Nunca tuve demoras</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Tuve demoras y no me reclamaron" class="check-exclusivo-7-2">
+                <span>Tuve demoras y no me reclamaron</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_modos" value="Prefiero no responder" class="check-exclusivo-7-2">
+                <span>Prefiero no responder</span>
+              </label>
+            </div>
           </div>
-          <input type="hidden" name="aporte_comunicacion_acuerdo_nota">
-        </div>
 
-        <!-- P7.4 Condicional a 7.3 = En desacuerdo / Totalmente en desacuerdo (Obligatoria) -->
-        <div class="form-group bordered-item hidden" id="group-pregunta-7-4">
-          <label class="form-label">7.4. ¿Qué fue lo que no te pareció adecuado? (selección múltiple) *</label>
-          <p class="form-sub">Selecciona los motivos principales:</p>
-          <div class="checkbox-group" id="group-7-4-checkboxes">
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Fue demasiado insistente" class="check-item-7-4">
-              <span>Fue demasiado insistente</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se hizo en mi lugar de trabajo" class="check-item-7-4">
-              <span>Se hizo en mi lugar de trabajo</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se involucró a terceros" class="check-item-7-4">
-              <span>Se involucró a terceros</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se hizo frente a otras personas" class="check-item-7-4">
-              <span>Se hizo frente a otras personas</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="No se contemplaron mis dificultades económicas" class="check-item-7-4">
-              <span>No se contemplaron mis dificultades económicas</span>
-            </label>
-            <label class="checkbox-card">
-              <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Otro motivo" class="check-item-7-4">
-              <span>Otro motivo</span>
-            </label>
+          <!-- P7.3 Condicional a marcar alguna de las cuatro primeras de 7.2 -->
+          <div class="form-group bordered-item hidden" id="group-pregunta-7-3">
+            <label class="form-label">7.3. ¿Qué tan de acuerdo estás con esa forma de comunicación? *</label>
+            <div class="rating-row" data-rating-group="aporte_comunicacion_acuerdo_nota" style="grid-template-columns: repeat(5, 1fr);">
+              <button type="button" data-val="1" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_dissatisfied</span><span class="rate-label">Totalmente en desacuerdo</span></button>
+              <button type="button" data-val="2" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_dissatisfied</span><span class="rate-label">En desacuerdo</span></button>
+              <button type="button" data-val="3" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_neutral</span><span class="rate-label">Neutral</span></button>
+              <button type="button" data-val="4" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_satisfied</span><span class="rate-label">De acuerdo</span></button>
+              <button type="button" data-val="5" class="btn-rate"><span class="material-symbols-outlined rate-face">sentiment_very_satisfied</span><span class="rate-label">Totalmente de acuerdo</span></button>
+            </div>
+            <input type="hidden" name="aporte_comunicacion_acuerdo_nota">
           </div>
-          <div class="validation-hint hidden" id="error-7-4" style="color:var(--c-alertas); font-size:12px; font-weight:600; margin-top:6px; display:flex; align-items:center; gap:5px;">
-            <span class="material-symbols-outlined" style="font-size:16px;">info</span>
-            Por favor selecciona al menos un motivo
-          </div>
-        </div>
 
-        <!-- P7.5 Condicional a 7.3 = En desacuerdo / Totalmente en desacuerdo (Opcional) -->
-        <div class="form-group bordered-item hidden" id="group-pregunta-7-5">
-          <label class="form-label" for="textarea-aporte-detalle">7.5. Si querés, contanos qué pasó (opcional)</label>
-          <p class="form-sub">Escribí tu comentario aquí (opcional):</p>
-          <textarea id="textarea-aporte-detalle" name="aporte_comunicacion_detalle" rows="3" class="form-textarea" maxlength="800"
-            placeholder="Contanos brevemente qué ocurrió (opcional)..."></textarea>
-          <div class="char-counter" id="counter-7-5">0 / 800 caracteres</div>
+          <!-- P7.4 Condicional a 7.3 = En desacuerdo / Totalmente en desacuerdo (Obligatoria) -->
+          <div class="form-group bordered-item hidden" id="group-pregunta-7-4">
+            <label class="form-label">7.4. ¿Qué fue lo que no te pareció adecuado? (selección múltiple) *</label>
+            <p class="form-sub">Selecciona los motivos principales:</p>
+            <div class="checkbox-group" id="group-7-4-checkboxes">
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Fue demasiado insistente" class="check-item-7-4">
+                <span>Fue demasiado insistente</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se hizo en mi lugar de trabajo" class="check-item-7-4">
+                <span>Se hizo en mi lugar de trabajo</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se involucró a terceros" class="check-item-7-4">
+                <span>Se involucró a terceros</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Se hizo frente a otras personas" class="check-item-7-4">
+                <span>Se hizo frente a otras personas</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="No se contemplaron mis dificultades económicas" class="check-item-7-4">
+                <span>No se contemplaron mis dificultades económicas</span>
+              </label>
+              <label class="checkbox-card">
+                <input type="checkbox" name="aporte_comunicacion_motivos_no_adecuado" value="Otro motivo" class="check-item-7-4">
+                <span>Otro motivo</span>
+              </label>
+            </div>
+            <div class="validation-hint hidden" id="error-7-4" style="color:var(--c-alertas); font-size:12px; font-weight:600; margin-top:6px; display:flex; align-items:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">info</span>
+              Por favor selecciona al menos un motivo
+            </div>
+          </div>
+
+          <!-- P7.5 Condicional a 7.3 = En desacuerdo / Totalmente en desacuerdo (Opcional) -->
+          <div class="form-group bordered-item hidden" id="group-pregunta-7-5">
+            <label class="form-label" for="textarea-aporte-detalle">7.5. Si querés, contanos qué pasó (opcional)</label>
+            <p class="form-sub">Escribí tu comentario aquí (opcional):</p>
+            <textarea id="textarea-aporte-detalle" name="aporte_comunicacion_detalle" rows="3" class="form-textarea" maxlength="800"
+              placeholder="Contanos brevemente qué ocurrió (opcional)..."></textarea>
+            <div class="char-counter" id="counter-7-5">0 / 800 caracteres</div>
+          </div>
         </div>
       </div>
 
@@ -2604,7 +2607,10 @@
     }
 
     function initAporteConditionalFlow() {
+      const group7Buttons = document.querySelectorAll('[data-rating-group="respuesta_institucional_nota"] .btn-rate');
+      const wrapperAporte = document.getElementById('wrapper-aporte-mensual');
       const group71Buttons = document.querySelectorAll('[data-rating-group="aporte_monto_adecuado_nota"] .btn-rate');
+      const hidden71 = document.querySelector('input[name="aporte_monto_adecuado_nota"]');
       const group72 = document.getElementById('group-pregunta-7-2');
       const group73 = document.getElementById('group-pregunta-7-3');
       const group74 = document.getElementById('group-pregunta-7-4');
@@ -2612,6 +2618,13 @@
       const hidden73 = document.querySelector('input[name="aporte_comunicacion_acuerdo_nota"]');
       const textarea75 = document.getElementById('textarea-aporte-detalle');
       const counter75 = document.getElementById('counter-7-5');
+
+      function reset71to75() {
+        if (wrapperAporte) wrapperAporte.classList.add('hidden');
+        if (hidden71) hidden71.value = '';
+        document.querySelectorAll('[data-rating-group="aporte_monto_adecuado_nota"] .btn-rate').forEach(b => b.classList.remove('active'));
+        reset72to75();
+      }
 
       function reset72to75() {
         if (group72) group72.classList.add('hidden');
@@ -2642,6 +2655,28 @@
         if (textarea75) textarea75.value = '';
         if (counter75) counter75.textContent = '0 / 800 caracteres';
       }
+
+      // 0. Manejo de cambios en P7: solo se despliega 7.1 si en 7 no seleccionaron N/A
+      group7Buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-val');
+          if (val === 'NA') {
+            // N/A en P7 -> no se despliega 7.1 y se repliega/resetea todo el aporte
+            reset71to75();
+          } else {
+            // No seleccionaron N/A -> se despliega 7.1
+            if (wrapperAporte) {
+              const wasHidden = wrapperAporte.classList.contains('hidden');
+              wrapperAporte.classList.remove('hidden');
+              if (wasHidden) {
+                setTimeout(() => {
+                  wrapperAporte.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 50);
+              }
+            }
+          }
+        });
+      });
 
       // 1. Manejo de cambios en 7.1
       group71Buttons.forEach(btn => {
@@ -3094,7 +3129,11 @@
       document.querySelectorAll('.chip-btn.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.btn-nps.active').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('input[type="hidden"]').forEach(i => i.value = "");
-      // Reset aporte institucional 7.2 a 7.5
+      // Reset aporte institucional (wrapper y preguntas 7.1 a 7.5)
+      const wrapperAporte = document.getElementById('wrapper-aporte-mensual');
+      if (wrapperAporte) wrapperAporte.classList.add('hidden');
+      const hidden71 = document.querySelector('input[name="aporte_monto_adecuado_nota"]');
+      if (hidden71) hidden71.value = '';
       const group72 = document.getElementById('group-pregunta-7-2');
       if (group72) group72.classList.add('hidden');
       document.querySelectorAll('#group-7-2-checkboxes input[type="checkbox"]').forEach(cb => {
