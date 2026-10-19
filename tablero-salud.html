@@ -766,7 +766,7 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwrhg-bnnwGEhCE48DzPlkt_TZtz8fD8_2MMf_Za1N-kg6LnaWcc9hlIfVleOZSHIf75Q/exec";
 
     // Datos históricos reales embebidos (Maternidad Kowalk)
-    let RAW = [
+    const BASE_RAW = [
   {
     "fecha_hora": "2026-06-02 14:05:09",
     "centro_id": "MATERNIDAD_KOWALK",
@@ -3149,14 +3149,39 @@
   }
 ];
 
+    let RAW = [...BASE_RAW];
+
     let chartDimensiones, chartTendencia, chartCentros, chartEspecialidad, chartLlegada;
 
     document.addEventListener('DOMContentLoaded', () => {
+      loadSavedLocalData();
       initFilterOptions();
       setupEventListeners();
       renderDashboard();
       if (SCRIPT_URL) fetchLiveData();
     });
+
+    function loadSavedLocalData() {
+      try {
+        const localSaved = JSON.parse(localStorage.getItem('encuestas_salud_guardadas') || '[]');
+        if (Array.isArray(localSaved) && localSaved.length > 0) {
+          const map = new Map();
+          BASE_RAW.forEach(item => {
+            const key = item.id || `${item.fecha_hora}_${item.centro_id}_${item.profesional}_${item.nps_puntaje}`;
+            map.set(key, item);
+          });
+          localSaved.forEach(item => {
+            const key = item.id || `${item.fecha_hora || item.fecha}_${item.centro_id}_${item.profesional}_${item.nps_puntaje}`;
+            if (!map.has(key)) {
+              map.set(key, item);
+            }
+          });
+          RAW = Array.from(map.values());
+        }
+      } catch (e) {
+        console.warn("Error leyendo localStorage de salud:", e);
+      }
+    }
 
     function getDoctorPhotoUrl(name) {
       if (!name || name === 'Profesional de Turno' || name === 'No especificado') return null;
@@ -3335,9 +3360,10 @@
           const catalogoMap = {};
           centrosCatalogo.forEach(c => { catalogoMap[c.id] = c; });
 
-          RAW = rowsArr.map(r => {
+          const liveRows = rowsArr.map(r => {
             const cat = catalogoMap[r.centro_id] || centrosCatalogo.find(c => c.nombre === r.centro_nombre) || {};
             return {
+              id: r.id || '',
               fecha_hora: r.fecha_hora ? r.fecha_hora : parseFecha(r.fecha),
               centro_id: r.centro_id || cat.id || 'MATERNIDAD_KOWALK',
               centro_nombre: r.centro_nombre || cat.nombre || 'Maternidad Hortensia Gardey de Kowalk',
@@ -3356,6 +3382,34 @@
               sugerencias: (r.sugerencias || '').trim()
             };
           });
+
+          // Combinar datos históricos base + respuestas en vivo de Google Sheets + contingencia local sin duplicados
+          const map = new Map();
+
+          // 1. Cargar base histórica de Maternidad Kowalk (140 evaluaciones)
+          BASE_RAW.forEach(item => {
+            const key = item.id || `${item.fecha_hora}_${item.centro_id}_${item.profesional}_${item.nps_puntaje}`;
+            map.set(key, item);
+          });
+
+          // 2. Cargar respuestas locales guardadas (offline)
+          try {
+            const localSaved = JSON.parse(localStorage.getItem('encuestas_salud_guardadas') || '[]');
+            if (Array.isArray(localSaved)) {
+              localSaved.forEach(item => {
+                const key = item.id || `${item.fecha_hora || item.fecha}_${item.centro_id}_${item.profesional}_${item.nps_puntaje}`;
+                if (!map.has(key)) map.set(key, item);
+              });
+            }
+          } catch(e) {}
+
+          // 3. Cargar respuestas en vivo de Google Sheets
+          liveRows.forEach(item => {
+            const key = item.id || `${item.fecha_hora}_${item.centro_id}_${item.profesional}_${item.nps_puntaje}`;
+            map.set(key, item);
+          });
+
+          RAW = Array.from(map.values());
 
           initFilterOptions();
           renderDashboard();
