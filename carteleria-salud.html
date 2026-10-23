@@ -913,149 +913,79 @@
 
     <!-- SECCIÓN 1: MÓDULO DE TRABAJO PRINCIPAL - CARTELERÍA QR A4 OFICIAL -->
     <section class="tool-section" id="seccion-generador-qr">
-      <div class="salud-workspace-grid">
+      <div class="tool-box" id="modulo-salud-qr" style="max-width:760px; margin:0 auto;">
+        <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:20px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
+              <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartelería QR A4 Oficial (Salas de Espera)
+            </span>
+            <span style="font-size:11.5px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.9); padding:4px 10px; border-radius:6px;">
+              Padrón Oficial 2026
+            </span>
+          </div>
+          <p style="font-size:13.5px; color:var(--ink); margin:0 0 16px; line-height:1.45;">
+            Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
+          </p>
 
-        <!-- BLOQUE IZQUIERDO: MÓDULO EXACTO DE CARTELERÍA QR A4 OFICIAL (SALAS DE ESPERA) -->
-        <div class="tool-box" id="modulo-salud-qr">
-          <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:20px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
-                <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartelería QR A4 Oficial (Salas de Espera)
-              </span>
-              <span style="font-size:11.5px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.9); padding:4px 10px; border-radius:6px;">
-                Padrón Oficial 2026
-              </span>
-            </div>
-            <p style="font-size:13.5px; color:var(--ink); margin:0 0 16px; line-height:1.45;">
-              Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
-            </p>
-
-            <div style="margin-bottom:14px;">
-              <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
-                <div class="tool-field" style="margin-bottom:0;">
-                  <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
-                  <select id="qr-select-salud"></select>
-                </div>
-                <div class="tool-field" style="margin-bottom:0;">
-                  <label>2. Especialidad / Consultorio (Opcional)</label>
-                  <select id="qr-select-salud-esp">
-                    <option value="">Todas las especialidades (Cartel General de Sala)</option>
-                  </select>
-                </div>
+          <div style="margin-bottom:14px;">
+            <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+              <div class="tool-field" style="margin-bottom:0;">
+                <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
+                <select id="qr-select-salud"></select>
+              </div>
+              <div class="tool-field" style="margin-bottom:0;">
+                <label>2. Especialidad / Consultorio (Opcional)</label>
+                <select id="qr-select-salud-esp">
+                  <option value="">Todas las especialidades (Cartel General de Sala)</option>
+                </select>
               </div>
             </div>
+          </div>
 
-            <!-- VISTA PREVIA CARTEL A4 -->
-            <div id="printable-poster">
-              <div class="poster-print-header">
-                <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:40px; width:auto; margin:0 auto 10px; display:block;">
-                <div class="poster-print-subse" style="font-size:13.5px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
-                <div class="poster-print-divider" style="display:none;"></div>
-              </div>
-
-              <div class="poster-print-main" style="margin:12px 0;">
-                <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 4px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
-                <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Maternidad Hortensia Gardey de Kowalk</div>
-                <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Centro · Río Cuarto</div>
-                <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:#0284c7; background:#e0f2fe; border:1px solid #009de0; border-radius:999px; padding:4px 14px; margin-top:6px;"></div>
-              </div>
-
-              <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
-                <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px; border:1px solid #e5e8eb;"></div>
-              </div>
-
-              <div class="poster-print-footer">
-                <p class="poster-print-cta" style="font-size:13.5px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
-                  <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
-                  Escaneá con la cámara de tu celular
-                </p>
-                <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
-                <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
-              </div>
+          <!-- VISTA PREVIA CARTEL A4 -->
+          <div id="printable-poster">
+            <div class="poster-print-header">
+              <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:40px; width:auto; margin:0 auto 10px; display:block;">
+              <div class="poster-print-subse" style="font-size:13.5px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
+              <div class="poster-print-divider" style="display:none;"></div>
             </div>
 
-            <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
-              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
-                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
-              </button>
-              <button type="button" onclick="printAll24SaludPosters()" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:150px;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
-                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">print_connect</span> Imprimir Todos (24)
-              </button>
-              <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
-                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">qr_code_2</span> Descargar QR HD
-              </a>
-              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:120px;">
-                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">content_copy</span> Copiar Link
-              </button>
+            <div class="poster-print-main" style="margin:12px 0;">
+              <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 4px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
+              <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Maternidad Hortensia Gardey de Kowalk</div>
+              <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Centro · Río Cuarto</div>
+              <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:#0284c7; background:#e0f2fe; border:1px solid #009de0; border-radius:999px; padding:4px 14px; margin-top:6px;"></div>
             </div>
+
+            <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
+              <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px; border:1px solid #e5e8eb;"></div>
+            </div>
+
+            <div class="poster-print-footer">
+              <p class="poster-print-cta" style="font-size:13.5px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
+                <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+                Escaneá con la cámara de tu celular
+              </p>
+              <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
+              <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+            <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
+              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
+            </button>
+            <button type="button" onclick="printAll24SaludPosters()" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:150px;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
+              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">print_connect</span> Imprimir Todos (24)
+            </button>
+            <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
+              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">qr_code_2</span> Descargar QR HD
+            </a>
+            <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:120px;">
+              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">content_copy</span> Copiar Link
+            </button>
           </div>
         </div>
-
-        <!-- BLOQUE DERECHO: ENLACE PRECOMPLETADO, WHATSAPP E INSTRUCCIONES PARA EQUIPOS DE SALUD -->
-        <div style="display:flex; flex-direction:column; gap:20px;">
-
-          <!-- TARJETA DE DIFUSIÓN DIGITAL DEL EFECTOR SELECCIONADO -->
-          <div class="tool-box">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-              <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d); font-weight:800;">
-                <span class="material-symbols-outlined" style="font-size:16px;">link</span> Enlace Directo Precompletado
-              </span>
-              <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:var(--bg-alt); border:1px solid var(--line); padding:3px 8px; border-radius:6px;">
-                Sincronizado con el QR
-              </span>
-            </div>
-            <p style="font-size:13px; color:var(--ink-soft); margin:0 0 12px; line-height:1.45;">
-              Además del cartel impreso en sala, podés compartir el enlace directo de este efector o consultorio por WhatsApp, turneros digitales o correo.
-            </p>
-
-            <div style="margin-bottom:12px;">
-              <label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); display:block; margin-bottom:6px;">
-                URL directa del formulario seleccionado:
-              </label>
-              <div style="display:flex; gap:6px;">
-                <input type="text" id="input-link-salud-directo" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
-                <button type="button" id="btn-copy-url-box" class="btn-pill btn-salud" style="width:auto; padding:0 16px; font-size:12px;">
-                  <span class="material-symbols-outlined" style="font-size:15px; margin:0;">content_copy</span> Copiar
-                </button>
-                <a id="btn-open-url-box" href="encuesta-salud.html" target="_blank" class="btn-pill btn-outline" style="width:auto; padding:0 14px; font-size:12px;" title="Abrir encuesta precompletada en nueva pestaña">
-                  <span class="material-symbols-outlined" style="font-size:15px; margin:0;">open_in_new</span>
-                </a>
-              </div>
-            </div>
-
-            <!-- PREVIEW MENSAJE WHATSAPP SALUD -->
-            <div style="margin-top:14px;">
-              <label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); display:flex; align-items:center; gap:5px; margin-bottom:6px;">
-                <span class="material-symbols-outlined" style="font-size:15px; margin:0; color:#25D366;">chat</span>
-                Mensaje listo para enviar por WhatsApp a pacientes:
-              </label>
-              <div id="salud-wsp-preview" style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 14px; font-size:12px; line-height:1.45; white-space:pre-line; color:var(--ink);"></div>
-              <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
-                <button type="button" id="btn-copy-wsp-salud" class="btn-pill" style="flex:1; background:#ecfdf5; border:1px solid #25D366; color:#065f46; font-size:12.5px;">
-                  <span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#25D366;">content_copy</span> Copiar Mensaje WhatsApp
-                </button>
-                <button type="button" id="btn-send-wsp-salud" class="btn-pill btn-outline" style="flex:1; font-size:12.5px;">
-                  <span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#25D366;">send</span> Abrir en WhatsApp
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- GUÍA RÁPIDA DE IMPRESIÓN OFICIAL A4 -->
-          <div class="tool-box" style="background:var(--bg-alt);">
-            <div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:14px; margin-bottom:10px; color:var(--ink);">
-              <span class="material-symbols-outlined" style="color:var(--brand); margin:0;">verified</span>
-              Instrucciones de Impresión Oficial A4
-            </div>
-            <ul style="margin:0; padding-left:18px; font-size:12.5px; color:var(--ink-soft); line-height:1.55; display:flex; flex-direction:column; gap:6px;">
-              <li><b>Cartel General de Sala:</b> Dejá la opción 2 en <i>«Todas las especialidades»</i> para imprimir el cartel general de la sala de espera del efector.</li>
-              <li><b>Cartel por Consultorio:</b> Elegí una especialidad en el punto 2 (ej. Pediatría, Odontología, Guardia) para que el paciente ya tenga preseleccionado el consultorio al escanear.</li>
-              <li><b>Lote Completo (24 hojas A4):</b> Con el botón <b>«Imprimir Todos (24)»</b> se generan automáticamente los 24 carteles oficiales (1 por hoja A4) listos para imprimir o guardar como PDF único.</li>
-            </ul>
-          </div>
-
-        </div>
-
       </div>
     </section>
 
@@ -1420,41 +1350,16 @@
       const btnCopyLink = document.getElementById('btn-copy-link-salud');
       if (btnCopyLink) {
         btnCopyLink.addEventListener('click', () => {
-          const url = document.getElementById('input-link-salud-directo')?.value || '';
-          if (!url) return;
-          navigator.clipboard.writeText(url).then(() => {
+          const opt = selectSalud.selectedOptions[0];
+          if (!opt) return;
+          const currentUrl = new URL(getBaseUrl('encuesta-salud.html'));
+          currentUrl.searchParams.set('centro', opt.value);
+          if (selectEsp.value) {
+            currentUrl.searchParams.set('especialidad', selectEsp.value);
+          }
+          navigator.clipboard.writeText(currentUrl.toString()).then(() => {
             flashButtonFeedback(btnCopyLink, `<span class="material-symbols-outlined" style="font-size:16px; margin:0; color:var(--c-educacion-d);">check</span> ¡Link Copiado!`);
           });
-        });
-      }
-
-      const btnCopyBox = document.getElementById('btn-copy-url-box');
-      if (btnCopyBox) {
-        btnCopyBox.addEventListener('click', () => {
-          const url = document.getElementById('input-link-salud-directo')?.value || '';
-          if (!url) return;
-          navigator.clipboard.writeText(url).then(() => {
-            flashButtonFeedback(btnCopyBox, `<span class="material-symbols-outlined" style="font-size:15px; margin:0;">check</span> ¡Copiado!`);
-          });
-        });
-      }
-
-      const btnCopyWsp = document.getElementById('btn-copy-wsp-salud');
-      if (btnCopyWsp) {
-        btnCopyWsp.addEventListener('click', () => {
-          const text = document.getElementById('salud-wsp-preview')?.innerText || '';
-          if (!text) return;
-          navigator.clipboard.writeText(text).then(() => {
-            flashButtonFeedback(btnCopyWsp, `<span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#065f46;">check</span> ¡Mensaje Copiado!`);
-          });
-        });
-      }
-
-      const btnSendWsp = document.getElementById('btn-send-wsp-salud');
-      if (btnSendWsp) {
-        btnSendWsp.addEventListener('click', () => {
-          const text = encodeURIComponent(document.getElementById('salud-wsp-preview')?.innerText || '');
-          window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
         });
       }
     }
@@ -1492,25 +1397,6 @@
       }
 
       const finalUrl = targetUrl.toString();
-
-      // Actualizar campo de URL directa y mensaje WhatsApp
-      const inputDirect = document.getElementById('input-link-salud-directo');
-      if (inputDirect) inputDirect.value = finalUrl;
-      const btnOpenDirect = document.getElementById('btn-open-url-box');
-      if (btnOpenDirect) btnOpenDirect.href = finalUrl;
-
-      const wspBox = document.getElementById('salud-wsp-preview');
-      if (wspBox) {
-        const espLine = espVal ? `\n🩺 *Consultorio / Servicio:* ${espVal}` : '';
-        wspBox.textContent = `👋 *Hola, te escribimos desde ${opt.dataset.nombre} (${bText}) · Municipalidad de Río Cuarto:*${espLine}
-
-Tu opinión nos ayuda a mejorar la atención de nuestra Red Municipal de Salud. Te invitamos a responder esta breve encuesta (100% anónima, demora 1 minuto):
-
-👉 *Ingresá aquí:*
-${finalUrl}
-
-¡Muchas gracias por tu tiempo! 💙`;
-      }
 
       // 1. Renderizar en la tarjeta de previsualización
       const qrContainer = document.getElementById('qrcode-target-salud');
