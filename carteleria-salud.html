@@ -848,24 +848,10 @@
           <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
         </a>
 
-        <nav class="topbar-nav">
-          <a href="#modulo-salud-qr" class="nav-pill primary">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">qr_code_2</span>
-            Cartelería QR A4
-          </a>
-          <a href="#directorio-salud" class="nav-pill">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">table_chart</span>
-            Padrón 24 Efectores
-          </a>
-          <a href="encuesta-salud.html" target="_blank" class="nav-pill">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">assignment</span>
-            Encuesta
-          </a>
-          <a href="tablero-salud.html" target="_blank" class="nav-pill">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">analytics</span>
-            Tablero en Vivo
-          </a>
-        </nav>
+        <div class="badge-chip">
+          <span class="material-symbols-outlined" style="color:var(--brand); margin:0;">local_hospital</span>
+          Red de Salud Municipal
+        </div>
       </div>
     </div>
   </header>
@@ -913,84 +899,102 @@
 
     <!-- SECCIÓN 1: MÓDULO DE TRABAJO PRINCIPAL - CARTELERÍA QR A4 OFICIAL -->
     <section class="tool-section" id="seccion-generador-qr">
-      <div class="tool-box" id="modulo-salud-qr" style="max-width:760px; margin:0 auto;">
-        <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:20px;">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
-            <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
-              <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartelería QR A4 Oficial (Salas de Espera)
-            </span>
-            <span style="font-size:11.5px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.9); padding:4px 10px; border-radius:6px;">
-              Padrón Oficial 2026
-            </span>
-          </div>
-          <p style="font-size:13.5px; color:var(--ink); margin:0 0 16px; line-height:1.45;">
-            Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
-          </p>
+      <div class="salud-workspace-grid">
 
-          <div style="margin-bottom:14px;">
-            <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
-              <div class="tool-field" style="margin-bottom:0;">
-                <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
-                <select id="qr-select-salud"></select>
+        <!-- BLOQUE IZQUIERDO: MÓDULO EXACTO DE CARTELERÍA QR A4 OFICIAL (SALAS DE ESPERA) -->
+        <div class="tool-box" id="modulo-salud-qr">
+          <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
+                <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartelería QR A4 Oficial (Salas de Espera)
+              </span>
+              <span style="font-size:11.5px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.9); padding:4px 10px; border-radius:6px;">
+                Padrón Oficial 2026
+              </span>
+            </div>
+            <p style="font-size:13.5px; color:var(--ink); margin:0 0 16px; line-height:1.45;">
+              Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
+            </p>
+
+            <div style="margin-bottom:14px;">
+              <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+                <div class="tool-field" style="margin-bottom:0;">
+                  <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
+                  <select id="qr-select-salud"></select>
+                </div>
+                <div class="tool-field" style="margin-bottom:0;">
+                  <label>2. Especialidad / Consultorio (Opcional)</label>
+                  <select id="qr-select-salud-esp">
+                    <option value="">Todas las especialidades (Cartel General de Sala)</option>
+                  </select>
+                </div>
               </div>
-              <div class="tool-field" style="margin-bottom:0;">
-                <label>2. Especialidad / Consultorio (Opcional)</label>
-                <select id="qr-select-salud-esp">
-                  <option value="">Todas las especialidades (Cartel General de Sala)</option>
-                </select>
+            </div>
+
+            <!-- VISTA PREVIA CARTEL A4 -->
+            <div id="printable-poster">
+              <div class="poster-print-header">
+                <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:40px; width:auto; margin:0 auto 10px; display:block;">
+                <div class="poster-print-subse" style="font-size:13.5px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
+                <div class="poster-print-divider" style="display:none;"></div>
+              </div>
+
+              <div class="poster-print-main" style="margin:12px 0;">
+                <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 4px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
+                <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Maternidad Hortensia Gardey de Kowalk</div>
+                <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Centro · Río Cuarto</div>
+                <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:#0284c7; background:#e0f2fe; border:1px solid #009de0; border-radius:999px; padding:4px 14px; margin-top:6px;"></div>
+              </div>
+
+              <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
+                <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px; border:1px solid #e5e8eb;"></div>
+              </div>
+
+              <div class="poster-print-footer">
+                <p class="poster-print-cta" style="font-size:13.5px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
+                  <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+                  Escaneá con la cámara de tu celular
+                </p>
+                <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
+                <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
               </div>
             </div>
-          </div>
 
-          <!-- VISTA PREVIA CARTEL A4 -->
-          <div id="printable-poster">
-            <div class="poster-print-header">
-              <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:40px; width:auto; margin:0 auto 10px; display:block;">
-              <div class="poster-print-subse" style="font-size:13.5px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
-              <div class="poster-print-divider" style="display:none;"></div>
+            <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
+              </button>
+              <button type="button" onclick="printAll24SaludPosters()" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:150px;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
+                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">print_connect</span> Imprimir Todos (24)
+              </button>
+              <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
+                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">qr_code_2</span> Descargar QR HD
+              </a>
+              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:120px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">content_copy</span> Copiar Link
+              </button>
             </div>
-
-            <div class="poster-print-main" style="margin:12px 0;">
-              <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 4px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
-              <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Maternidad Hortensia Gardey de Kowalk</div>
-              <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Centro · Río Cuarto</div>
-              <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:#0284c7; background:#e0f2fe; border:1px solid #009de0; border-radius:999px; padding:4px 14px; margin-top:6px;"></div>
-            </div>
-
-            <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
-              <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px; border:1px solid #e5e8eb;"></div>
-            </div>
-
-            <div class="poster-print-footer">
-              <p class="poster-print-cta" style="font-size:13.5px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
-                <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
-                Escaneá con la cámara de tu celular
-              </p>
-              <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
-              <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
-            <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
-              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
-            </button>
-            <button type="button" onclick="printAll24SaludPosters()" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:150px;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
-              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">print_connect</span> Imprimir Todos (24)
-            </button>
-            <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
-              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">qr_code_2</span> Descargar QR HD
-            </a>
-            <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:120px;">
-              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">content_copy</span> Copiar Link
-            </button>
           </div>
         </div>
+
+        <!-- BLOQUE DERECHO: GUÍA RÁPIDA DE IMPRESIÓN OFICIAL A4 -->
+        <div class="tool-box" style="background:var(--bg-alt);">
+          <div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:14px; margin-bottom:10px; color:var(--ink);">
+            <span class="material-symbols-outlined" style="color:var(--brand); margin:0;">verified</span>
+            Instrucciones de Impresión Oficial A4
+          </div>
+          <ul style="margin:0; padding-left:18px; font-size:12.5px; color:var(--ink-soft); line-height:1.55; display:flex; flex-direction:column; gap:6px;">
+            <li><b>Cartel General de Sala:</b> Dejá la opción 2 en <i>«Todas las especialidades»</i> para imprimir el cartel general de la sala de espera del efector.</li>
+            <li><b>Cartel por Consultorio:</b> Elegí una especialidad en el punto 2 (ej. Pediatría, Odontología, Guardia) para que el paciente ya tenga preseleccionado el consultorio al escanear.</li>
+            <li><b>Lote Completo (24 hojas A4):</b> Con el botón <b>«Imprimir Todos (24)»</b> se generan automáticamente los 24 carteles oficiales (1 por hoja A4) listos para imprimir o guardar como PDF único.</li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
     <!-- SECCIÓN 2: DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL -->
-    <section class="tool-section" id="directorio-salud" style="padding-top:28px;">
+    <section class="tool-section" id="directorio-salud" style="padding-top:28px; padding-bottom:16px;">
       <div class="sec-head">
         <h2>
           <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
@@ -1044,65 +1048,12 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 3: ACCESOS AL FORMULARIO Y TABLERO DE SALUD MUNICIPAL -->
-    <section class="domain-section" style="padding-bottom: 16px;">
-      <div class="domain-header">
-        <div class="domain-tag" style="background:var(--tint-sky); color:var(--brand-d);">
-          <span class="material-symbols-outlined" style="font-size:18px; margin:0;">monitoring</span> Accesos del Ecosistema de Salud
-        </div>
-        <p class="domain-desc">Formulario de Relevamiento y Tablero Analítico en Tiempo Real</p>
-      </div>
-
-      <div class="grid-pair">
-        <!-- CARD 1: ENCUESTA SALUD -->
-        <div class="portal-card">
-          <div>
-            <div class="portal-head">
-              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand);">
-                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">assignment</span>
-              </div>
-              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Relevamiento en Sala (QR)</span>
-            </div>
-            <h3 class="portal-title">Encuesta de Salud Municipal</h3>
-            <p class="portal-desc">
-              Formulario accesible para pacientes de la Red de Salud. Cascada por centro, especialidad y profesional médico, tiempos de espera y recomendación NPS.
-            </p>
-          </div>
-          <a href="encuesta-salud.html" target="_blank" class="btn-pill btn-salud">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">open_in_new</span>
-            Abrir Formulario de Salud
-          </a>
-        </div>
-
-        <!-- CARD 2: TABLERO SALUD -->
-        <div class="portal-card">
-          <div>
-            <div class="portal-head">
-              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand-d);">
-                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">analytics</span>
-              </div>
-              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Gestión y Analítica</span>
-            </div>
-            <h3 class="portal-title">Tablero de Salud Municipal</h3>
-            <p class="portal-desc">
-              Monitor de pulso NPS en vivo, comparativa entre efectores de la Red de Salud, ranking por profesional y matriz de tiempos de espera.
-            </p>
-          </div>
-          <a href="tablero-salud.html" target="_blank" class="btn-pill btn-outline">
-            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">dashboard</span>
-            Ver Tablero de Salud
-          </a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="wrap">
-      <b>Subsecretaría de Salud · Dirección de Estadística · Gobierno de Río Cuarto</b><br>
-      Infraestructura del Observatorio Social · Gabinete Social + LMetB
+      <b>Secretaría de Gestión y Participación Ciudadana · Dirección de Estadística, Control de Calidad y Procesos</b>
     </div>
   </footer>
 
