@@ -1,0 +1,1933 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cartelería QR A4 Oficial · Red de Salud Municipal · Gobierno de Río Cuarto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="backend/catalogo.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f7f9;
+      --ink: #14171a;
+      --ink-soft: #5b6470;
+      --line: #e5e8eb;
+      --brand: #009DE0;
+      --brand-d: #0079ac;
+      --brand-bg: #dbf1fb;
+
+      /* Paleta institucional */
+      --c-salud: #009DE0;
+      --c-salud-alt: #0079ac;
+      --c-educacion: #00C96B;
+      --c-educacion-d: #009b52;
+      --c-gobierno: #F2C100;
+      --c-naranja: #F27C00;
+      --c-deporte: #FF3CB2;
+
+      /* Tints suaves */
+      --tint-sky: #e0f2fe;
+      --tint-verde: #dbf7ea;
+      --tint-naranja: #fdeddb;
+      --tint-amarillo: #fdf6db;
+      --tint-magenta: #ffe4f4;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(20, 23, 26, .06), 0 1px 12px rgba(20, 23, 26, .04);
+      --shadow-lift: 0 6px 20px rgba(20, 23, 26, .10), 0 2px 6px rgba(20, 23, 26, .06);
+      --ease-standard: cubic-bezier(.4, 0, .2, 1);
+      --ease-decel: cubic-bezier(0, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1216;
+        --bg-alt: #171b21;
+        --ink: #eef1f4;
+        --ink-soft: #a3adb8;
+        --line: #262c34;
+        --brand-bg: #102d39;
+        --tint-sky: #0c4a6e;
+        --tint-verde: #103524;
+        --tint-naranja: #3c2710;
+        --tint-amarillo: #3c3310;
+        --tint-magenta: #3e1b30;
+      }
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: -3px;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 5px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Google Sans", "Product Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar .wrap {
+      padding-top: 14px;
+      padding-bottom: 12px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .logo-muni {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      background: var(--bg-alt);
+      border: 1px solid var(--line);
+      padding: 7px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all .2s var(--ease-standard);
+    }
+
+    .nav-pill:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+      background: var(--brand-bg);
+    }
+
+    .nav-pill.primary {
+      background: var(--brand-bg);
+      color: var(--brand-d);
+      border-color: rgba(0, 157, 224, .3);
+    }
+
+    .badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 36px 0 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--brand-d);
+      background: var(--brand-bg);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      margin: 0 0 10px;
+      line-height: 1.12;
+    }
+
+    .hero h1 .accent {
+      color: var(--brand);
+    }
+
+    .hero p.sub {
+      font-size: 15.5px;
+      color: var(--ink-soft);
+      max-width: 820px;
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+
+    /* HERO STATS (1px hairline grid matching GS+LMetB) */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      background: var(--bg);
+      padding: 16px 20px;
+      position: relative;
+    }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3.5px;
+      background: var(--kc, var(--brand));
+    }
+
+    .hero-stat .stat-label {
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .hero-stat .stat-label .material-symbols-outlined {
+      color: var(--kc, var(--brand));
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .hero-stat .stat-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* SECCIÓN HERRAMIENTAS DE DIFUSIÓN */
+    .tool-section {
+      padding: 36px 0 10px;
+    }
+
+    .sec-head {
+      margin-bottom: 20px;
+    }
+
+    .sec-head h2 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sec-head p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .salud-workspace-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 920px) {
+      .salud-workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tool-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .tool-field {
+      margin-bottom: 14px;
+    }
+
+    .tool-field label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+
+    .tool-field select {
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 500;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .tool-field select {
+        background: var(--bg);
+      }
+    }
+
+    .tool-field select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(0, 157, 224, .15);
+    }
+
+    /* CARTEL A4 DE SALUD (VISTA PREVIA FIEL A CAPTURA) */
+    #printable-poster {
+      background: #ffffff;
+      color: #14171a;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin: 16px 0 0;
+    }
+
+    #qrcode-target-salud canvas {
+      display: none !important;
+    }
+
+    #qrcode-target-salud img {
+      width: 185px !important;
+      height: 185px !important;
+      margin: 0 auto !important;
+      display: block !important;
+    }
+
+    /* BOTONES */
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all .2s var(--ease-standard);
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-salud {
+      background: var(--c-salud);
+      color: #fff;
+    }
+
+    .btn-salud:hover {
+      background: var(--brand-d);
+      box-shadow: 0 4px 14px rgba(0, 157, 224, .35);
+    }
+
+    .btn-outline {
+      background: var(--bg-alt);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--brand);
+      color: var(--brand-d);
+      background: var(--brand-bg);
+    }
+
+    /* GRID DE ACCESOS DIRECTOS SALUD */
+    .domain-section {
+      margin-top: 36px;
+    }
+
+    .domain-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .domain-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    .domain-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .grid-pair {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portal-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      transition: transform .25s var(--ease-standard), box-shadow .25s var(--ease-standard), border-color .25s var(--ease-standard);
+      position: relative;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lift);
+      border-color: var(--brand);
+    }
+
+    .portal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .chip-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .portal-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 12px 0 6px;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+
+    .portal-desc {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* MODAL DE IMPRESIÓN QR */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(20, 23, 26, .7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .25s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: var(--shadow-lift);
+      border: 1px solid var(--line);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--bg-alt);
+      padding: 28px 0;
+      margin-top: 56px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    #print-poster-container,
+    #print-batch-container {
+      display: none;
+    }
+
+    /* ==========================================================================
+       CONFIGURACIÓN EXACTA DE IMPRESIÓN A4 (21 cm x 29.7 cm con márgenes de 2.54 cm)
+       GARANTIZA EXACTAMENTE 1 ÚNICA PÁGINA Y 1 ÚNICO CÓDIGO QR CENTRADO
+       ========================================================================== */
+    @page {
+      size: 21cm 29.7cm;
+      margin: 2.54cm;
+    }
+
+    @media print {
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+      }
+
+      html, body {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      body > * {
+        display: none !important;
+      }
+
+      /* Caso 1: Impresión individual (1 solo cartel A4) */
+      body:not(.printing-batch) > #print-poster-container {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0.8cm 1cm !important;
+        border: 2.5px solid #009de0 !important;
+        border-radius: 20px !important;
+        background: #ffffff !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-before: avoid !important;
+        break-after: avoid !important;
+      }
+
+      /* Caso 2: Impresión en lote (Los 24 carteles A4 oficiales) */
+      body.printing-batch > #print-batch-container {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      body.printing-batch .a4-batch-poster {
+        width: 100% !important;
+        height: 100% !important;
+        box-sizing: border-box !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 0.8cm 1cm !important;
+        border: 2.5px solid #009de0 !important;
+        border-radius: 20px !important;
+        background: #ffffff !important;
+      }
+
+      body.printing-batch .a4-batch-poster:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+
+      #print-poster-container .poster-print-header,
+      .a4-batch-poster .poster-print-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+
+      #print-poster-container .poster-print-logo,
+      .a4-batch-poster .poster-print-logo {
+        height: 56px !important;
+        width: auto !important;
+        margin: 0 auto 10px !important;
+        display: block !important;
+      }
+
+      #print-poster-container .poster-print-subse,
+      .a4-batch-poster .poster-print-subse {
+        font-size: 15px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.8px !important;
+        margin-bottom: 10px !important;
+      }
+
+      #print-poster-container .poster-print-divider,
+      .a4-batch-poster .poster-print-divider {
+        display: block !important;
+        width: 90px !important;
+        height: 3px !important;
+        background: #009de0 !important;
+        border-radius: 2px !important;
+        margin: 0 auto !important;
+      }
+
+      #print-poster-container .poster-print-main,
+      .a4-batch-poster .poster-print-main {
+        width: 100% !important;
+        margin: 6px 0 !important;
+      }
+
+      #print-poster-container .poster-print-title,
+      .a4-batch-poster .poster-print-title {
+        font-size: 28px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        line-height: 1.25 !important;
+        margin: 0 0 6px !important;
+      }
+
+      #print-poster-container .poster-print-nombre,
+      .a4-batch-poster .poster-print-nombre {
+        font-size: 27px !important;
+        font-weight: 900 !important;
+        color: #009de0 !important;
+        margin: 4px 0 !important;
+      }
+
+      #print-poster-container .poster-print-barrio,
+      .a4-batch-poster .poster-print-barrio {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+        margin-bottom: 6px !important;
+      }
+
+      #print-poster-container .poster-print-esp,
+      .a4-batch-poster .poster-print-esp {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: #0284c7 !important;
+        background: #e0f2fe !important;
+        border: 1.5px solid #009de0 !important;
+        border-radius: 999px !important;
+        padding: 6px 18px !important;
+        display: inline-block !important;
+        margin-top: 6px !important;
+      }
+
+      #print-poster-container .poster-print-esp:empty,
+      .a4-batch-poster .poster-print-esp:empty {
+        display: none !important;
+      }
+
+      #print-poster-container .poster-print-qr-wrap,
+      .a4-batch-poster .poster-print-qr-wrap {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 6px 0 !important;
+        width: 100% !important;
+      }
+
+      #print-poster-container #print-single-qr,
+      .a4-batch-poster .print-batch-qr {
+        width: 380px !important;
+        height: 380px !important;
+        max-width: 380px !important;
+        max-height: 380px !important;
+        border-radius: 20px !important;
+        padding: 12px !important;
+        background: #ffffff !important;
+        border: 2px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        display: block !important;
+        margin: 0 auto !important;
+      }
+
+      #print-poster-container .poster-print-footer,
+      .a4-batch-poster .poster-print-footer {
+        width: 100% !important;
+      }
+
+      #print-poster-container .poster-print-cta,
+      .a4-batch-poster .poster-print-cta {
+        font-size: 20px !important;
+        font-weight: 900 !important;
+        color: #0b1a2c !important;
+        margin: 6px 0 2px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+      }
+
+      #print-poster-container .poster-print-cta .material-symbols-outlined,
+      .a4-batch-poster .poster-print-cta .material-symbols-outlined {
+        font-size: 24px !important;
+        color: #009de0 !important;
+      }
+
+      #print-poster-container .poster-print-anon,
+      .a4-batch-poster .poster-print-anon {
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        margin: 2px 0 0 !important;
+      }
+
+      #print-poster-container .poster-print-footer-legal,
+      .a4-batch-poster .poster-print-footer-legal {
+        display: block !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: #94a3b8 !important;
+        letter-spacing: 0.6px !important;
+        text-transform: uppercase !important;
+        margin-top: 10px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-row">
+        <a href="#" class="logo">
+          <img class="logo-muni" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+        </a>
+
+        <nav class="topbar-nav">
+          <a href="#modulo-salud-qr" class="nav-pill primary">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">qr_code_2</span>
+            Cartelería QR A4
+          </a>
+          <a href="#directorio-salud" class="nav-pill">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">table_chart</span>
+            Padrón 24 Efectores
+          </a>
+          <a href="encuesta-salud.html" target="_blank" class="nav-pill">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">assignment</span>
+            Encuesta
+          </a>
+          <a href="tablero-salud.html" target="_blank" class="nav-pill">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">analytics</span>
+            Tablero en Vivo
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">
+        <span class="material-symbols-outlined" style="font-size:15px; margin:0;">local_hospital</span>
+        Subsecretaría de Salud · Dirección de Estadística
+      </span>
+      <h1>Cartelería QR y Difusión · <span class="accent">Salud Municipal</span></h1>
+      <p class="sub">
+        Herramienta oficial del Área de Salud para generar e imprimir la cartelería A4 con código QR de salas de espera y consultorios, compartir enlaces directos precompletados y monitorear la satisfacción de pacientes en los 24 efectores municipales.
+      </p>
+
+      <!-- STATS HERO (Hairline 1px) -->
+      <div class="hero-stats">
+        <div class="hero-stat" style="--kc:var(--c-salud);">
+          <div class="stat-label"><span class="material-symbols-outlined">local_hospital</span>Padrón Oficial 2026</div>
+          <strong>24 Efectores</strong>
+          <div class="stat-sub">Maternidad, S24, CAPS 1-16 y Postas</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-educacion);">
+          <div class="stat-label"><span class="material-symbols-outlined">medical_services</span>Cobertura Total</div>
+          <strong>228 Servicios</strong>
+          <div class="stat-sub">Consultorios y especialidades médicas</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-gobierno);">
+          <div class="stat-label"><span class="material-symbols-outlined">print</span>Salas de Espera</div>
+          <strong>Cartel A4 QR</strong>
+          <div class="stat-sub">Impresión individual o lote completo</div>
+        </div>
+        <div class="hero-stat" style="--kc:var(--c-deporte);">
+          <div class="stat-label"><span class="material-symbols-outlined">insights</span>Monitoreo Continuo</div>
+          <strong>NPS + Likert</strong>
+          <div class="stat-sub">Sincronizado en vivo con el Tablero</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="wrap">
+
+    <!-- SECCIÓN 1: MÓDULO DE TRABAJO PRINCIPAL - CARTELERÍA QR A4 OFICIAL -->
+    <section class="tool-section" id="seccion-generador-qr">
+      <div class="salud-workspace-grid">
+
+        <!-- BLOQUE IZQUIERDO: MÓDULO EXACTO DE CARTELERÍA QR A4 OFICIAL (SALAS DE ESPERA) -->
+        <div class="tool-box" id="modulo-salud-qr">
+          <div style="background:var(--tint-sky); border:1px solid rgba(0, 157, 224, 0.3); border-radius:var(--radius-sm); padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge-chip" style="background:#fff; color:var(--brand-d); font-weight:800;">
+                <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartelería QR A4 Oficial (Salas de Espera)
+              </span>
+              <span style="font-size:11.5px; font-weight:700; color:var(--brand-d); background:rgba(255,255,255,.9); padding:4px 10px; border-radius:6px;">
+                Padrón Oficial 2026
+              </span>
+            </div>
+            <p style="font-size:13.5px; color:var(--ink); margin:0 0 16px; line-height:1.45;">
+              Genera e imprime el cartel A4 oficial para colocar en la sala de espera o consultorios de cada efector o posta sanitaria.
+            </p>
+
+            <div style="margin-bottom:14px;">
+              <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+                <div class="tool-field" style="margin-bottom:0;">
+                  <label>1. Espacio de Salud a Imprimir (24 Efectores Oficiales) *</label>
+                  <select id="qr-select-salud"></select>
+                </div>
+                <div class="tool-field" style="margin-bottom:0;">
+                  <label>2. Especialidad / Consultorio (Opcional)</label>
+                  <select id="qr-select-salud-esp">
+                    <option value="">Todas las especialidades (Cartel General de Sala)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- VISTA PREVIA CARTEL A4 -->
+            <div id="printable-poster">
+              <div class="poster-print-header">
+                <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:40px; width:auto; margin:0 auto 10px; display:block;">
+                <div class="poster-print-subse" style="font-size:13.5px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
+                <div class="poster-print-divider" style="display:none;"></div>
+              </div>
+
+              <div class="poster-print-main" style="margin:12px 0;">
+                <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 4px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
+                <div id="poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Maternidad Hortensia Gardey de Kowalk</div>
+                <div id="poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Centro · Río Cuarto</div>
+                <div id="poster-salud-esp-text" class="poster-print-esp" style="display:none; font-size:12.5px; font-weight:700; color:#0284c7; background:#e0f2fe; border:1px solid #009de0; border-radius:999px; padding:4px 14px; margin-top:6px;"></div>
+              </div>
+
+              <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
+                <div id="qrcode-target-salud" style="padding:10px; background:#fff; border-radius:12px; border:1px solid #e5e8eb;"></div>
+              </div>
+
+              <div class="poster-print-footer">
+                <p class="poster-print-cta" style="font-size:13.5px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
+                  <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+                  Escaneá con la cámara de tu celular
+                </p>
+                <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
+                <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+              <button type="button" onclick="printSaludPoster()" class="btn-pill btn-salud" style="flex:1; min-width:140px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
+              </button>
+              <button type="button" onclick="printAll24SaludPosters()" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:150px;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
+                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">print_connect</span> Imprimir Todos (24)
+              </button>
+              <a id="btn-download-qr-salud-hd" href="#" target="_blank" download="QR_Salud_Oficial.png" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:130px; text-decoration:none;">
+                <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">qr_code_2</span> Descargar QR HD
+              </a>
+              <button type="button" id="btn-copy-link-salud" class="btn-pill btn-outline" style="background:#fff; flex:1; min-width:120px;">
+                <span class="material-symbols-outlined" style="font-size:16px; margin:0;">content_copy</span> Copiar Link
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOQUE DERECHO: ENLACE PRECOMPLETADO, WHATSAPP E INSTRUCCIONES PARA EQUIPOS DE SALUD -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+
+          <!-- TARJETA DE DIFUSIÓN DIGITAL DEL EFECTOR SELECCIONADO -->
+          <div class="tool-box">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+              <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d); font-weight:800;">
+                <span class="material-symbols-outlined" style="font-size:16px;">link</span> Enlace Directo Precompletado
+              </span>
+              <span style="font-size:11px; font-weight:700; color:var(--brand-d); background:var(--bg-alt); border:1px solid var(--line); padding:3px 8px; border-radius:6px;">
+                Sincronizado con el QR
+              </span>
+            </div>
+            <p style="font-size:13px; color:var(--ink-soft); margin:0 0 12px; line-height:1.45;">
+              Además del cartel impreso en sala, podés compartir el enlace directo de este efector o consultorio por WhatsApp, turneros digitales o correo.
+            </p>
+
+            <div style="margin-bottom:12px;">
+              <label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); display:block; margin-bottom:6px;">
+                URL directa del formulario seleccionado:
+              </label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="input-link-salud-directo" readonly style="flex:1; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--ink); font-family:monospace; outline:none;">
+                <button type="button" id="btn-copy-url-box" class="btn-pill btn-salud" style="width:auto; padding:0 16px; font-size:12px;">
+                  <span class="material-symbols-outlined" style="font-size:15px; margin:0;">content_copy</span> Copiar
+                </button>
+                <a id="btn-open-url-box" href="encuesta-salud.html" target="_blank" class="btn-pill btn-outline" style="width:auto; padding:0 14px; font-size:12px;" title="Abrir encuesta precompletada en nueva pestaña">
+                  <span class="material-symbols-outlined" style="font-size:15px; margin:0;">open_in_new</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- PREVIEW MENSAJE WHATSAPP SALUD -->
+            <div style="margin-top:14px;">
+              <label style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+                <span class="material-symbols-outlined" style="font-size:15px; margin:0; color:#25D366;">chat</span>
+                Mensaje listo para enviar por WhatsApp a pacientes:
+              </label>
+              <div id="salud-wsp-preview" style="background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 14px; font-size:12px; line-height:1.45; white-space:pre-line; color:var(--ink);"></div>
+              <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+                <button type="button" id="btn-copy-wsp-salud" class="btn-pill" style="flex:1; background:#ecfdf5; border:1px solid #25D366; color:#065f46; font-size:12.5px;">
+                  <span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#25D366;">content_copy</span> Copiar Mensaje WhatsApp
+                </button>
+                <button type="button" id="btn-send-wsp-salud" class="btn-pill btn-outline" style="flex:1; font-size:12.5px;">
+                  <span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#25D366;">send</span> Abrir en WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- GUÍA RÁPIDA DE IMPRESIÓN OFICIAL A4 -->
+          <div class="tool-box" style="background:var(--bg-alt);">
+            <div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:14px; margin-bottom:10px; color:var(--ink);">
+              <span class="material-symbols-outlined" style="color:var(--brand); margin:0;">verified</span>
+              Instrucciones de Impresión Oficial A4
+            </div>
+            <ul style="margin:0; padding-left:18px; font-size:12.5px; color:var(--ink-soft); line-height:1.55; display:flex; flex-direction:column; gap:6px;">
+              <li><b>Cartel General de Sala:</b> Dejá la opción 2 en <i>«Todas las especialidades»</i> para imprimir el cartel general de la sala de espera del efector.</li>
+              <li><b>Cartel por Consultorio:</b> Elegí una especialidad en el punto 2 (ej. Pediatría, Odontología, Guardia) para que el paciente ya tenga preseleccionado el consultorio al escanear.</li>
+              <li><b>Lote Completo (24 hojas A4):</b> Con el botón <b>«Imprimir Todos (24)»</b> se generan automáticamente los 24 carteles oficiales (1 por hoja A4) listos para imprimir o guardar como PDF único.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: DIRECTORIO MAESTRO DE LA RED DE SALUD MUNICIPAL -->
+    <section class="tool-section" id="directorio-salud" style="padding-top:28px;">
+      <div class="sec-head">
+        <h2>
+          <span class="material-symbols-outlined" style="color:var(--brand); font-size:26px;">local_hospital</span>
+          Directorio Maestro de Efectores y Servicios (Red de Salud Municipal)
+        </h2>
+        <p>Padrón oficial de los 24 efectores de salud y sus 228 servicios. Cada efector (Maternidad, CAPS 1 al 16, S24 y Postas) cuenta con su código QR oficial único y cartel A4 listo para imprimir.</p>
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:260px; position:relative;">
+            <span class="material-symbols-outlined" style="position:absolute; left:12px; color:var(--ink-soft); font-size:18px;">search</span>
+            <input type="text" id="filter-padron-salud" placeholder="Buscar por centro, barrio, especialidad o tipo de efector..." style="width:100%; padding:10px 14px 10px 38px; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius-sm); font-size:13px; font-family:inherit; color:var(--ink); outline:none;">
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <button type="button" onclick="printAll24SaludPosters()" class="btn-pill" style="padding:8px 14px; font-size:12px; font-weight:700; border-radius:8px; height:auto; width:auto; display:inline-flex; align-items:center; gap:6px; background:var(--brand); color:#fff; border:none; cursor:pointer;" title="Imprimir los 24 carteles oficiales de todos los efectores en una sola pasada">
+              <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print_connect</span>
+              <span>Imprimir los 24 Carteles A4</span>
+            </button>
+            <button type="button" id="btn-toggle-salud-modo" class="btn-pill btn-outline" style="padding:8px 14px; font-size:12px; font-weight:700; border-radius:8px; height:auto; width:auto; display:inline-flex; align-items:center; gap:6px; background:var(--bg);">
+              <span class="material-symbols-outlined" style="font-size:16px; color:var(--brand); margin:0;">layers</span>
+              <span id="label-toggle-salud-modo">Ver los 228 Servicios de Consultorio</span>
+            </button>
+            <select id="select-base-server" title="Servidor de destino para los códigos QR" style="padding:8px 12px; background:var(--bg-alt); border:1px solid var(--line); border-radius:8px; font-size:11.5px; font-weight:700; color:var(--ink); outline:none;">
+              <option value="https://datosrcu.github.io/satisfaccion/" selected>QR Destino: Portal Oficial (datosrcu.github.io/satisfaccion)</option>
+              <option value="auto">QR Destino: Dominio Actual / Local</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="max-height:520px; overflow-y:auto; overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius-sm);">
+          <table id="table-padron-salud" style="width:100%; border-collapse:collapse; font-size:12.5px; text-align:left;">
+            <thead>
+              <tr style="background:var(--bg-alt); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:11px; text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; z-index:2; box-shadow:0 1px 0 var(--line);">
+                <th style="padding:10px 12px; width:40px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">#</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Centro de Salud & Barrio</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Tipo</th>
+                <th style="padding:10px 12px; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Especialidad / Consultorio</th>
+                <th style="padding:10px 12px; text-align:center; background:var(--bg-alt); position:sticky; top:0; z-index:2; width:80px;">Código QR</th>
+                <th style="padding:10px 12px; text-align:right; background:var(--bg-alt); position:sticky; top:0; z-index:2;">Acciones Rápidas & Impresión</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-padron-salud">
+              <!-- Renderizado dinámico de los servicios de salud -->
+            </tbody>
+          </table>
+        </div>
+        <div id="padron-salud-count" style="font-size:11.5px; color:var(--ink-soft); margin-top:10px; font-weight:600;">
+          Cargando servicios oficiales de salud...
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: ACCESOS AL FORMULARIO Y TABLERO DE SALUD MUNICIPAL -->
+    <section class="domain-section" style="padding-bottom: 16px;">
+      <div class="domain-header">
+        <div class="domain-tag" style="background:var(--tint-sky); color:var(--brand-d);">
+          <span class="material-symbols-outlined" style="font-size:18px; margin:0;">monitoring</span> Accesos del Ecosistema de Salud
+        </div>
+        <p class="domain-desc">Formulario de Relevamiento y Tablero Analítico en Tiempo Real</p>
+      </div>
+
+      <div class="grid-pair">
+        <!-- CARD 1: ENCUESTA SALUD -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">assignment</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Relevamiento en Sala (QR)</span>
+            </div>
+            <h3 class="portal-title">Encuesta de Salud Municipal</h3>
+            <p class="portal-desc">
+              Formulario accesible para pacientes de la Red de Salud. Cascada por centro, especialidad y profesional médico, tiempos de espera y recomendación NPS.
+            </p>
+          </div>
+          <a href="encuesta-salud.html" target="_blank" class="btn-pill btn-salud">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">open_in_new</span>
+            Abrir Formulario de Salud
+          </a>
+        </div>
+
+        <!-- CARD 2: TABLERO SALUD -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-head">
+              <div class="icon-box" style="background:var(--tint-sky); color:var(--brand-d);">
+                <span class="material-symbols-outlined" style="font-size:24px; margin:0;">analytics</span>
+              </div>
+              <span class="chip-badge" style="background:var(--tint-sky); color:var(--brand-d);">Gestión y Analítica</span>
+            </div>
+            <h3 class="portal-title">Tablero de Salud Municipal</h3>
+            <p class="portal-desc">
+              Monitor de pulso NPS en vivo, comparativa entre efectores de la Red de Salud, ranking por profesional y matriz de tiempos de espera.
+            </p>
+          </div>
+          <a href="tablero-salud.html" target="_blank" class="btn-pill btn-outline">
+            <span class="material-symbols-outlined" style="font-size:16px; margin:0;">dashboard</span>
+            Ver Tablero de Salud
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <b>Subsecretaría de Salud · Dirección de Estadística · Gobierno de Río Cuarto</b><br>
+      Infraestructura del Observatorio Social · Gabinete Social + LMetB
+    </div>
+  </footer>
+
+  <!-- MODAL DE CARTEL QR OFICIAL A4 LISTO PARA IMPRIMIR -->
+  <div id="modal-qr-salud" class="modal-overlay">
+    <div class="modal-box" style="max-width:540px; text-align:center;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px;">
+        <span class="badge-chip" style="background:var(--tint-sky); color:var(--brand-d); font-weight:800; font-size:12px;">
+          <span class="material-symbols-outlined" style="font-size:16px;">qr_code_2</span> Cartel QR Oficial Listo para Imprimir
+        </span>
+        <button type="button" onclick="closeModalQrSalud()" style="background:transparent; border:none; color:var(--ink-soft); cursor:pointer; font-size:20px; display:inline-flex; align-items:center;" title="Cerrar ventana">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- CARTEL IMPRIMIBLE A4 EN MODAL -->
+      <div id="modal-printable-poster" style="background:#fff; color:#14171a; border:2px dashed #cbd5e1; border-radius:var(--radius); padding:28px 24px; text-align:center; margin:10px 0;">
+        <div class="poster-print-header">
+          <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto" style="height:38px; width:auto; margin:0 auto 10px; display:block;">
+          <div class="poster-print-subse" style="font-size:13px; font-weight:900; margin-bottom:8px; color:#14171a;">Subsecretaría de Salud · Dirección de Estadística</div>
+          <div class="poster-print-divider" style="display:none;"></div>
+        </div>
+
+        <div class="poster-print-main" style="margin:12px 0;">
+          <h3 class="poster-print-title" style="font-size:19px; font-weight:900; margin:0 0 2px; color:#14171a;">Tu opinión nos ayuda a mejorar</h3>
+          <div id="modal-poster-salud-nombre" class="poster-print-nombre" style="font-size:16px; font-weight:800; color:var(--brand);">Dispensario N° 1</div>
+          <div id="modal-poster-salud-barrio" class="poster-print-barrio" style="font-size:12.5px; color:#5b6470; margin-bottom:6px;">B° Alberdi · Río Cuarto</div>
+          <div id="modal-poster-salud-esp" class="poster-print-esp" style="display:none; font-size:13px; font-weight:700; color:#14171a; margin-top:4px;"></div>
+        </div>
+
+        <div class="poster-print-qr-wrap" style="display:flex; justify-content:center; margin:14px 0;">
+          <img id="modal-poster-qr-img" src="" alt="Código QR Oficial" style="width:240px; height:240px; border-radius:14px; border:1px solid #e5e8eb; padding:8px; background:#fff; display:block; box-shadow:0 2px 10px rgba(0,0,0,.06);">
+        </div>
+
+        <div class="poster-print-footer">
+          <p class="poster-print-cta" style="font-size:13px; font-weight:700; margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px; color:#14171a;">
+            <span class="material-symbols-outlined" style="font-size:18px; color:var(--brand); margin:0;">qr_code_scanner</span>
+            Escaneá con la cámara de tu celular
+          </p>
+          <p class="poster-print-anon" style="font-size:11.5px; color:#5b6470; margin:0;">Encuesta 100% anónima · 1 minuto</p>
+          <div class="poster-print-footer-legal" style="display:none;">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+          <div class="poster-hide-in-print" style="font-size:10px; color:#5b6470; margin-top:10px; opacity:.7;">Generación QR HD Instantánea en Memoria (Alta Definición)</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <button type="button" onclick="printModalPoster()" class="btn-pill btn-salud" style="flex:1; min-width:160px;">
+          <span class="material-symbols-outlined" style="font-size:16px; margin:0;">print</span> Imprimir Cartel A4
+        </button>
+        <a id="modal-poster-download-btn" href="#" target="_blank" download="QR_Salud.png" class="btn-pill btn-outline" style="flex:1; min-width:140px; text-decoration:none;">
+          <span class="material-symbols-outlined" style="font-size:16px; margin:0;">download</span> Descargar QR HD
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR EXCLUSIVO PARA IMPRESIÓN A4 OFICIAL (1 SOLA PÁGINA, 1 SOLO QR) -->
+  <div id="print-poster-container" aria-hidden="true">
+    <div class="poster-print-header">
+      <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+      <div class="poster-print-subse">Subsecretaría de Salud · Dirección de Estadística</div>
+      <div class="poster-print-divider"></div>
+    </div>
+
+    <div class="poster-print-main">
+      <h2 class="poster-print-title">Tu opinión nos ayuda a mejorar</h2>
+      <div id="print-poster-nombre" class="poster-print-nombre">Centro de Salud (CS)</div>
+      <div id="print-poster-barrio" class="poster-print-barrio">B° Centro · Río Cuarto</div>
+      <div id="print-poster-esp" class="poster-print-esp" style="display:none;"></div>
+    </div>
+
+    <div class="poster-print-qr-wrap">
+      <img id="print-single-qr" src="" alt="Código QR Oficial de Satisfacción">
+    </div>
+
+    <div class="poster-print-footer">
+      <p class="poster-print-cta">
+        <span class="material-symbols-outlined">qr_code_scanner</span>
+        Escaneá con la cámara de tu celular
+      </p>
+      <p class="poster-print-anon">Encuesta 100% anónima · 1 minuto</p>
+      <div class="poster-print-footer-legal">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR EXCLUSIVO PARA IMPRESIÓN EN LOTE (LOS 24 CARTELES A4 OFICIALES) -->
+  <div id="print-batch-container" aria-hidden="true"></div>
+
+  <!-- SCRIPT -->
+  <script>
+    let qrcodeSalud = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initSaludQr();
+      renderPadronSaludTable();
+
+      const filterSaludInput = document.getElementById('filter-padron-salud');
+      if (filterSaludInput) {
+        filterSaludInput.addEventListener('input', (e) => {
+          renderPadronSaludTable(e.target.value);
+        });
+      }
+
+      const selectServer = document.getElementById('select-base-server');
+      if (selectServer) {
+        selectServer.addEventListener('change', () => {
+          updateSaludPoster();
+          renderPadronSaludTable(document.getElementById('filter-padron-salud')?.value || '');
+        });
+      }
+
+      // Cerrar modal con tecla Escape o clic fuera
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModalQrSalud();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModalQrSalud();
+      });
+    });
+
+    function getBaseUrl(file = 'encuesta-salud.html') {
+      const selectServer = document.getElementById('select-base-server');
+      const val = selectServer ? selectServer.value : 'https://datosrcu.github.io/satisfaccion/';
+      if (val && val !== 'auto') {
+        const cleanBase = val.endsWith('/') ? val : val + '/';
+        return cleanBase + file;
+      }
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return new URL(file, window.location.href).toString();
+      }
+      return new URL(file, window.location.href).toString();
+    }
+
+    function getQrDataUrl(text, size = 500) {
+      if (!text) return '';
+      const holder = document.createElement('div');
+      holder.style.position = 'absolute';
+      holder.style.left = '-9999px';
+      holder.style.top = '-9999px';
+      holder.style.visibility = 'hidden';
+      document.body.appendChild(holder);
+
+      try {
+        new QRCode(holder, {
+          text: text,
+          width: size,
+          height: size,
+          colorDark: "#14171A",
+          colorLight: "#FFFFFF",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        const canvas = holder.querySelector('canvas');
+        if (canvas) {
+          const dataUrl = canvas.toDataURL('image/png');
+          holder.remove();
+          return dataUrl;
+        }
+        const img = holder.querySelector('img');
+        if (img && img.src) {
+          const src = img.src;
+          holder.remove();
+          return src;
+        }
+      } catch (e) {
+        console.error('Error al generar QR en memoria:', e);
+      }
+
+      holder.remove();
+      return '';
+    }
+
+    function flashButtonFeedback(btn, labelHtml) {
+      if (!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = labelHtml;
+      setTimeout(() => {
+        btn.innerHTML = orig;
+      }, 1800);
+    }
+
+    function initSaludQr() {
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+
+      selectSalud.innerHTML = '';
+
+      // Agrupación de efectores oficiales por tipología institucional
+      const grupos = [
+        { label: "Maternidad Municipal", filter: c => c.tipo.includes('Maternidad') },
+        { label: "Centros de Salud 24 Horas (S24)", filter: c => c.id.startsWith('S24') },
+        { label: "Centros de Atención Primaria (CAPS 1 al 16)", filter: c => c.id.startsWith('CAPS') },
+        { label: "Centro de Salud Central", filter: c => c.id === 'CS_CABRERA' },
+        { label: "Postas Sanitarias y Centro de Integración", filter: c => c.id.startsWith('POSTA') || c.id === 'CEDIS' }
+      ];
+
+      grupos.forEach(g => {
+        const matching = centros.filter(g.filter);
+        if (matching.length) {
+          const optGroup = document.createElement('optgroup');
+          optGroup.label = g.label;
+          matching.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.nombre} (${c.barrio})`;
+            opt.dataset.nombre = c.nombre;
+            opt.dataset.barrio = c.barrio;
+            optGroup.appendChild(opt);
+          });
+          selectSalud.appendChild(optGroup);
+        }
+      });
+
+      // Permitir preselección por parámetro URL ?centro=...
+      const params = new URLSearchParams(window.location.search);
+      const paramCentro = params.get('centro');
+      if (paramCentro && Array.from(selectSalud.options).some(o => o.value === paramCentro)) {
+        selectSalud.value = paramCentro;
+      }
+
+      function onSaludCentroChange() {
+        const centroId = selectSalud.value;
+        const centro = centros.find(c => c.id === centroId);
+        selectEsp.innerHTML = '<option value="">Todas las especialidades (Cartel General de Sala)</option>';
+        if (centro && centro.especialidades) {
+          centro.especialidades.forEach(esp => {
+            const optEsp = document.createElement('option');
+            optEsp.value = esp.nombre;
+            optEsp.textContent = esp.nombre;
+            selectEsp.appendChild(optEsp);
+          });
+        }
+        updateSaludPoster();
+      }
+
+      selectSalud.addEventListener('change', onSaludCentroChange);
+      selectEsp.addEventListener('change', updateSaludPoster);
+
+      onSaludCentroChange();
+
+      const btnCopyLink = document.getElementById('btn-copy-link-salud');
+      if (btnCopyLink) {
+        btnCopyLink.addEventListener('click', () => {
+          const url = document.getElementById('input-link-salud-directo')?.value || '';
+          if (!url) return;
+          navigator.clipboard.writeText(url).then(() => {
+            flashButtonFeedback(btnCopyLink, `<span class="material-symbols-outlined" style="font-size:16px; margin:0; color:var(--c-educacion-d);">check</span> ¡Link Copiado!`);
+          });
+        });
+      }
+
+      const btnCopyBox = document.getElementById('btn-copy-url-box');
+      if (btnCopyBox) {
+        btnCopyBox.addEventListener('click', () => {
+          const url = document.getElementById('input-link-salud-directo')?.value || '';
+          if (!url) return;
+          navigator.clipboard.writeText(url).then(() => {
+            flashButtonFeedback(btnCopyBox, `<span class="material-symbols-outlined" style="font-size:15px; margin:0;">check</span> ¡Copiado!`);
+          });
+        });
+      }
+
+      const btnCopyWsp = document.getElementById('btn-copy-wsp-salud');
+      if (btnCopyWsp) {
+        btnCopyWsp.addEventListener('click', () => {
+          const text = document.getElementById('salud-wsp-preview')?.innerText || '';
+          if (!text) return;
+          navigator.clipboard.writeText(text).then(() => {
+            flashButtonFeedback(btnCopyWsp, `<span class="material-symbols-outlined" style="font-size:16px; margin:0; color:#065f46;">check</span> ¡Mensaje Copiado!`);
+          });
+        });
+      }
+
+      const btnSendWsp = document.getElementById('btn-send-wsp-salud');
+      if (btnSendWsp) {
+        btnSendWsp.addEventListener('click', () => {
+          const text = encodeURIComponent(document.getElementById('salud-wsp-preview')?.innerText || '');
+          window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        });
+      }
+    }
+
+    function updateSaludPoster() {
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const opt = selectSalud?.selectedOptions[0];
+      if (!opt) return;
+
+      const espVal = selectEsp?.value || '';
+
+      document.getElementById('poster-salud-nombre').textContent = opt.dataset.nombre;
+      let bText = (opt.dataset.barrio || '').trim();
+      if (!bText.toLowerCase().startsWith('b°') && !bText.toLowerCase().startsWith('bº')) {
+        bText = `B° ${bText}`;
+      }
+      document.getElementById('poster-salud-barrio').textContent = `${bText} · Río Cuarto`;
+
+      const espElem = document.getElementById('poster-salud-esp-text');
+      if (espElem) {
+        if (espVal) {
+          espElem.textContent = `Consultorio: ${espVal}`;
+          espElem.style.display = 'inline-block';
+        } else {
+          espElem.textContent = '';
+          espElem.style.display = 'none';
+        }
+      }
+
+      const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+      targetUrl.searchParams.set('centro', opt.value);
+      if (espVal) {
+        targetUrl.searchParams.set('especialidad', espVal);
+      }
+
+      const finalUrl = targetUrl.toString();
+
+      // Actualizar campo de URL directa y mensaje WhatsApp
+      const inputDirect = document.getElementById('input-link-salud-directo');
+      if (inputDirect) inputDirect.value = finalUrl;
+      const btnOpenDirect = document.getElementById('btn-open-url-box');
+      if (btnOpenDirect) btnOpenDirect.href = finalUrl;
+
+      const wspBox = document.getElementById('salud-wsp-preview');
+      if (wspBox) {
+        const espLine = espVal ? `\n🩺 *Consultorio / Servicio:* ${espVal}` : '';
+        wspBox.textContent = `👋 *Hola, te escribimos desde ${opt.dataset.nombre} (${bText}) · Municipalidad de Río Cuarto:*${espLine}
+
+Tu opinión nos ayuda a mejorar la atención de nuestra Red Municipal de Salud. Te invitamos a responder esta breve encuesta (100% anónima, demora 1 minuto):
+
+👉 *Ingresá aquí:*
+${finalUrl}
+
+¡Muchas gracias por tu tiempo! 💙`;
+      }
+
+      // 1. Renderizar en la tarjeta de previsualización
+      const qrContainer = document.getElementById('qrcode-target-salud');
+      qrContainer.innerHTML = '';
+      qrcodeSalud = new QRCode(qrContainer, {
+        text: finalUrl,
+        width: 320,
+        height: 320,
+        colorDark: "#14171A",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // 2. Generar Data URL de alta definición en memoria (PNG base64 garantizado sin peticiones de red)
+      const qrDataUrl = getQrDataUrl(finalUrl, 500);
+
+      // 3. Pre-cargar el cartel de impresión A4 oficial
+      populatePrintPoster(opt.dataset.nombre, opt.dataset.barrio, espVal, qrDataUrl);
+
+      // 4. Configurar botón de descarga
+      const dlBtn = document.getElementById('btn-download-qr-salud-hd');
+      if (dlBtn) {
+        dlBtn.href = qrDataUrl;
+        dlBtn.download = `QR_${opt.value}${espVal ? '_' + encodeURIComponent(espVal) : ''}.png`;
+      }
+    }
+
+    function populatePrintPoster(nombre, barrio, especialidad, qrUrl) {
+      const nombreEl = document.getElementById('print-poster-nombre');
+      const barrioEl = document.getElementById('print-poster-barrio');
+      const espEl = document.getElementById('print-poster-esp');
+      const qrEl = document.getElementById('print-single-qr');
+
+      if (nombreEl) nombreEl.textContent = nombre || 'Centro de Salud';
+      if (barrioEl) {
+        let bText = (barrio || '').trim();
+        if (bText.startsWith('B°') || bText.startsWith('Bº')) {
+          barrioEl.textContent = `${bText} · Río Cuarto`;
+        } else if (bText) {
+          barrioEl.textContent = `B° ${bText} · Río Cuarto`;
+        } else {
+          barrioEl.textContent = 'Río Cuarto';
+        }
+      }
+
+      if (espEl) {
+        if (especialidad && !especialidad.toLowerCase().includes('general de sala') && especialidad !== 'Atención General de Sala') {
+          espEl.textContent = `Consultorio: ${especialidad}`;
+          espEl.style.display = 'inline-block';
+        } else {
+          espEl.textContent = '';
+          espEl.style.display = 'none';
+        }
+      }
+
+      if (qrEl && qrUrl) {
+        qrEl.src = qrUrl;
+      }
+    }
+
+    function printSaludPoster() {
+      document.body.classList.remove('printing-batch');
+      const selectSalud = document.getElementById('qr-select-salud');
+      const selectEsp = document.getElementById('qr-select-salud-esp');
+      const opt = selectSalud?.selectedOptions[0];
+      if (!opt) return;
+
+      const nombre = opt.dataset.nombre || opt.textContent;
+      const barrio = opt.dataset.barrio || '';
+      const espVal = selectEsp?.value || '';
+
+      const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+      targetUrl.searchParams.set('centro', opt.value);
+      if (espVal) targetUrl.searchParams.set('especialidad', espVal);
+      const finalUrl = targetUrl.toString();
+
+      const qrDataUrl = getQrDataUrl(finalUrl, 500);
+      populatePrintPoster(nombre, barrio, espVal, qrDataUrl);
+
+      const qrImg = document.getElementById('print-single-qr');
+      if (qrImg && !qrImg.complete) {
+        qrImg.onload = () => window.print();
+      } else {
+        setTimeout(() => {
+          window.print();
+        }, 80);
+      }
+    }
+
+    function openModalQrSalud(centroNombre, barrio, especialidad, link, qrDataUrl) {
+      document.getElementById('modal-poster-salud-nombre').textContent = centroNombre;
+      document.getElementById('modal-poster-salud-barrio').textContent = `B° ${barrio} · Río Cuarto`;
+      const espElem = document.getElementById('modal-poster-salud-esp');
+      if (especialidad && especialidad !== 'Atención General de Sala' && !especialidad.includes('General de Sala')) {
+        espElem.textContent = `Consultorio: ${especialidad}`;
+        espElem.style.display = 'block';
+      } else {
+        espElem.textContent = 'Cartel General de Sala de Espera';
+        espElem.style.display = 'block';
+      }
+
+      const effectiveQrUrl = qrDataUrl || getQrDataUrl(link, 500);
+
+      document.getElementById('modal-poster-qr-img').src = effectiveQrUrl;
+      const dlBtn = document.getElementById('modal-poster-download-btn');
+      if (dlBtn) {
+        dlBtn.href = effectiveQrUrl;
+        dlBtn.download = `QR_${centroNombre.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+      }
+
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModalQrSalud() {
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function printModalPoster() {
+      document.body.classList.remove('printing-batch');
+      const nombre = document.getElementById('modal-poster-salud-nombre')?.textContent || '';
+      const barrio = document.getElementById('modal-poster-salud-barrio')?.textContent || '';
+      const espEl = document.getElementById('modal-poster-salud-esp');
+      const espText = (espEl && espEl.style.display !== 'none' && !espEl.textContent.includes('General de Sala'))
+        ? espEl.textContent.replace('Consultorio:', '').trim()
+        : '';
+      const qrUrl = document.getElementById('modal-poster-qr-img')?.src || '';
+
+      populatePrintPoster(nombre, barrio, espText, qrUrl);
+
+      const qrImg = document.getElementById('print-single-qr');
+      if (qrImg && !qrImg.complete) {
+        qrImg.onload = () => window.print();
+      } else {
+        setTimeout(() => {
+          window.print();
+        }, 80);
+      }
+    }
+
+    function printAll24SaludPosters() {
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+      if (!centros.length) {
+        alert('No se pudo cargar el catálogo de efectores de salud.');
+        return;
+      }
+
+      const batchContainer = document.getElementById('print-batch-container');
+      if (!batchContainer) return;
+
+      batchContainer.innerHTML = '';
+
+      centros.forEach(c => {
+        const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+        targetUrl.searchParams.set('centro', c.id);
+        const finalUrl = targetUrl.toString();
+        const qrDataUrl = getQrDataUrl(finalUrl, 500);
+
+        let bText = (c.barrio || '').trim();
+        if (!bText.toLowerCase().startsWith('b°') && !bText.toLowerCase().startsWith('bº')) {
+          bText = `B° ${bText}`;
+        }
+
+        const posterDiv = document.createElement('div');
+        posterDiv.className = 'a4-batch-poster';
+        posterDiv.innerHTML = `
+          <div class="poster-print-header">
+            <img class="poster-print-logo" src="assets/rio-cuarto-vos.png" alt="Gobierno de Río Cuarto">
+            <div class="poster-print-subse">Subsecretaría de Salud · Dirección de Estadística</div>
+            <div class="poster-print-divider"></div>
+          </div>
+
+          <div class="poster-print-main">
+            <h2 class="poster-print-title">Tu opinión nos ayuda a mejorar</h2>
+            <div class="poster-print-nombre">${c.nombre}</div>
+            <div class="poster-print-barrio">${bText} · Río Cuarto</div>
+            <div class="poster-print-esp" style="display:none;"></div>
+          </div>
+
+          <div class="poster-print-qr-wrap">
+            <img class="print-batch-qr" src="${qrDataUrl}" alt="Código QR Oficial - ${c.nombre}">
+          </div>
+
+          <div class="poster-print-footer">
+            <p class="poster-print-cta">
+              <span class="material-symbols-outlined">qr_code_scanner</span>
+              Escaneá con la cámara de tu celular
+            </p>
+            <p class="poster-print-anon">Encuesta 100% anónima · 1 minuto</p>
+            <div class="poster-print-footer-legal">Gobierno de Río Cuarto · Red Municipal de Salud</div>
+          </div>
+        `;
+        batchContainer.appendChild(posterDiv);
+      });
+
+      document.body.classList.add('printing-batch');
+
+      setTimeout(() => {
+        window.print();
+      }, 250);
+    }
+
+    // Asegurar compatibilidad directa con Ctrl+P del navegador
+    window.addEventListener('beforeprint', () => {
+      if (document.body.classList.contains('printing-batch')) {
+        return;
+      }
+      const modal = document.getElementById('modal-qr-salud');
+      if (modal && modal.classList.contains('active')) {
+        const nombre = document.getElementById('modal-poster-salud-nombre')?.textContent || '';
+        const barrio = document.getElementById('modal-poster-salud-barrio')?.textContent || '';
+        const espEl = document.getElementById('modal-poster-salud-esp');
+        const espText = (espEl && espEl.style.display !== 'none' && !espEl.textContent.includes('General de Sala'))
+          ? espEl.textContent.replace('Consultorio:', '').trim()
+          : '';
+        const qrUrl = document.getElementById('modal-poster-qr-img')?.src || '';
+        populatePrintPoster(nombre, barrio, espText, qrUrl);
+      } else {
+        const selectSalud = document.getElementById('qr-select-salud');
+        const selectEsp = document.getElementById('qr-select-salud-esp');
+        const opt = selectSalud?.selectedOptions[0];
+        if (opt) {
+          const nombre = opt.dataset.nombre || opt.textContent;
+          const barrio = opt.dataset.barrio || '';
+          const espVal = selectEsp?.value || '';
+          const targetUrl = new URL(getBaseUrl('encuesta-salud.html'));
+          targetUrl.searchParams.set('centro', opt.value);
+          if (espVal) targetUrl.searchParams.set('especialidad', espVal);
+          const qrDataUrl = getQrDataUrl(targetUrl.toString(), 500);
+          populatePrintPoster(nombre, barrio, espVal, qrDataUrl);
+        }
+      }
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.body.classList.remove('printing-batch');
+    });
+
+    let saludTableModo = 'generales';
+
+    function renderPadronSaludTable(filter = '') {
+      const tbody = document.getElementById('tbody-padron-salud');
+      const countEl = document.getElementById('padron-salud-count');
+      if (!tbody) return;
+
+      const btnToggleModo = document.getElementById('btn-toggle-salud-modo');
+      const labelToggleModo = document.getElementById('label-toggle-salud-modo');
+      if (btnToggleModo && !btnToggleModo.dataset.initialized) {
+        btnToggleModo.dataset.initialized = 'true';
+        btnToggleModo.addEventListener('click', () => {
+          saludTableModo = (saludTableModo === 'generales') ? 'servicios' : 'generales';
+          if (labelToggleModo) {
+            labelToggleModo.textContent = (saludTableModo === 'generales')
+              ? 'Ver los 228 Servicios de Consultorio'
+              : 'Ver los 24 Efectores con QR Propio';
+          }
+          renderPadronSaludTable(document.getElementById('filter-padron-salud')?.value || '');
+        });
+      }
+
+      const centros = (window.CATALOGO_MUNICIPAL && window.CATALOGO_MUNICIPAL.salud) ? window.CATALOGO_MUNICIPAL.salud.centros : [];
+
+      const allServices = [];
+      let idx = 1;
+
+      if (saludTableModo === 'generales') {
+        const sortedCentros = [...centros].sort((a, b) => {
+          const priority = (c) => {
+            if (c.tipo.includes('Maternidad')) return 1;
+            if (c.id.startsWith('S24')) return 2;
+            if (c.id.startsWith('CAPS')) return 3;
+            if (c.id.startsWith('POSTA') || c.id === 'CEDIS') return 4;
+            return 5;
+          };
+          const pA = priority(a);
+          const pB = priority(b);
+          if (pA !== pB) return pA - pB;
+          return a.nombre.localeCompare(b.nombre);
+        });
+
+        sortedCentros.forEach(c => {
+          allServices.push({
+            num: idx++,
+            centroId: c.id,
+            centroNombre: c.nombre,
+            tipo: c.tipo,
+            barrio: c.barrio,
+            especialidad: "Cartel General Oficial de Efector",
+            isGeneral: true
+          });
+        });
+      } else {
+        centros.forEach(c => {
+          (c.especialidades || []).forEach(e => {
+            allServices.push({
+              num: idx++,
+              centroId: c.id,
+              centroNombre: c.nombre,
+              tipo: c.tipo,
+              barrio: c.barrio,
+              especialidad: e.nombre,
+              isGeneral: false
+            });
+          });
+        });
+      }
+
+      const query = (filter || '').trim().toLowerCase();
+      const filtered = allServices.filter(s => {
+        if (!query) return true;
+        return s.centroNombre.toLowerCase().includes(query) ||
+               s.barrio.toLowerCase().includes(query) ||
+               s.tipo.toLowerCase().includes(query) ||
+               s.especialidad.toLowerCase().includes(query) ||
+               s.centroId.toLowerCase().includes(query);
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="padding:24px; text-align:center; color:var(--ink-soft);">
+              No se encontraron efectores o servicios que coincidan con "<b>${filter}</b>".
+            </td>
+          </tr>`;
+        if (countEl) countEl.innerHTML = `Mostrando 0 de ${allServices.length} carteles oficiales`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--line)';
+
+        const baseUrl = getBaseUrl('encuesta-salud.html');
+        const targetUrl = new URL(baseUrl);
+        targetUrl.searchParams.set('centro', item.centroId);
+        if (!item.isGeneral && item.especialidad) {
+          targetUrl.searchParams.set('especialidad', item.especialidad);
+        }
+        const link = targetUrl.toString();
+
+        const qrThumbDataUrl = getQrDataUrl(link, 120);
+        const qrHdDataUrl = getQrDataUrl(link, 500);
+
+        tr.innerHTML = `
+          <td style="padding:10px 12px; font-weight:800; color:var(--brand-d); font-family:monospace; font-size:12px;">
+            SAL_${String(item.num).padStart(3, '0')}
+          </td>
+          <td style="padding:10px 12px;">
+            <div style="font-weight:700; color:var(--ink);">${item.centroNombre}</div>
+            <div style="font-size:11px; color:var(--ink-soft);">B° ${item.barrio}</div>
+          </td>
+          <td style="padding:10px 12px;">
+            <span style="display:inline-block; padding:3px 8px; border-radius:6px; font-size:11px; font-weight:700; background:var(--tint-sky); color:var(--brand-d);">
+              ${item.tipo}
+            </span>
+          </td>
+          <td style="padding:10px 12px; font-weight:600; color:var(--ink);">
+            ${item.isGeneral
+              ? `<span style="display:inline-flex; align-items:center; gap:4px; font-weight:700; color:var(--brand-d); background:var(--brand-bg); padding:3px 8px; border-radius:6px;"><span class="material-symbols-outlined" style="font-size:14px;">storefront</span> General de Sala</span>`
+              : item.especialidad}
+          </td>
+          <td style="padding:6px 12px; text-align:center;">
+            <div style="display:inline-flex; flex-direction:column; align-items:center; gap:2px;">
+              <img src="${qrThumbDataUrl}" width="38" height="38" alt="QR" style="border-radius:6px; border:1px solid var(--line); background:#fff; cursor:pointer; vertical-align:middle; box-shadow:0 1px 4px rgba(0,0,0,.08);" title="Clic para abrir e imprimir Cartel A4" class="btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdDataUrl}">
+              <span style="font-size:9px; font-weight:800; color:var(--brand-d); text-transform:uppercase;">QR PROPIO</span>
+            </div>
+          </td>
+          <td style="padding:10px 12px; text-align:right;">
+            <div style="display:inline-flex; gap:6px; align-items:center; justify-content:flex-end; flex-wrap:nowrap;">
+              <button type="button" class="btn-table-action btn-qr-action" data-centro="${item.centroNombre}" data-barrio="${item.barrio}" data-esp="${item.isGeneral ? '' : item.especialidad}" data-link="${link}" data-qr="${qrHdDataUrl}" title="Imprimir Cartel A4 Oficial para este efector" style="padding:6px 10px; font-size:11px; font-weight:700; border:1px solid var(--brand); border-radius:6px; background:var(--brand-bg); color:var(--brand-d); cursor:pointer; display:inline-flex; align-items:center; gap:4px; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">print</span> Imprimir Cartel A4
+              </button>
+              <a href="${qrHdDataUrl}" download="QR_${item.centroId}.png" title="Descargar imagen QR en alta resolución" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">qr_code_2</span>
+              </a>
+              <button type="button" class="btn-table-action btn-copy-link-salud-table" data-url="${link}" data-nombre="${item.centroNombre}" title="Copiar enlace prefijado" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:var(--bg-alt); color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; font-family:inherit;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">content_copy</span>
+              </button>
+              <a href="${link}" target="_blank" title="Abrir y probar encuesta" style="padding:6px 8px; font-size:11px; font-weight:700; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--brand-d); text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                <span class="material-symbols-outlined" style="font-size:14px; margin:0;">open_in_new</span>
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('.btn-qr-action').forEach(btn => {
+        btn.onclick = () => {
+          openModalQrSalud(
+            btn.dataset.centro,
+            btn.dataset.barrio,
+            btn.dataset.esp,
+            btn.dataset.link,
+            btn.dataset.qr
+          );
+        };
+      });
+
+      tbody.querySelectorAll('.btn-copy-link-salud-table').forEach(btn => {
+        btn.onclick = () => {
+          const url = btn.dataset.url;
+          navigator.clipboard.writeText(url).then(() => {
+            flashButtonFeedback(btn, `<span class="material-symbols-outlined" style="font-size:14px; margin:0; color:var(--c-educacion-d);">check</span>`);
+          });
+        };
+      });
+
+      if (countEl) {
+        const modoText = (saludTableModo === 'generales') ? 'efectores de salud oficiales con QR propio' : 'servicios y consultorios de salud municipal';
+        countEl.innerHTML = `Mostrando <b>${filtered.length}</b> de <b>${allServices.length}</b> ${modoText}`;
+      }
+    }
+  </script>
+</body>
+
+</html>

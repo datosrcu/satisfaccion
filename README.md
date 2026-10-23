@@ -11,6 +11,7 @@ Ecosistema analítico y participativo para la recolección, medición continua y
 - **[`index.html`](index.html)**: Portal central interactivo para la gestión de canales de difusión, generación de cartelería oficial con código QR (A4 para salas de espera y consultorios) y generador de mensajes y enlaces precompletados por WhatsApp.
 
 ### 2. Salud Municipal (CAPS, CS, S24 y Postas Sanitarias)
+- **[`carteleria-salud.html`](carteleria-salud.html)**: Aplicación independiente y exclusiva para compartir con el **Área de Salud Municipal**, con el Generador de Cartelería QR A4 Oficial (Salas de Espera), enlaces precompletados de WhatsApp, el Directorio Maestro de los 24 efectores / 228 servicios y accesos directos a Encuesta y Tablero (sin módulos de Educación).
 - **[`encuesta-salud.html`](encuesta-salud.html)**: Formulario accesible de satisfacción para pacientes (Recepción, Tiempo de Espera, Infraestructura, Enfermería, Atención Médica y NPS 0-10).
 - **[`tablero-salud.html`](tablero-salud.html)**: Monitor analítico en tiempo real con cálculo de NPS Global, ranking de profesionales, comparativas entre centros y análisis de tiempos de espera.
 
